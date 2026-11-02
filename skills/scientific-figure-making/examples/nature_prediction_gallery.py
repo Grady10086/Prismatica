@@ -20,7 +20,7 @@ def cohort(seed,n,shift=0):
 
 
 def bootstrap(y,p,B=400,seed=925):
-    
+
     for k in range(p.shape[1]):validate(y,p[:,k])
     if len(np.unique(y))!=2:raise ValueError('ROC/PR evaluation requires both outcome classes')
     rng=np.random.default_rng(seed);result=[]
