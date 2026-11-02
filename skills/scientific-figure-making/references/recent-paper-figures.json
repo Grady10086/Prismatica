@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-26",
+  "scope": "2025-2026 conference editions; selected 2025 model report. Not an exhaustive awards list or citation ranking.",
+  "rights": "Original PDFs and rendered excerpts remain local reference materials. Repository ships metadata and code only. Verify asset-specific reuse terms before redistribution.",
+  "entries": [
+    {
+      "id": "vggt",
+      "title": "VGGT: Visual Geometry Grounded Transformer",
+      "venue": "CVPR",
+      "year": 2025,
+      "selection": "award",
+      "award": {
+        "label": "Best Paper",
+        "source_url": "https://cvpr.thecvf.com/Conferences/2025/News/Awards_Press"
+      },
+      "source_url": "https://openaccess.thecvf.com/content/CVPR2025/papers/Wang_VGGT_Visual_Geometry_Grounded_Transformer_CVPR_2025_paper.pdf",
+      "pdf_file": "vggt.pdf",
+      "figure": "Fig. 1",
+      "page": 1,
+      "crop": [
+        0.09,
+        0.29,
+        0.915,
+        0.53
+      ],
+      "tags": [
+        "3d",
+        "scene",
+        "reconstruction"
+      ],
+      "mode": "teaser",
+      "observed": "A large scene reconstruction occupies the center, with a narrow stack of input views and smaller tracking/depth evidence around it.",
+      "adaptation": "Let one actual scene dominate. Keep matching camera/view evidence small but legible; connect only corresponding regions.",
+      "avoid": "Do not enlarge a decorative scene while hiding the actual reconstruction or reuse invented depth maps."
+    },
+    {
+      "id": "d4rt",
+      "title": "Efficiently Reconstructing Dynamic Scenes One D4RT at a Time",
+      "venue": "CVPR",
+      "year": 2026,
+      "selection": "award",
+      "award": {
+        "label": "Best Paper",
+        "source_url": "https://cvpr.thecvf.com/Conferences/2026/News/Best_Papers"
+      },
+      "source_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Zhang_Efficiently_Reconstructing_Dynamic_Scenes_One_D4RT_at_a_Time_CVPR_2026_paper.pdf",
+      "pdf_file": "d4rt.pdf",
+      "figure": "Fig. 4",
+      "page": 5,
+      "crop": [
+        0.09,
+        0.09,
+        0.91,
+        0.365
+      ],
+      "tags": [
+        "video",
+        "3d",
+        "comparison"
+      ],
+      "mode": "teaser",
+      "observed": "Rows align the same dynamic input with reconstruction outputs from several methods; geometry and trajectories coexist in the comparison.",
+      "adaptation": "Compare motion-aware scene reconstructions under the same input and preserve each method label and trajectory legend.",
+      "avoid": "Do not interpret trajectory colors as segmentation classes or describe a static reconstruction as a generated video."
+    },
+    {
+      "id": "native3d",
+      "title": "Native and Compact Structured Latents for 3D Generation",
+      "venue": "CVPR",
+      "year": 2026,
+      "selection": "award",
+      "award": {
+        "label": "Best Student Paper",
+        "source_url": "https://cvpr.thecvf.com/Conferences/2026/News/Best_Papers"
+      },
+      "source_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Xiang_Native_and_Compact_Structured_Latents_for_3D_Generation_CVPR_2026_paper.pdf",
+      "pdf_file": "native3d.pdf",
+      "figure": "Fig. 1; Fig. 5-6 also inspected",
+      "page": 1,
+      "crop": [
+        0.09,
+        0.24,
+        0.92,
+        0.501
+      ],
+      "tags": [
+        "3d",
+        "material",
+        "geometry",
+        "detail"
+      ],
+      "mode": "teaser",
+      "observed": "Large reconstruction and generation specimens combine normals, material breakdowns and smaller views; compact quantitative plots sit at the side.",
+      "adaptation": "Place a detailed asset beside genuinely corresponding geometry/material passes. Add a small efficiency chart only when measured data are available.",
+      "avoid": "Do not fabricate material channels, normals, token counts or efficiency measurements to complete the composition."
+    },
+    {
+      "id": "brickgpt",
+      "title": "Generating Physically Stable and Buildable Brick Structures from Text",
+      "venue": "ICCV",
+      "year": 2025,
+      "selection": "award",
+      "award": {
+        "label": "Best Paper (Marr Prize)",
+        "source_url": "https://www.thecvf.com/?page_id=413"
+      },
+      "source_url": "https://openaccess.thecvf.com/content/ICCV2025/papers/Pun_Generating_Physically_Stable_and_Buildable_Brick_Structures_from_Text_ICCV_2025_paper.pdf",
+      "pdf_file": "brickgpt.pdf",
+      "figure": "Fig. 1",
+      "page": 1,
+      "crop": [
+        0.09,
+        0.235,
+        0.91,
+        0.545
+      ],
+      "tags": [
+        "3d",
+        "robotics",
+        "physical",
+        "sequence"
+      ],
+      "mode": "teaser",
+      "observed": "Intermediate construction views share a band with human/robot assembly photos; a separate gallery demonstrates output diversity.",
+      "adaptation": "Pair a digital result with the actual fabricated object or real execution, and use short chronological assembly samples.",
+      "avoid": "The transferable idea is physical verification, not a requirement to turn unrelated tasks into brick scenes."
+    },
+    {
+      "id": "feast",
+      "title": "FEAST: A Flexible Mealtime-Assistance System Towards In-the-Wild Personalization",
+      "venue": "RSS",
+      "year": 2025,
+      "selection": "award",
+      "award": {
+        "label": "Outstanding Paper Award",
+        "source_url": "https://roboticsfoundation.org/awards/best-paper-award/"
+      },
+      "source_url": "https://www.roboticsproceedings.org/rss21/p083.pdf",
+      "pdf_file": "feast.pdf",
+      "figure": "Fig. 1",
+      "page": 1,
+      "crop": [
+        0.075,
+        0.212,
+        0.93,
+        0.615
+      ],
+      "tags": [
+        "robotics",
+        "human",
+        "deployment",
+        "mosaic"
+      ],
+      "mode": "teaser",
+      "observed": "A compact study/design rationale sits beside a larger mosaic of people using the robot across real home contexts.",
+      "adaptation": "For human-centered deployment, show actual usage contexts and framing variation rather than only robot hardware close-ups.",
+      "avoid": "Do not infer user outcomes from a photo; retain participant consent, privacy treatment and source-specific reuse terms."
+    },
+    {
+      "id": "fabrica",
+      "title": "Fabrica: Dual-Arm Assembly of General Multi-Part Objects via Integrated Planning and Learning",
+      "venue": "CoRL",
+      "year": 2025,
+      "selection": "award",
+      "award": {
+        "label": "Best Paper",
+        "source_url": "https://2025.corl.org/program/awards"
+      },
+      "source_url": "https://fabrica.csail.mit.edu/static/pdf/paper.pdf",
+      "pdf_file": "fabrica.pdf",
+      "figure": "Fig. 1",
+      "page": 1,
+      "crop": [
+        0.17,
+        0.252,
+        0.83,
+        0.509
+      ],
+      "tags": [
+        "robotics",
+        "assembly",
+        "sequence",
+        "contact"
+      ],
+      "mode": "teaser",
+      "observed": "Three task rows show successive real dual-arm interactions for different objects on a consistent work surface.",
+      "adaptation": "Use one row per task; sample contact and assembly transitions rather than repeating nearly identical idle frames.",
+      "avoid": "Shown samples are not necessarily contiguous frames or equal time intervals; do not label every endpoint a success."
+    },
+    {
+      "id": "sam2",
+      "title": "SAM 2: Segment Anything in Images and Videos",
+      "venue": "ICLR",
+      "year": 2025,
+      "selection": "award",
+      "award": {
+        "label": "Honorable Mention",
+        "source_url": "https://blog.iclr.cc/2025/04/22/announcing-the-outstanding-paper-awards-at-iclr-2025/"
+      },
+      "source_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/45c1f6a8cbf2da59ebf2c802b4f742cd-Paper-Conference.pdf",
+      "pdf_file": "sam2.pdf",
+      "figure": "Fig. 2; Fig. 4 also inspected",
+      "page": 4,
+      "crop": [
+        0.17,
+        0.095,
+        0.85,
+        0.295
+      ],
+      "tags": [
+        "video",
+        "segmentation",
+        "interaction",
+        "comparison"
+      ],
+      "mode": "teaser",
+      "observed": "Two aligned rows show the same dog sequence before and after an additional interaction; the prompt frame and correction are explicitly marked.",
+      "adaptation": "Use synchronized before/after frame positions for interactive corrections; preserve object identity and overlay-color meaning.",
+      "avoid": "Do not call this Best Paper, or repaint masks with arbitrary aesthetic colors that change object correspondence."
+    },
+    {
+      "id": "cast",
+      "title": "CAST: Component-Aligned 3D Scene Reconstruction from an RGB Image",
+      "venue": "SIGGRAPH",
+      "year": 2025,
+      "selection": "award",
+      "award": {
+        "label": "Best Paper",
+        "source_url": "https://blog.siggraph.org/2025/06/siggraph-2025-technical-papers-awards-best-papers-honorable-mentions-and-test-of-time.html/"
+      },
+      "source_url": "https://arxiv.org/pdf/2502.12894",
+      "pdf_file": "cast.pdf",
+      "figure": "Fig. 1",
+      "page": 1,
+      "crop": [
+        0.08,
+        0.3,
+        0.925,
+        0.542
+      ],
+      "tags": [
+        "3d",
+        "scene",
+        "gallery",
+        "component"
+      ],
+      "mode": "teaser",
+      "observed": "An interlocking gallery presents many reconstructed scenes with a consistent elevated viewpoint and visually varied contents.",
+      "adaptation": "Unify lighting and camera convention while varying the actual scenes; use a gallery when diversity itself is evidenced.",
+      "avoid": "Do not copy the tessellated layout so densely that object occlusion hides reconstruction errors."
+    },
+    {
+      "id": "tokenverse",
+      "title": "TokenVerse: Versatile Multi-concept Personalization in Token Modulation Space",
+      "venue": "SIGGRAPH",
+      "year": 2025,
+      "selection": "award",
+      "award": {
+        "label": "Best Paper",
+        "source_url": "https://blog.siggraph.org/2025/06/siggraph-2025-technical-papers-awards-best-papers-honorable-mentions-and-test-of-time.html/"
+      },
+      "source_url": "https://arxiv.org/pdf/2501.12224",
+      "pdf_file": "tokenverse.pdf",
+      "figure": "Fig. 1",
+      "page": 1,
+      "crop": [
+        0.085,
+        0.26,
+        0.91,
+        0.611
+      ],
+      "tags": [
+        "generation",
+        "personalization",
+        "multimodal",
+        "comparison"
+      ],
+      "mode": "teaser",
+      "observed": "A narrow concept-image rail feeds three larger composed outputs; corresponding words and source concepts share selective color cues.",
+      "adaptation": "Use small real reference images above large compositional results, linking only the concepts actually conditioned on.",
+      "avoid": "Do not represent an output as a conditioning image, or imply a concept transfer that the shown run did not perform."
+    },
+    {
+      "id": "gated-attention",
+      "title": "Gated Attention for Large Language Models: Non-linearity, Sparsity, and Attention-Sink-Free",
+      "venue": "NeurIPS",
+      "year": 2025,
+      "selection": "award",
+      "award": {
+        "label": "Best Paper",
+        "source_url": "https://blog.neurips.cc/2025/11/26/announcing-the-neurips-2025-best-paper-awards/"
+      },
+      "source_url": "https://papers.neurips.cc/paper_files/paper/2025/file/904e89bb4e632e75fb47f093b620b257-Paper-Conference.pdf",
+      "pdf_file": "gated-attention.pdf",
+      "figure": "Fig. 2",
+      "page": 3,
+      "crop": [
+        0.17,
+        0.085,
+        0.85,
+        0.372
+      ],
+      "tags": [
+        "analysis",
+        "heatmap",
+        "comparison"
+      ],
+      "mode": "analysis",
+      "observed": "Baseline and gated-model rows align a layer-wise summary curve with matching attention maps.",
+      "adaptation": "For mechanism evidence, align quantitative summaries with raw matrix evidence, retaining axes, scales and experimental conditions.",
+      "avoid": "This is a chart reference, not a photo-teaser preset. Never replace actual attention data with decorative heatmaps."
+    },
+    {
+      "id": "score-matching",
+      "title": "Score Matching with Missing Data",
+      "venue": "ICML",
+      "year": 2025,
+      "selection": "award",
+      "award": {
+        "label": "Outstanding Paper",
+        "source_url": "https://icml.cc/virtual/2025/awards_detail"
+      },
+      "source_url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/givens25a/givens25a.pdf",
+      "pdf_file": "score-matching.pdf",
+      "figure": "Fig. 1",
+      "page": 7,
+      "crop": [
+        0.535,
+        0.08,
+        0.87,
+        0.261
+      ],
+      "tags": [
+        "analysis",
+        "uncertainty",
+        "comparison"
+      ],
+      "mode": "analysis",
+      "observed": "A compact method comparison uses labeled axes, a legend and visible uncertainty intervals across sample sizes.",
+      "adaptation": "Retain statistical definitions and readable intervals when inserting a small quantitative panel beside qualitative results.",
+      "avoid": "Do not infer uncertainty from line thickness or copy a caption without checking the plotted axis and metric."
+    },
+    {
+      "id": "wan",
+      "title": "Wan: Open and Advanced Large-Scale Video Generative Models",
+      "venue": "Technical report",
+      "year": 2025,
+      "selection": "representative-model",
+      "award": null,
+      "source_url": "https://arxiv.org/pdf/2503.20314",
+      "pdf_file": "wan.pdf",
+      "figure": "Fig. 20; Fig. 23 also inspected",
+      "page": 29,
+      "crop": [
+        0.175,
+        0.11,
+        0.83,
+        0.855
+      ],
+      "tags": [
+        "video",
+        "generation",
+        "gallery",
+        "sequence"
+      ],
+      "mode": "teaser",
+      "observed": "Rows of six ordered outputs cover varied subjects and aspect ratios; the page is dominated by generated frames rather than a method diagram.",
+      "adaptation": "Use multiple subjects and meaningful motion samples; keep within-sequence framing consistent and place prompt details in the caption.",
+      "avoid": "Representative model selection is not an award or a citation ranking. Do not equate six shown samples with a six-frame generated clip."
+    }
+  ]
+}
