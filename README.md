@@ -1,8 +1,8 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/homepage/masthead-dark.png">
-    <img src="docs/homepage/masthead.png" alt="Prismatica — from research evidence to publication-ready figures" width="1200">
-  </picture>
+  <a href="https://grady10086.github.io/Prismatica/"><picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/homepage/masthead-v2-dark.png">
+    <img src="docs/homepage/masthead-v2.png" alt="Prismatica — make data matter. Scientific visualization studio." width="1200">
+  </picture></a>
 </p>
 <p align="center"><a href="https://grady10086.github.io/Prismatica/">Interactive studio ↗</a> · <a href="#start-creating">Get started</a> · <a href="docs/gallery.md">Gallery</a> · <a href="docs/usage.md">Guide</a> · <a href="docs/examples.md">Examples</a> · <a href="README.zh-CN.md">简体中文</a></p>
 

@@ -1,8 +1,8 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/homepage/masthead-dark.png">
-    <img src="docs/homepage/masthead.png" alt="Prismatica — 从研究证据到论文成图" width="1200">
-  </picture>
+  <a href="https://grady10086.github.io/Prismatica/"><picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/homepage/masthead-v2-dark.png">
+    <img src="docs/homepage/masthead-v2.png" alt="Prismatica — 科研绘图与视觉表达工作室" width="1200">
+  </picture></a>
 </p>
 <p align="center"><a href="https://grady10086.github.io/Prismatica/">在线交互工作室 ↗</a> · <a href="#开始绘图">开始使用</a> · <a href="docs/gallery.md">精选画廊</a> · <a href="docs/usage.md">使用指南</a> · <a href="docs/examples.md">全部示例</a> · <a href="README.md">English</a></p>
 
