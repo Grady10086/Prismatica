@@ -1,0 +1,23 @@
+{
+  "name": "Prismatica Iris",
+  "status": "Selected by the user",
+  "source": "User-provided Solid Coated V5 library; derived sRGB screen values, not Connect-verified",
+  "colors": {
+    "stem": {
+      "code": "6091 C",
+      "hex": "#55609B"
+    },
+    "upper_facet": {
+      "code": "4082 C",
+      "hex": "#AB6690"
+    },
+    "lower_facet": {
+      "code": "2438 C",
+      "hex": "#E6A385"
+    },
+    "wordmark": {
+      "code": "432 C",
+      "hex": "#333F49"
+    }
+  }
+}

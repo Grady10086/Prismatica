@@ -1,0 +1,7 @@
+interface:
+  display_name: "Prismatica"
+  short_description: "Research plots, palettes and publication-ready layouts"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#55609B"
+  default_prompt: "Use $prismatica to combine a suitable research plot, palette and final-size layout for my data."

@@ -1,0 +1,10 @@
+{
+  "name": "Prismatica",
+  "version": "0.2.0",
+  "entrypoint": "prismatica",
+  "skills": [
+    "prismatica",
+    "scientific-figure-making",
+    "paper-colors"
+  ]
+}

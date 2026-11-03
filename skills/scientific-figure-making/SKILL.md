@@ -10,6 +10,9 @@ license: MIT
 
 # Scientific figure making
 
+For the combined palette + composition workflow, use the sibling
+[Prismatica entrypoint](../prismatica/SKILL.md). This module remains independently usable.
+
 ## Workflow
 
 1. Identify the scientific claim, available data/assets and output venue. For

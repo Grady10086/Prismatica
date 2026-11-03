@@ -1,7 +1,7 @@
 [project]
-name = "scientific-figure-making"
-version = "0.1.0"
-description = "Agent skill and reproducible scientific figure galleries"
+name = "prismatica"
+version = "0.2.0"
+description = "Unified scientific visualization skills and reproducible figure galleries"
 requires-python = ">=3.10"
 dependencies = ["matplotlib>=3.6", "numpy>=1.24"]
 
@@ -11,4 +11,4 @@ references = ["pymupdf>=1.24", "resvg-py>=0.2"]
 dev = ["pytest>=8", "pypdf>=4", "pyyaml>=6", "pillow>=10"]
 
 [tool.pytest.ini_options]
-testpaths = ["skills/scientific-figure-making/tests", "skills/paper-colors/tests"]
+testpaths = ["tests", "skills/scientific-figure-making/tests", "skills/paper-colors/tests"]
