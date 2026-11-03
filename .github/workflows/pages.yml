@@ -6,6 +6,7 @@ on:
       - 'site/**'
       - 'scripts/test_web_models.py'
       - '.github/workflows/pages.yml'
+      - 'scripts/build_web.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -27,10 +28,12 @@ jobs:
           python-version: '3.12'
       - name: Verify browser models and vector outputs
         run: uv run --no-project --with quickjs python scripts/test_web_models.py
+      - name: Revision static assets
+        run: python scripts/build_web.py --out /tmp/prismatica-pages --revision "$GITHUB_SHA"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: /tmp/prismatica-pages
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4

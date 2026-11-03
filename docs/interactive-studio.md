@@ -35,7 +35,7 @@ Numeric input must be finite and within ±1,000,000; diffusion has tighter coord
 
 ## Develop and deploy
 
-The site is buildless HTML, CSS and ES modules under [`site/`](../site/index.html). Relative URLs work under the `/Prismatica/` project path and on local servers.
+The site uses framework-free HTML, CSS and ES modules under [`site/`](../site/index.html). Relative URLs work under the `/Prismatica/` project path and on local servers.
 
 ```sh
 python3 -m http.server 8877 --directory site
@@ -45,6 +45,6 @@ uv run --with quickjs python scripts/test_web_models.py
 
 The model checks execute the actual JavaScript modules with QuickJS, validate every preset at default and numeric parameter boundaries (45 complete SVG renders), and check deterministic sampling, CSV validation, retrieval ranking, matched effects, analytic-score gradients and numerical convergence. Browser QA additionally verifies editing, navigation, rendering, palette changes and downloads.
 
-[The deployment workflow](../.github/workflows/pages.yml) validates and publishes only `site/` after a matching push to `main`. Hosting does not require changing the repository's visibility. Model and data code is intentionally part of the public browser bundle; it contains no credentials.
+[The deployment workflow](../.github/workflows/pages.yml) validates and packages only `site/` with revisioned asset URLs, then publishes it after a matching push to `main`. Hosting does not require changing the repository's visibility. Model and data code is intentionally part of the public browser bundle; it contains no credentials.
 
 Visual-direction references: [Active Theory](https://activetheory.net/), [Resn](https://resn.co.nz/) and [Codrops](https://tympanus.net/codrops/). The site uses an original particle sculpture, typography and interface; it does not copy their artwork or source. Scientific composition references remain documented in [the gallery](gallery.md) and [multimodal/diffusion studies](multimodal-diffusion.md).
