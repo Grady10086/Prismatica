@@ -6,6 +6,7 @@ Run `uv sync --all-extras --locked` from the repository root. The selected galle
 
 | Script | Purpose | Inputs / invocation |
 | --- | --- | --- |
+| [advanced_showcase.py](../skills/scientific-figure-making/examples/advanced_showcase.py) | Multi-track circular profiles, paired representation landscapes and conserved flows | Synthetic arrays: `--out PATH` |
 | [build_reference_atlas.py](../skills/scientific-figure-making/examples/build_reference_atlas.py) | Build local excerpts from the paper reference catalog | Local PDFs, assets or manifests; inspect `--help` and the linked skill reference |
 | [cs_analysis_gallery.py](../skills/scientific-figure-making/examples/cs_analysis_gallery.py) | Representation, ablation and performance compositions | Original fixture/template: `--out PATH`; inspect `--help` for options |
 | [cs_diagnostic_gallery.py](../skills/scientific-figure-making/examples/cs_diagnostic_gallery.py) | Locally trained digits attention model diagnostics | Actual small local demo model: `--out PATH` |

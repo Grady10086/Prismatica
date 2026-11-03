@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/horizontal-dark.svg">
-    <img src="docs/brand/horizontal.svg" alt="Prismatica" width="360">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/gallery/cover-dark.png">
+    <img src="docs/gallery/cover.png" alt="Prismatica" width="1200">
   </picture>
 </p>
 <p align="center"><strong>A visual toolkit for research.</strong><br>Plots, palettes and publication layouts — one coordinated skill workflow.</p>
@@ -9,19 +9,19 @@
 
 ## See what you can make
 
-A benchmark overview with a precise paired-effect view alongside it. The overview reveals coverage; the Cartesian panel preserves readable comparisons.
+Three new visual studies: concentric task fingerprints, paired representation landscapes and matched evaluation flows. Each combines an overview with quantitative detail.
 
-[![Benchmark atlas: radial overview and paired bootstrap effects](docs/gallery/benchmark-atlas.png)](docs/gallery.md#benchmark-atlas)
+[![Multi-track task fingerprint](docs/gallery/circular-fingerprint.png)](docs/gallery.md#multi-track-task-fingerprint)
 
 <table>
 <tr>
-<td width="50%"><a href="docs/gallery.md#paired-estimation"><img src="docs/gallery/paired-estimation.png" alt="Paired observations, distribution of change and subgroup estimates"></a></td>
-<td width="50%"><a href="docs/gallery.md#quality-and-cost"><img src="docs/gallery/quality-cost.png" alt="Quality-cost operating points with dispersion and tail distributions"></a></td>
+<td width="50%"><a href="docs/gallery.md#representation-landscape"><img src="docs/gallery/representation-landscape.png" alt="Shared projection, density contours and dispersion ratios"></a></td>
+<td width="50%"><a href="docs/gallery.md#matched-evaluation-flows"><img src="docs/gallery/evaluation-flow.png" alt="Conserved evaluation flows, paired gains and individual changes"></a></td>
 </tr>
-<tr><td><strong>Paired estimation</strong><br>Observations, within-case changes and uncertainty.</td><td><strong>Quality & cost</strong><br>Operating points, variability and tail behavior.</td></tr>
+<tr><td><strong>Representation landscape</strong><br>Shared projection, density and dispersion.</td><td><strong>Matched evaluation flows</strong><br>Case transitions, uncertainty and regressions.</td></tr>
 </table>
 
-All three previews are **original designs with synthetic demonstration data**, not benchmark claims. [View full-size figures, definitions and reproduction commands →](docs/gallery.md)
+All previews use **synthetic demonstration data**, not benchmark results. The cover shows cropped details; the gallery contains complete figures, statistical definitions and editable SVGs. [Explore all six selected compositions →](docs/gallery.md)
 
 ## What Prismatica does
 

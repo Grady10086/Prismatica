@@ -46,7 +46,7 @@ For the combined palette + composition workflow, use the sibling
 | Benchmark-wide iterations, radial bars, correlations | [Trinity data reference](references/trinity-paper.md) |
 | Image-first CS teasers with ordered results | [CS editorial](references/cs-editorial.md), [sequences](references/sequence-teasers.md) |
 | Multimodal / diffusion published reference studies | [Multimodal](references/multimodal-diffusion.md), [recent studies](references/recent-multimodal.md) |
-| Curated visual examples with reproducible arrays | `examples/showcase_gallery.py`; gallery-sized masters, resize typography for a venue |
+| Curated visual examples with reproducible arrays | `examples/showcase_gallery.py` and `examples/advanced_showcase.py` (multi-track, representation and flow compositions); gallery-sized masters, resize typography for a venue |
 | Full example commands and specialized chart references | [Gallery catalog](references/gallery-catalog.md) |
 
 Read only the relevant branch. Scientific data plots take priority over teaser

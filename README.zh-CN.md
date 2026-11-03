@@ -1,10 +1,12 @@
-<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/brand/horizontal-dark.svg"><img src="docs/brand/horizontal.svg" alt="Prismatica" width="360"></picture></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/gallery/cover-dark.png"><img src="docs/gallery/cover.png" alt="Prismatica" width="1200"></picture></p>
 <p align="center"><strong>面向科研的可视化工具箱</strong><br>选图、配色、排版、导出与检查，组合成一套工作流。</p>
 <p align="center"><a href="README.md">English</a> · <a href="docs/gallery.md">精选画廊</a> · <a href="docs/examples.md">全部示例</a> · <a href="docs/usage.md">使用方式</a></p>
 
 ## 从数据到可读的研究图
 
-![Benchmark 总览与配对效应](docs/gallery/benchmark-atlas.png)
+[![多轨道任务指纹与稳定性分析](docs/gallery/circular-fingerprint.png)](docs/gallery.md#multi-track-task-fingerprint)
+
+新增三种复杂组合：**多轨道环形图、表征分布与密度轮廓、配对评测流向图**。每种均配有精确比较面板；[精选画廊](docs/gallery.md)提供六张完整图、统计定义和可编辑 SVG。封面仅展示局部细节。
 
 Prismatica 是供 AI 编程助手使用的 skill 套件。它帮助确定图表类型、统计口径与配色，在最终尺寸下组织面板，并导出可编辑的 PDF／SVG 和 PNG 预览。
 
