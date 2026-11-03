@@ -12,17 +12,21 @@ Prismatica 是面向 AI 编程助手的**完整科研绘图工具套件**。提�
 
 ## 精选展示
 
-[![完整因子消融：种子分布、组件效应与交互分析](docs/homepage/experiments.png)](docs/gallery.md#cs-factorial-ablation)
+**因子消融** · 种子分布、组件效应与交互结构。
 
-[![模型行为分析与性能成本组合图](docs/homepage/diagnostics.png)](docs/gallery.md#cs-model-analysis)
+[![紧凑的完整因子消融组合](docs/gallery/editorial-ablation.png)](docs/gallery.md#dense-cs-compositions)
 
-[模型分析 ↗](docs/gallery.md#cs-model-analysis) · [性能对比 ↗](docs/gallery.md#cs-performance-audit)
+**模型诊断** · 预测密度、逐层探针、难度切片与失败样本。
 
-[![多轨道任务指纹与配对评测流向](docs/homepage/compositions.png)](docs/gallery.md#multi-track-task-fingerprint)
+[![六面板模型诊断组合](docs/gallery/editorial-analysis.png)](docs/gallery.md#dense-cs-compositions)
 
-[多轨道组合 ↗](docs/gallery.md#multi-track-task-fingerprint) · [评测流向 ↗](docs/gallery.md#matched-evaluation-flows) · **[完整画廊 ↗](docs/gallery.md)**
+**性能评测** · 成本曲线、配对效应、任务分布与种子一致性。
 
-<sub>展示均为使用合成演示数据的原创组合。画廊提供完整大图、统计定义、可编辑 SVG 和复现命令。</sub>
+[![多层次性能与成本分析](docs/gallery/editorial-performance.png)](docs/gallery.md#dense-cs-compositions)
+
+[完整画廊与可编辑图形 →](docs/gallery.md)
+
+<sub>以上为使用合成演示数据的原创组合。统计定义与复现命令见画廊。</sub>
 
 ## 从输入到成图
 

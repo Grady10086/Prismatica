@@ -1,7 +1,6 @@
-"""Build restrained brand mastheads and vector-based editorial preview boards."""
+"""Build restrained brand mastheads."""
 from pathlib import Path
 import argparse
-import base64
 import xml.etree.ElementTree as E
 import resvg_py
 from build_gallery_cover import tag,subsvg,text,ROOT
@@ -25,14 +24,6 @@ def build(gallery,out):
   for i,(label,col) in enumerate([('01  PLAN','#55609B'),('02  COMPOSE','#AB6690'),('03  REFINE','#E6A385'),('04  EXPORT',muted)]):
    x=60+i*285;E.SubElement(r,tag('rect'),{'x':str(x),'y':'261','width':'22','height':'3','fill':col});text(r,x+32,267,label,11,ink,'600')
   export(r,out,'masthead'+('-dark' if dark else ''))
- boards=[('experiments','01  /  EXPERIMENT DESIGN','Ablations, interactions and seed-level evidence.', [('cs-factorial-ablation.svg',40,100,1120,652)],800),('diagnostics','02  /  MODEL EVALUATION','Behavior analysis and performance–cost comparisons.', [('cs-model-analysis.svg',28,104,564,328),('cs-performance-audit.svg',608,104,564,328)],475),('compositions','03  /  COMPLEX COMPOSITIONS','Multi-track profiles and matched evaluation flows.', [('circular-fingerprint.svg',28,104,564,326),('evaluation-flow.svg',608,104,564,326)],475)]
- for name,title,subtitle,items,h in boards:
-  r=root(1200,h,title,'#F7F6F2');text(r,40,38,title,12,'#55609B','600');text(r,40,69,subtitle,19,'#333F49')
-  for i,(file,x,y,w,hh) in enumerate(items):
-   E.SubElement(r,tag('rect'),{'x':str(x-5),'y':str(y-6),'width':str(w+10),'height':str(hh+12),'rx':'10','fill':'white','stroke':'#DFE3E8'})
-   data=base64.b64encode((gallery/Path(file).with_suffix('.png')).read_bytes()).decode('ascii')
-   E.SubElement(r,tag('image'),{'x':str(x),'y':str(y),'width':str(w),'height':str(hh),'href':'data:image/png;base64,'+data})
-  export(r,out,name)
  print(out)
 
 def main():

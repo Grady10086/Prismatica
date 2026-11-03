@@ -12,17 +12,21 @@ Prismatica is a **complete scientific figure toolkit for AI coding agents**. Bri
 
 ## Selected work
 
-[![Full-factorial ablation with seed distributions, component effects and interaction analysis](docs/homepage/experiments.png)](docs/gallery.md#cs-factorial-ablation)
+**Factorial ablation** · Seed distributions, component effects and interactions.
 
-[![Model behavior analysis and performance-cost comparison compositions](docs/homepage/diagnostics.png)](docs/gallery.md#cs-model-analysis)
+[![Dense factorial ablation study](docs/gallery/editorial-ablation.png)](docs/gallery.md#dense-cs-compositions)
 
-[Model analysis ↗](docs/gallery.md#cs-model-analysis) · [Performance audit ↗](docs/gallery.md#cs-performance-audit)
+**Model diagnostics** · Prediction density, layer probes, difficulty slices and failure cases.
 
-[![Multi-track task profiles and matched evaluation flows](docs/homepage/compositions.png)](docs/gallery.md#multi-track-task-fingerprint)
+[![Six-panel model diagnostic study](docs/gallery/editorial-analysis.png)](docs/gallery.md#dense-cs-compositions)
 
-[Multi-track profiles ↗](docs/gallery.md#multi-track-task-fingerprint) · [Evaluation flows ↗](docs/gallery.md#matched-evaluation-flows) · **[Full gallery ↗](docs/gallery.md)**
+**Performance audit** · Operating points, paired effects, task profiles and consistency.
 
-<sub>Original compositions with synthetic demonstration data. Full-size figures, statistical definitions, editable SVGs and reproduction commands are in the gallery.</sub>
+[![Dense performance and cost audit](docs/gallery/editorial-performance.png)](docs/gallery.md#dense-cs-compositions)
+
+[Explore the full gallery and editable figures →](docs/gallery.md)
+
+<sub>Original compositions using synthetic demonstration data. Statistical definitions and reproduction commands accompany every study.</sub>
 
 ## One workflow, from input to figure
 

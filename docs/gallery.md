@@ -1,6 +1,41 @@
 # Selected gallery
 
-Nine deliberately different compositions. These are original gallery designs with **synthetic inputs**, not screenshots from papers or performance claims. The readable gallery masters are 10.4 × 5.8–6 or 11 × 6.4 inches; adjust font sizes and dimensions for a specific manuscript venue.
+Twelve original compositions, including three dense CS studies. These are original gallery designs with **synthetic inputs**, not screenshots from papers or performance claims. The readable gallery masters are 10.4 × 5.8–6 or 11 × 6.4 inches; adjust font sizes and dimensions for a specific manuscript venue.
+
+## Dense CS compositions
+
+These three homepage figures reuse the exact arrays exported by `cs_showcase.py`. They replace the surrounding presentation cards with aligned scientific panels. Gallery masters are 11 × 6.7 inches; tune typography for the submission width.
+
+### Factorial response atlas
+
+![Factorial response atlas](gallery/editorial-ablation.png)
+
+- **a:** 8 configurations × 16 shared seeds. Half-density curves are independently peak-normalized Gaussian KDEs, with all seed points and mean/95% percentile seed-bootstrap intervals below each row.
+- **b:** marginal component effects are on-minus-off differences within seed, averaging the other factors. Densities summarize the 16 paired seed effects; black intervals bootstrap those effects.
+- **c:** per-seed changes relative to the no-component configuration. Columns share one ordering by mean change over configurations. Fixed symmetric color scale (−10 to 10); end caps flag saturation.
+- **d–e:** A × B and A × C comparisons, each averaged over the remaining factor. Faint lines retain individual seeds; heavy lines and error bars show means and 95% seed-bootstrap intervals. Nonparallel lines alone do not establish statistical interaction.
+- [Editable SVG](gallery/editorial-ablation.svg)
+
+### Model diagnostic plate
+
+![Model diagnostic plate](gallery/editorial-analysis.png)
+
+- **a:** hexagon color encodes counts of 240 paired synthetic predictions; both probability axes use 0–1. **b:** KDE violins summarize ten synthetic probe seeds per layer; the line connects layer means. No confidence interval is encoded by violin width.
+- **c–d:** paired probability changes against independently generated difficulty and in four predefined equal-width difficulty bins. Half-density heights are peak-normalized and descriptive; raw cases remain visible.
+- **e:** all paired changes, ordered by value; negative changes remain. **f:** case values and mean/95% case-bootstrap intervals in the same four bins. Q1–Q4 are bin labels, not empirical quantiles. These intervals exclude retraining uncertainty.
+- [Editable SVG](gallery/editorial-analysis.svg)
+
+### Performance and consistency plate
+
+![Performance and consistency plate](gallery/editorial-performance.png)
+
+- **a:** every simulated seed operating point; heavy lines connect mean scores at median simulated latencies for four evaluated budgets. Error bars show **seed SD**, not confidence intervals. **b:** peak-normalized KDEs and raw paired differences at budget 4.
+- **c:** task means retain the method colors and marker shapes. Connectors trace method profiles over task IDs, not continuous task interpolation. **d:** task-specific mean differences versus reference on a fixed symmetric −6 to 6 scale, with saturation marked by end caps.
+- **e:** for each seed, compute the fraction of ten tasks beating reference, then display the ECDF across 20 seeds. No independence assumption across tasks or significance claim is implied.
+- The 10 × 4 × 20 task tensor averages exactly to the fixed-budget seed scores used in the overview.
+- [Editable SVG](gallery/editorial-performance.svg)
+
+**Literature context:** the analysis themes were cross-checked against the published figure descriptions of [AdaptiveNN, Nature Machine Intelligence (2025)](https://www.nature.com/articles/s42256-025-01130-7) (multi-task cost comparisons and controlled ablations) and [high-level visual representations, Nature Machine Intelligence (2025)](https://www.nature.com/articles/s42256-025-01072-0) (layer-wise and matched representation comparisons). These are original synthetic layouts, not reproductions of those paper figures or results.
 
 ## CS model analysis
 
@@ -99,13 +134,14 @@ uv sync --all-extras --locked
 uv run python skills/scientific-figure-making/examples/showcase_gallery.py --out /tmp/prismatica-gallery
 uv run python skills/scientific-figure-making/examples/advanced_showcase.py --out /tmp/prismatica-advanced
 uv run python skills/scientific-figure-making/examples/cs_showcase.py --out /tmp/prismatica-cs
+uv run python skills/scientific-figure-making/examples/cs_dense_gallery.py --inputs /tmp/prismatica-cs/cs-inputs.npz --out /tmp/prismatica-editorial
 uv run python scripts/build_gallery_cover.py --gallery /tmp/prismatica-advanced --out /tmp/prismatica-cover
 uv run python scripts/build_homepage.py --out /tmp/prismatica-homepage
 ```
 
 Each figure script outputs three PNG/SVG/PDF figures, `showcase-inputs.npz`, `advanced-inputs.npz` or `cs-inputs.npz`, and `provenance.json` with the random seed and fixture status. Replace the data generation blocks with actual measurements and recompute all derived panels before publication.
 
-The homepage boards are presentation previews built from the committed gallery PNGs; editable chart SVGs remain linked with each complete figure. `build_homepage.py` also rebuilds the light/dark brand mastheads.
+The homepage displays complete dense compositions directly. `build_homepage.py` rebuilds the light/dark brand mastheads.
 
 ## Beyond this selection
 
