@@ -1,27 +1,49 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/brand/horizontal-dark.svg">
-    <img src="docs/brand/horizontal.svg" alt="Prismatica" width="500">
+    <img src="docs/brand/horizontal.svg" alt="Prismatica" width="360">
   </picture>
 </p>
+<p align="center"><strong>A visual toolkit for research.</strong><br>Plots, palettes and publication layouts — one coordinated skill workflow.</p>
+<p align="center"><a href="docs/gallery.md">Gallery</a> · <a href="#quick-start">Quick start</a> · <a href="docs/usage.md">Usage</a> · <a href="docs/examples.md">All examples</a> · <a href="README.zh-CN.md">简体中文</a></p>
 
-<p align="center">A visual toolkit for research · 面向科研的可视化工具箱</p>
+## See what you can make
 
-Prismatica 将绘图、配色、论文排版、模型分析和结果展示组合为一套 skill 工作流。
-支持紧凑的论文数据图，也支持方法主图与 image-led teaser；不以美化为由改变实验结果。
+A benchmark overview with a precise paired-effect view alongside it. The overview reveals coverage; the Cartesian panel preserves readable comparisons.
 
-## One entrypoint, all drawing skills
+[![Benchmark atlas: radial overview and paired bootstrap effects](docs/gallery/benchmark-atlas.png)](docs/gallery.md#benchmark-atlas)
 
-| Skill | Role |
+<table>
+<tr>
+<td width="50%"><a href="docs/gallery.md#paired-estimation"><img src="docs/gallery/paired-estimation.png" alt="Paired observations, distribution of change and subgroup estimates"></a></td>
+<td width="50%"><a href="docs/gallery.md#quality-and-cost"><img src="docs/gallery/quality-cost.png" alt="Quality-cost operating points with dispersion and tail distributions"></a></td>
+</tr>
+<tr><td><strong>Paired estimation</strong><br>Observations, within-case changes and uncertainty.</td><td><strong>Quality & cost</strong><br>Operating points, variability and tail behavior.</td></tr>
+</table>
+
+All three previews are **original designs with synthetic demonstration data**, not benchmark claims. [View full-size figures, definitions and reproduction commands →](docs/gallery.md)
+
+## What Prismatica does
+
+Prismatica is a skill suite for an AI coding agent. It helps choose a chart, apply a coherent palette, build the figure with code, inspect its final size and deliver editable outputs.
+
+| Your task | What the workflow emphasizes |
 | --- | --- |
-| [`prismatica`](skills/prismatica/SKILL.md) | 统一入口，协调配色、选图、排版、导出和检查 |
-| [`scientific-figure-making`](skills/scientific-figure-making/SKILL.md) | 科研数据图、复杂组合图、实验分析、方法主图、teaser |
-| [`paper-colors`](skills/paper-colors/SKILL.md) | 色库匹配、主题、顺序色阶、跨媒介导出与颜色检查 |
+| Training runs, ablations and model comparisons | Matched runs, defined uncertainty, honest axes and visible losing cases |
+| Multimodal and diffusion experiments | Retrieval, condition conflicts, reconstruction metrics and compute budgets |
+| Statistical compositions | Distributions, clustering, correlations, flows, spatial views and inference |
+| Method overviews and research teasers | Actual mechanisms and inputs/results, clear hierarchy and linked crops |
+| Palette and publication formatting | Semantic color roles, accessible series, venue dimensions and vector export |
 
-保留全部原有示例、统计工具、测试和论文参考；两个底层 skill 也可以独立调用。
-完整图表路线见 [gallery catalog](skills/scientific-figure-making/references/gallery-catalog.md)。
+The three bundled skills work together:
 
-## Install the complete suite
+- **[`prismatica`](skills/prismatica/SKILL.md)** — one entrypoint for the full workflow.
+- **[`scientific-figure-making`](skills/scientific-figure-making/SKILL.md)** — composition, statistics, layout and export.
+- **[`paper-colors`](skills/paper-colors/SKILL.md)** — color books, themes, ramps and color checks.
+
+## Quick start
+
+Install all three skills into your agent’s skill directory:
 
 ```sh
 git clone https://github.com/Grady10086/Prismatica.git
@@ -29,56 +51,36 @@ cd Prismatica
 python3 scripts/install_skills.py
 ```
 
-默认安装三个目录到 `~/.codex/skills/`。已存在的目录不会被覆盖；安装器会在写入前列出冲突并退出。
-用 `--dest /your/skills/directory` 可选择其他位置。仅更新已安装版本时显式使用 `--replace`；旧目录会保留为备份。
-不要只复制统一入口：它需要两个 sibling modules。
+The default destination is `~/.codex/skills/`. Existing installations are preserved: use `--dest` for another directory or `--replace` to update with backups. Start a new agent session if the skills are not yet listed.
 
-Example:
+Then ask:
 
-> 使用 $prismatica，根据我的实验 CSV 选择合适的图和配色，做成 180 mm 双栏组合图。
-> 保留逐种子数据与配对关系，说明置信区间，导出 PDF、SVG、PNG，并检查最终尺寸的可读性。
+> Use $prismatica to turn my experiment CSV into a double-column figure. Compare the models using matched seeds, show the appropriate uncertainty, keep method colors consistent, and export PDF, SVG and PNG. Inspect the result at its intended paper width.
 
-安装后若当前会话尚未显示新 skill，请在新会话中调用。
+[More example requests and input expectations →](docs/usage.md)
 
-## Capabilities
+## Reproduce the gallery
 
-- **论文数据图**：训练动态、消融与交互、跨模态检索／条件冲突、性能与成本比较。
-- **复杂统计组合**：分布与估计、聚类热图、相关矩阵、网络、桑基、空间／多尺度、剂量响应、生存、火山／富集／森林、ROC／PR／校准与决策曲线。
-- **方法主图与 teaser**：层级框架、闭环机制、真实图像／连续帧、视频生成、3D 和机器人结果展示。
-- **配色与导出**：用户提供的色库、可复用主题与色阶、最终尺寸排版、PDF／SVG／PNG 和视觉检查。
-
-## Preview
-
-Original layouts rendered from **synthetic demonstration data**:
-
-![Training dynamics](docs/images/training-dynamics.png)
-![Factorial interactions](docs/images/factorial-interactions.png)
-
-## Reproduce and test
-
-Python 3.10+ and uv:
+Python 3.10+ and [uv](https://docs.astral.sh/uv/):
 
 ```sh
 uv sync --all-extras --locked
-uv run python skills/scientific-figure-making/examples/cs_paper_data_gallery.py --out /tmp/paper-data
-uv run python skills/scientific-figure-making/examples/cs_paper_comparisons.py --out /tmp/paper-comparisons
+uv run python skills/scientific-figure-making/examples/showcase_gallery.py --out /tmp/prismatica-gallery
 uv run pytest -q
 ```
 
-All fixture data remain labeled synthetic. Paper-reference tools require separately supplied local PDFs and keep author/source labels; they do not run model inference. Users must supply real measurements to generate reportable results.
+The gallery command exports PNG/PDF/SVG, the synthetic arrays and a provenance record. The suite also retains all earlier galleries, layout utilities and paper-specific references. [Browse every example →](docs/examples.md)
 
-## Brand
+## Evidence stays intact
 
-The selected **Iris** logo palette uses the user's local Solid Coated V5 library:
-6091 C / 4082 C / 2438 C, with 432 C for the wordmark. The four exported sRGB colors
-and vector artwork are in [docs/brand](docs/brand). They are brand colors, not a
-universal categorical-data palette. Screen values are approximations; the source
-color book is not distributed or covered by our MIT license.
+Styling must preserve the experiment. Prismatica distinguishes synthetic fixtures, actual local demo-model results, published-value redraws and original-paper excerpts. It keeps sample pairing, uncertainty definitions and split denominators explicit. Paper-reference scripts require separately supplied source PDFs; original illustrations and proprietary color books are not bundled.
 
-## Sources and license
+The Iris logo palette is documented in [brand assets](docs/brand). Brand colors are not automatically a suitable palette for every scientific comparison.
 
-Developed while extending [ruixuan-ray-zhang/beautify](https://github.com/ruixuan-ray-zhang/beautify).
-Upstream MIT authorship is preserved in [LICENSE](LICENSE) and [NOTICE](NOTICE.md).
-Original paper PDFs, extracted paper illustrations, proprietary color books and personal files are not included.
-Reference-image/data rights remain with their owners. Prismatica is not affiliated with or endorsed by Pantone LLC.
-The earlier `scientific-figure-making` repository name redirects here after the rename.
+## Contributing
+
+Contributions can improve a plotting primitive, add a coherent composition, expand an evidence-grounded reference or fix final-size readability. Include provenance and a reproducible preview. [Development and review checklist →](CONTRIBUTING.md)
+
+## Credits & license
+
+Developed while extending [ruixuan-ray-zhang/beautify](https://github.com/ruixuan-ray-zhang/beautify). Upstream MIT authorship is retained in [LICENSE](LICENSE) and [NOTICE](NOTICE.md). Referenced papers and third-party data retain their own rights. The project is not affiliated with or endorsed by Pantone LLC.

@@ -11,3 +11,4 @@ jobs:
       - run: uv sync --all-extras --locked
       - run: uv run pytest -q
       - run: uv run python skills/scientific-figure-making/examples/cs_paper_data_gallery.py --out /tmp/paper-data
+      - run: uv run python skills/scientific-figure-making/examples/showcase_gallery.py --out /tmp/showcase
