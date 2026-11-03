@@ -100,9 +100,12 @@ uv run python skills/scientific-figure-making/examples/showcase_gallery.py --out
 uv run python skills/scientific-figure-making/examples/advanced_showcase.py --out /tmp/prismatica-advanced
 uv run python skills/scientific-figure-making/examples/cs_showcase.py --out /tmp/prismatica-cs
 uv run python scripts/build_gallery_cover.py --gallery /tmp/prismatica-advanced --out /tmp/prismatica-cover
+uv run python scripts/build_homepage.py --out /tmp/prismatica-homepage
 ```
 
 Each figure script outputs three PNG/SVG/PDF figures, `showcase-inputs.npz`, `advanced-inputs.npz` or `cs-inputs.npz`, and `provenance.json` with the random seed and fixture status. Replace the data generation blocks with actual measurements and recompute all derived panels before publication.
+
+The homepage boards are presentation previews built from the committed gallery PNGs; editable chart SVGs remain linked with each complete figure. `build_homepage.py` also rebuilds the light/dark brand mastheads.
 
 ## Beyond this selection
 

@@ -15,3 +15,4 @@ jobs:
       - run: uv run python skills/scientific-figure-making/examples/advanced_showcase.py --out /tmp/advanced
       - run: uv run python scripts/build_gallery_cover.py --gallery /tmp/advanced --out /tmp/cover
       - run: uv run python skills/scientific-figure-making/examples/cs_showcase.py --out /tmp/cs-showcase
+      - run: uv run python scripts/build_homepage.py --out /tmp/homepage
