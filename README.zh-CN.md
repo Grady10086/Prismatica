@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/brand/horizontal.svg" alt="Prismatica" width="360"></p>
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/brand/horizontal-dark.svg"><img src="docs/brand/horizontal.svg" alt="Prismatica" width="360"></picture></p>
 <p align="center"><strong>面向科研的可视化工具箱</strong><br>选图、配色、排版、导出与检查，组合成一套工作流。</p>
 <p align="center"><a href="README.md">English</a> · <a href="docs/gallery.md">精选画廊</a> · <a href="docs/examples.md">全部示例</a> · <a href="docs/usage.md">使用方式</a></p>
 
