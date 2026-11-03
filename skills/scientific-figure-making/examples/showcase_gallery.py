@@ -15,7 +15,9 @@ def clean(a):a.tick_params(length=0,pad=5);a.set_axisbelow(True)
 def panel(a,letter,title):a.set_title(title,loc='left',pad=13);a.text(-.12,1.065,letter,transform=a.transAxes,fontweight='bold',fontsize=10)
 def footer(f,s):f.text(.07,.025,'SYNTHETIC DEMONSTRATION  ·  '+s,fontsize=6,color='#78818B')
 def save(f,out,name):
- for ext in ['png','svg','pdf']:f.savefig(out/(name+'.'+ext),dpi=220,facecolor='white')
+ for ext in ['png','svg','pdf']:
+  p=out/(name+'.'+ext);f.savefig(p,dpi=220,facecolor='white')
+  if ext=='svg':p.write_text('\n'.join(line.rstrip() for line in p.read_text().splitlines())+'\n')
  plt.close(f)
 def ci(v,rng):return np.quantile(v[rng.integers(len(v),size=(2000,len(v)))].mean(1),[.025,.975])
 def atlas(out,rng):
