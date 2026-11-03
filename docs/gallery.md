@@ -2,6 +2,10 @@
 
 Twelve original compositions, including three dense CS studies. These are original gallery designs with **synthetic inputs**, not screenshots from papers or performance claims. The readable gallery masters are 10.4 × 5.8–6 or 11 × 6.4 inches; adjust font sizes and dimensions for a specific manuscript venue.
 
+## Multimodal and diffusion studies
+
+Three additional compositions cover [cross-modal retrieval, evidence conflict and computed diffusion numerics](multimodal-diffusion.md). Their panel definitions, Nature-family source studies and reproduction commands are documented together. The homepage features these studies; all earlier compositions below remain available.
+
 ## Dense CS compositions
 
 These three homepage figures reuse the exact arrays exported by `cs_showcase.py`. They replace the surrounding presentation cards with aligned scientific panels. Gallery masters are 11 × 6.7 inches; tune typography for the submission width.

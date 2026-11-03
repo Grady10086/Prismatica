@@ -12,21 +12,21 @@ Prismatica is a **complete scientific figure toolkit for AI coding agents**. Bri
 
 ## Selected work
 
-**Factorial ablation** · Seed distributions, component effects and interactions.
+**Diffusion numerics** · Computed sampling checkpoints, particle trajectories and equal-budget convergence.
 
-[![Dense factorial ablation study](docs/gallery/editorial-ablation.png)](docs/gallery.md#dense-cs-compositions)
+[![Diffusion sampling and numerical convergence plate](docs/gallery/diffusion-numerics.png)](docs/multimodal-diffusion.md#diffusion-sampling-and-numerics)
 
-**Model diagnostics** · Prediction density, layer probes, difficulty slices and failure cases.
+**Cross-modal alignment** · Similarity structure, bidirectional retrieval and query-level changes.
 
-[![Six-panel model diagnostic study](docs/gallery/editorial-analysis.png)](docs/gallery.md#dense-cs-compositions)
+[![Cross-modal alignment and retrieval diagnostics](docs/gallery/multimodal-retrieval.png)](docs/multimodal-diffusion.md#cross-modal-alignment-and-retrieval)
 
-**Performance audit** · Operating points, paired effects, task profiles and consistency.
+**Multimodal evidence conflict** · Matched response flows, response surfaces and selective risk.
 
-[![Dense performance and cost audit](docs/gallery/editorial-performance.png)](docs/gallery.md#dense-cs-compositions)
+[![Evidence-conflict analysis plate](docs/gallery/multimodal-conflict.png)](docs/multimodal-diffusion.md#multimodal-evidence-conflict)
 
-[Explore the full gallery and editable figures →](docs/gallery.md)
+[Factorial ablations & model diagnostics →](docs/gallery.md#dense-cs-compositions) · [Full gallery →](docs/gallery.md) · [Paper references & statistical definitions →](docs/multimodal-diffusion.md)
 
-<sub>Original compositions using synthetic demonstration data. Statistical definitions and reproduction commands accompany every study.</sub>
+<sub>Original layouts informed by Nature-family figure studies. Multimodal arrays are synthetic; diffusion is a computed 2D analytic-score experiment, not a pretrained image-model evaluation. Editable figures and reproduction commands are included.</sub>
 
 ## One workflow, from input to figure
 

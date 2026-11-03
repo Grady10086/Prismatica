@@ -45,6 +45,7 @@ For the combined palette + composition workflow, use the sibling
 | Method overview with scope, mechanisms and evidence | [Trinity overview](references/trinity-overview.md) |
 | Benchmark-wide iterations, radial bars, correlations | [Trinity data reference](references/trinity-paper.md) |
 | Image-first CS teasers with ordered results | [CS editorial](references/cs-editorial.md), [sequences](references/sequence-teasers.md) |
+| Quantitative multimodal and diffusion plates | [Computed retrieval, conflict and sampling studies](references/multimodal-quantitative.md) |
 | Multimodal / diffusion published reference studies | [Multimodal](references/multimodal-diffusion.md), [recent studies](references/recent-multimodal.md) |
 | Curated visual examples with reproducible arrays | `examples/showcase_gallery.py` and `examples/advanced_showcase.py` (multi-track, representation and flow compositions); gallery-sized masters, resize typography for a venue |
 | Full example commands and specialized chart references | [Gallery catalog](references/gallery-catalog.md) |

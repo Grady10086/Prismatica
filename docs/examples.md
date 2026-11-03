@@ -20,6 +20,7 @@ Run `uv sync --all-extras --locked` from the repository root. The selected galle
 | [editorial_sequence_gallery.py](../skills/scientific-figure-making/examples/editorial_sequence_gallery.py) | Volumetric, material and live-cell image sequences | Synthetic fixture: `--demo --out PATH` |
 | [make_examples.py](../skills/scientific-figure-making/examples/make_examples.py) | Generic layout/export examples | Original fixture/template: `--out PATH`; inspect `--help` for options |
 | [multimodal_diffusion_gallery.py](../skills/scientific-figure-making/examples/multimodal_diffusion_gallery.py) | Published multimodal responses and diffusion studies | Local PDFs, assets or manifests; inspect `--help` and the linked skill reference |
+| [multimodal_diffusion_plate.py](../skills/scientific-figure-making/examples/multimodal_diffusion_plate.py) | Retrieval, evidence-conflict and computed analytic-score diffusion plates | `--out PATH`; synthetic arrays and actual toy numerical integrations |
 | [nature_advanced_gallery.py](../skills/scientific-figure-making/examples/nature_advanced_gallery.py) | Circular atlas, dose response and survival | Synthetic fixture: `--demo --out PATH` |
 | [nature_complex_gallery.py](../skills/scientific-figure-making/examples/nature_complex_gallery.py) | Clustered heatmap, correlation and conserved flows | Synthetic fixture: `--demo --out PATH` |
 | [nature_data_gallery.py](../skills/scientific-figure-making/examples/nature_data_gallery.py) | Core statistical data charts | Synthetic fixture: `--demo --out PATH` |

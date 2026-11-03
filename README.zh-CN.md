@@ -12,21 +12,21 @@ Prismatica 是面向 AI 编程助手的**完整科研绘图工具套件**。提�
 
 ## 精选展示
 
-**因子消融** · 种子分布、组件效应与交互结构。
+**扩散采样与数值诊断** · 实际运行的采样检查点、粒子轨迹与等预算收敛。
 
-[![紧凑的完整因子消融组合](docs/gallery/editorial-ablation.png)](docs/gallery.md#dense-cs-compositions)
+[![扩散采样与数值收敛组合](docs/gallery/diffusion-numerics.png)](docs/multimodal-diffusion.md#diffusion-sampling-and-numerics)
 
-**模型诊断** · 预测密度、逐层探针、难度切片与失败样本。
+**跨模态对齐与检索** · 相似度结构、双向检索和逐查询变化。
 
-[![六面板模型诊断组合](docs/gallery/editorial-analysis.png)](docs/gallery.md#dense-cs-compositions)
+[![跨模态对齐与检索诊断](docs/gallery/multimodal-retrieval.png)](docs/multimodal-diffusion.md#cross-modal-alignment-and-retrieval)
 
-**性能评测** · 成本曲线、配对效应、任务分布与种子一致性。
+**多模态证据冲突** · 配对回答流向、条件响应面与选择性风险。
 
-[![多层次性能与成本分析](docs/gallery/editorial-performance.png)](docs/gallery.md#dense-cs-compositions)
+[![多模态证据冲突分析](docs/gallery/multimodal-conflict.png)](docs/multimodal-diffusion.md#multimodal-evidence-conflict)
 
-[完整画廊与可编辑图形 →](docs/gallery.md)
+[消融与模型诊断 →](docs/gallery.md#dense-cs-compositions) · [完整画廊 →](docs/gallery.md) · [论文参考与统计定义 →](docs/multimodal-diffusion.md)
 
-<sub>以上为使用合成演示数据的原创组合。统计定义与复现命令见画廊。</sub>
+<sub>参考 Nature 系论文组织方式的原创布局。多模态部分为合成数组；扩散部分为实际计算的二维解析 score 实验，不代表预训练图像模型性能。提供可编辑图形与复现命令。</sub>
 
 ## 从输入到成图
 
