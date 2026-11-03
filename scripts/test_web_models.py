@@ -12,7 +12,7 @@ ROOT=Path(__file__).resolve().parents[1]
 ctx=quickjs.Context()
 # QuickJS's JS standard library lacks this modern browser method.
 ctx.eval('Array.prototype.at=function(i){return this[i<0?this.length+i:i]}')
-for name,obj in [('models','Models'),('charts','Charts')]:
+for name,obj in [('models','Models'),('charts','Charts'),('hero','Hero')]:
     raw=(ROOT/'site'/f'{name}.js').read_text()
     exported=re.findall(r'export (?:const|function) (\w+)',raw)
     imported=re.search(r'import \{([^}]+)\}',raw)
@@ -67,10 +67,14 @@ for family in ['Euler','Heun','Midpoint']:
     result=js(f"return Models.integrate([[1,1,2],[2,-1,.3]],16,'{family}',3).path.length;")
     assert result==(17 if family=='Euler' else 9)
 
+# A Möbius half twist must join u=2π,v to u=0,-v, including during scrolling.
+assert js("for(const p of [0,.4,1.15])for(const t of [0,2,9])for(const v of [-1,-.3,0,.7,1]){const a=Hero.mobiusPoint(2*Math.PI,v,p,t),b=Hero.mobiusPoint(0,-v,p,t);if(a.some((x,i)=>Math.abs(x-b[i])>1e-12))return false}return true;")
+assert js("const a=Hero.mobiusPoint(.7,.4,0,0),b=Hero.mobiusPoint(.7,.4,.9,0);return Math.hypot(...a.map((x,i)=>x-b[i]))>.01;")
+
 # No broken local links/assets in the static entrypoint or module graph.
 html=(ROOT/'site/index.html').read_text()
 for url in re.findall(r'(?:src|href)="([^\"]+)"',html):
     if url.startswith('./'):assert (ROOT/'site'/url[2:]).exists(),url
 for p in (ROOT/'site').glob('*.js'):
     for target in re.findall(r"from '(\./[^']+)'",p.read_text()):assert (p.parent/target).exists(),target
-print(f'{count} study/boundary renders passed; deterministic data, schema validation, retrieval, paired effects, analytic gradients and solver convergence verified.')
+print(f'{count} study/boundary renders passed; deterministic data, schema validation, retrieval, paired effects, analytic gradients, solver convergence and Möbius seam continuity verified.')

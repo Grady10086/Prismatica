@@ -47,4 +47,6 @@ The model checks execute the actual JavaScript modules with QuickJS, validate ev
 
 [The deployment workflow](../.github/workflows/pages.yml) validates and packages only `site/` with revisioned asset URLs, then publishes it after a matching push to `main`. Hosting does not require changing the repository's visibility. Model and data code is intentionally part of the public browser bundle; it contains no credentials.
 
+The landing artwork uses the same Iris palette and original Möbius geometry as the README banner. Pointer motion eases the camera tilt; scrolling rotates and gently deforms the strip while preserving the half-twist seam. Silk, Wire and Contour are rendering styles for the same surface. Rendering is capped at approximately 30 fps, uses a smaller mesh on narrow screens, and suspends when offscreen or hidden. The pause control and system reduced-motion setting stop automatic animation.
+
 Visual-direction references: [Active Theory](https://activetheory.net/), [Resn](https://resn.co.nz/) and [Codrops](https://tympanus.net/codrops/). The site uses an original particle sculpture, typography and interface; it does not copy their artwork or source. Scientific composition references remain documented in [the gallery](gallery.md) and [multimodal/diffusion studies](multimodal-diffusion.md).

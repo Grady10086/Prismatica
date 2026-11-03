@@ -1,11 +1,172 @@
-export function initHero(){const canvas=document.querySelector('#universe'),ctx=canvas.getContext('2d',{alpha:true});if(!ctx)return;let width=0,height=0,dpr=1,shape=0,target=0,paused=matchMedia('(prefers-reduced-motion: reduce)').matches,visible=true,pointer={x:0,y:0},time=0,frame=0;const colors=['#747FC4','#C689AD','#E6A385','#8A9DAC'],particles=Array.from({length:1104},(_,i)=>({u:i/1104,a:i*2.399963,b:Math.sin(i*79.1)*.5+.5}));
-function resize(){let b=canvas.getBoundingClientRect();width=b.width;height=b.height;dpr=Math.min(devicePixelRatio||1,2);canvas.width=width*dpr;canvas.height=height*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}new ResizeObserver(resize).observe(canvas);
-canvas.addEventListener('pointermove',e=>{let b=canvas.getBoundingClientRect();pointer.x=(e.clientX-b.left)/width-.5;pointer.y=(e.clientY-b.top)/height-.5});canvas.addEventListener('pointerleave',()=>{pointer.x=0;pointer.y=0});
-document.querySelectorAll('[data-shape]').forEach(button=>button.addEventListener('click',()=>{target=+button.dataset.shape;document.querySelectorAll('[data-shape]').forEach(b=>{let on=b===button;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on)});if(paused){shape=target;draw()}}));
-function coords(p,type){let a=p.a,b=p.b;if(type===0){let index=Math.round(p.u*1104),theta=Math.floor(index/24)/46*2*Math.PI+time*.08,minor=(index%24)/24*2*Math.PI;let radius=1.25+.38*Math.cos(minor);return[radius*Math.cos(theta),radius*Math.sin(theta),Math.sin(minor)*.38]}if(type===1){let x=(p.u-.5)*3.9,z=(b-.5)*2.4;return[x,.55*Math.sin(x*2.4+z*2.1+time*.6),z]}let i=Math.floor(p.u*1100),x=(i%33-16)/10,y=(Math.floor(i/33)%33-16)/10;return[x,y,Math.sin(x*2+time*.4)*Math.cos(y*2+time*.3)*.4]}
-function draw(){ctx.clearRect(0,0,width,height);shape+=(target-shape)*.035;let type0=Math.floor(shape+.00001),type1=Math.min(2,type0+1),mix=shape-type0,rx=.55+pointer.y*.3,ry=time*.07+pointer.x*.35,cx=width*(width<760?.68:.735),cy=height*.48,scale=Math.min(width*(width<760?.38:.21),height*.275),points=[];for(let i=0;i<particles.length;i++){let p=particles[i],v0=coords(p,type0),v1=coords(p,type1),v=v0.map((x,j)=>x+(v1[j]-x)*mix),x=v[0],y=v[1]*Math.cos(rx)-v[2]*Math.sin(rx),z=v[1]*Math.sin(rx)+v[2]*Math.cos(rx),xx=x*Math.cos(ry)+z*Math.sin(ry),zz=-x*Math.sin(ry)+z*Math.cos(ry),perspective=3.8/(3.8+zz),sx=cx+xx*scale*perspective,sy=cy+y*scale*perspective;points.push({index:i,x:sx,y:sy,z:zz,color:colors[Math.floor(i/24)%4],r:(.8+p.b*.4)*perspective,alpha:.4+(zz+2)/6})}const original=[...points];points.sort((a,b)=>b.z-a.z);
-ctx.lineWidth=.55;for(let i=0;i<points.length;i++){let p=points[i];for(let offset of[1,24]){let q=original[(p.index+offset)%points.length],dist=Math.hypot(p.x-q.x,p.y-q.y);if(dist<scale*.55){ctx.strokeStyle=p.color;ctx.globalAlpha=.21*(1-dist/(scale*.55));ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()}}ctx.globalAlpha=Math.min(.9,p.alpha);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;
-// Orbit reference lines give the sculpture a scientific instrument quality.
-ctx.strokeStyle='#b5a4d022';ctx.lineWidth=.6;ctx.beginPath();ctx.ellipse(cx,cy,scale*1.87,scale*.48,-.3,0,2*Math.PI);ctx.stroke();ctx.strokeStyle='#e6a38520';ctx.beginPath();ctx.ellipse(cx,cy,scale*1.75,scale*.65,.48,0,2*Math.PI);ctx.stroke();}
-function tick(){if(!paused&&visible&&!document.hidden){time+=.009;draw()}frame=requestAnimationFrame(tick)}
-const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting});observer.observe(canvas);document.querySelector('#motion-toggle').addEventListener('click',e=>{paused=!paused;e.currentTarget.textContent=paused?'▶':'Ⅱ';e.currentTarget.setAttribute('aria-pressed',paused);e.currentTarget.setAttribute('aria-label',paused?'Resume decorative motion':'Pause all decorative motion');document.body.classList.toggle('no-motion',paused)});if(paused){document.body.classList.add('no-motion');document.querySelector('#motion-toggle').textContent='▶';document.querySelector('#motion-toggle').setAttribute('aria-pressed','true')}resize();draw();tick();return()=>{cancelAnimationFrame(frame);observer.disconnect()}}
+const IRIS = ['#55609B', '#AB6690', '#E6A385'];
+const TAU = Math.PI * 2;
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+
+// Periodic color and geometry preserve the half-twist seam of the Möbius strip.
+function pigment(u) {
+  const t = ((u / TAU) % 1 + 1) % 1 * 3;
+  const k = Math.floor(t), f = t - k;
+  const a = IRIS[k].slice(1).match(/../g).map(x => parseInt(x, 16));
+  const b = IRIS[(k + 1) % 3].slice(1).match(/../g).map(x => parseInt(x, 16));
+  return a.map((v, i) => Math.round(v + (b[i] - v) * f));
+}
+
+export function mobiusPoint(u, v, progress = 0, time = 0) {
+  const width = .58 + progress * .11;
+  const radius = 1.55 + .055 * Math.sin(3 * u + time * .32) * progress;
+  const vv = v * width;
+  return [(radius + vv * Math.cos(u / 2)) * Math.cos(u),
+          (radius + vv * Math.cos(u / 2)) * Math.sin(u),
+          vv * Math.sin(u / 2) + .11 * progress * Math.sin(2 * u + time * .25)];
+}
+
+export function initHero() {
+  const hero = document.querySelector('.hero');
+  const canvas = document.querySelector('#universe');
+  const ctx = canvas.getContext('2d', { alpha: true });
+  if (!ctx) return;
+  const media = matchMedia('(prefers-reduced-motion: reduce)');
+  const motionButton = document.querySelector('#motion-toggle');
+  let width = 0, height = 0, dpr = 1, visible = true;
+  let paused = media.matches, mode = 0, time = 0, raf = 0, previous = 0;
+  let pointer = { x: 0, y: 0 }, tilt = { x: 0, y: 0 };
+  let targetProgress = 0, progress = 0;
+
+  function readScroll() {
+    targetProgress = clamp(-hero.getBoundingClientRect().top / Math.max(1, hero.offsetHeight), 0, 1.15);
+  }
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    width = rect.width; height = rect.height;
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    canvas.width = width * dpr; canvas.height = height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    readScroll();
+    draw();
+  }
+
+  function project(point) {
+    let [x, y, z] = point;
+    const rx = .92 + tilt.y * .42 + progress * .14;
+    const ry = -.48 + tilt.x * .5 + progress * .72 + Math.sin(time * .2) * .07;
+    const rz = -.38 + progress * .32 + Math.sin(time * .13) * .045;
+    [y, z] = [y * Math.cos(rx) - z * Math.sin(rx), y * Math.sin(rx) + z * Math.cos(rx)];
+    [x, z] = [x * Math.cos(ry) + z * Math.sin(ry), -x * Math.sin(ry) + z * Math.cos(ry)];
+    [x, y] = [x * Math.cos(rz) - y * Math.sin(rz), x * Math.sin(rz) + y * Math.cos(rz)];
+    const mobile = width < 760;
+    const scale = Math.min(width * (mobile ? .39 : .205), height * .31);
+    const perspective = 4.8 / (4.8 + z);
+    const cx = width * (mobile ? .79 : .81) + tilt.x * 14;
+    const cy = height * (mobile ? .43 : .48) - progress * height * .08;
+    return [cx + x * scale * perspective, cy + y * scale * perspective, z];
+  }
+
+  function curve(points, color, alpha, lineWidth) {
+    if (!points.length) return;
+    ctx.beginPath();
+    points.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+    ctx.strokeStyle = color; ctx.globalAlpha = alpha; ctx.lineWidth = lineWidth; ctx.stroke();
+  }
+
+  function draw() {
+    if (!width || !height) return;
+    ctx.clearRect(0, 0, width, height);
+    const mobile = width < 760;
+    const segments = mobile ? 72 : 112, strips = mobile ? 12 : 18;
+    const vertices = Array.from({ length: segments + 1 }, (_, i) =>
+      Array.from({ length: strips + 1 }, (_, j) =>
+        project(mobiusPoint(i * TAU / segments, -1 + 2 * j / strips, progress, time))));
+    const faces = [];
+    for (let i = 0; i < segments; i++) {
+      const color = pigment((i + .5) * TAU / segments);
+      for (let j = 0; j < strips; j++) {
+        const points = [vertices[i][j], vertices[i + 1][j], vertices[i + 1][j + 1], vertices[i][j + 1]];
+        faces.push({ points, depth: points.reduce((s, p) => s + p[2], 0) / 4, color });
+      }
+    }
+    faces.sort((a, b) => b.depth - a.depth);
+    if (mode !== 2) for (const face of faces) {
+      ctx.beginPath();
+      face.points.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y));
+      ctx.closePath();
+      const light = clamp(.09 + (1.5 - face.depth) * .045, .04, .25);
+      ctx.fillStyle = `rgb(${face.color.join(',')})`;
+      ctx.globalAlpha = mode === 0 ? light : light * .18;
+      ctx.fill();
+      ctx.strokeStyle = `rgb(${face.color.join(',')})`;
+      ctx.globalAlpha = mode === 0 ? .37 : .72;
+      ctx.lineWidth = mode === 0 ? .5 : .6;
+      ctx.stroke();
+    }
+    if (mode === 2) {
+      for (let j = 0; j <= strips; j += 2) {
+        for (let i = 0; i < segments; i++) {
+          const rgb = pigment(i * TAU / segments);
+          curve([vertices[i][j], vertices[i + 1][j]], `rgb(${rgb.join(',')})`, .76, .9);
+        }
+      }
+      for (let i = 0; i < segments; i += 8) curve(vertices[i], '#AB6690', .2, .5);
+    }
+    for (const j of [0, strips]) curve(vertices.map(row => row[j]), '#E6A385', .7, .9);
+    for (let i = 0; i < segments; i += 5) for (let j = 0; j <= strips; j += 3) {
+      const [x, y, z] = vertices[i][j];
+      const color = pigment(i * TAU / segments);
+      ctx.fillStyle = `rgb(${color.join(',')})`; ctx.globalAlpha = clamp(.62 - z * .1, .3, .9);
+      ctx.beginPath(); ctx.arc(x, y, mode === 1 ? 1.4 : .85, 0, TAU); ctx.fill();
+    }
+    // Fade the art behind the headline, keeping its geometry on the right.
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'destination-in';
+    const fade = ctx.createLinearGradient(width * (mobile ? .12 : .42), 0, width * (mobile ? .72 : .63), 0);
+    fade.addColorStop(0, 'rgba(0,0,0,0)'); fade.addColorStop(1, 'rgba(0,0,0,1)');
+    ctx.fillStyle = fade; ctx.fillRect(0, 0, width, height);
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  function updateMotionButton() {
+    motionButton.textContent = paused ? '▶' : 'Ⅱ';
+    motionButton.setAttribute('aria-pressed', String(paused));
+    motionButton.setAttribute('aria-label', paused ? 'Resume decorative motion' : 'Pause all decorative motion');
+    document.body.classList.toggle('no-motion', paused);
+  }
+
+  function tick(stamp) {
+    if (!previous) previous = stamp;
+    const elapsed = stamp - previous;
+    // Limit paint rate, and stop rendering when the hero or document is hidden.
+    if (elapsed >= 32 && !paused && visible && !document.hidden) {
+      const dt = Math.min(elapsed / 1000, .08);
+      time += dt; previous = stamp;
+      tilt.x += (pointer.x - tilt.x) * .095;
+      tilt.y += (pointer.y - tilt.y) * .095;
+      progress += (targetProgress - progress) * .09;
+      draw();
+    } else if (paused || !visible || document.hidden) previous = stamp;
+    raf = requestAnimationFrame(tick);
+  }
+
+  hero.addEventListener('pointermove', event => {
+    const rect = hero.getBoundingClientRect();
+    pointer.x = clamp((event.clientX - rect.left) / width - .5, -.5, .5);
+    pointer.y = clamp((event.clientY - rect.top) / height - .5, -.5, .5);
+  });
+  hero.addEventListener('pointerleave', () => { pointer = { x: 0, y: 0 }; });
+  window.addEventListener('scroll', readScroll, { passive: true });
+  const resizeObserver = new ResizeObserver(resize);
+  resizeObserver.observe(canvas);
+  const observer = new IntersectionObserver(entries => { visible = entries[0].isIntersecting; });
+  observer.observe(hero);
+  document.querySelectorAll('[data-shape]').forEach(button => button.addEventListener('click', () => {
+    mode = Number(button.dataset.shape);
+    document.querySelectorAll('[data-shape]').forEach(item => {
+      const selected = item === button;
+      item.classList.toggle('active', selected); item.setAttribute('aria-pressed', String(selected));
+    });
+    draw();
+  }));
+  motionButton.addEventListener('click', () => { paused = !paused; updateMotionButton(); });
+  media.addEventListener('change', event => { paused = event.matches; updateMotionButton(); draw(); });
+  updateMotionButton(); resize(); raf = requestAnimationFrame(tick);
+  return () => { cancelAnimationFrame(raf); observer.disconnect(); resizeObserver.disconnect(); window.removeEventListener('scroll', readScroll); };
+}
