@@ -9,19 +9,27 @@
 
 ## See what you can make
 
-Three new visual studies: concentric task fingerprints, paired representation landscapes and matched evaluation flows. Each combines an overview with quantitative detail.
+### CS experiment studies
 
-[![Multi-track task fingerprint](docs/gallery/circular-fingerprint.png)](docs/gallery.md#multi-track-task-fingerprint)
+Model behavior, full-factorial ablations and performance comparisons — three compositions with paired evidence, explicit uncertainty and visible regressions.
+
+[![CS model analysis: paired predictions, marginal distributions, layer probes and difficulty slices](docs/gallery/cs-model-analysis.png)](docs/gallery.md#cs-model-analysis)
 
 <table>
 <tr>
-<td width="50%"><a href="docs/gallery.md#representation-landscape"><img src="docs/gallery/representation-landscape.png" alt="Shared projection, density contours and dispersion ratios"></a></td>
-<td width="50%"><a href="docs/gallery.md#matched-evaluation-flows"><img src="docs/gallery/evaluation-flow.png" alt="Conserved evaluation flows, paired gains and individual changes"></a></td>
+<td width="50%"><a href="docs/gallery.md#cs-factorial-ablation"><img src="docs/gallery/cs-factorial-ablation.png" alt="Full factorial ablation, component effects and interactions"></a></td>
+<td width="50%"><a href="docs/gallery.md#cs-performance-audit"><img src="docs/gallery/cs-performance-audit.png" alt="Performance operating points, paired gains and per-task audit"></a></td>
 </tr>
-<tr><td><strong>Representation landscape</strong><br>Shared projection, density and dispersion.</td><td><strong>Matched evaluation flows</strong><br>Case transitions, uncertainty and regressions.</td></tr>
+<tr><td><strong>Factorial ablation</strong><br>Eight configurations, seed distributions and interactions.</td><td><strong>Performance audit</strong><br>Latency trade-offs, paired effects and task-level detail.</td></tr>
 </table>
 
-All previews use **synthetic demonstration data**, not benchmark results. The cover shows cropped details; the gallery contains complete figures, statistical definitions and editable SVGs. [Explore all six selected compositions →](docs/gallery.md)
+### More visual compositions
+
+[![Multi-track task fingerprint](docs/gallery/circular-fingerprint.png)](docs/gallery.md#multi-track-task-fingerprint)
+
+Explore [representation landscapes](docs/gallery.md#representation-landscape), [matched evaluation flows](docs/gallery.md#matched-evaluation-flows), [paired estimation](docs/gallery.md#paired-estimation) and more in the **[nine-design gallery →](docs/gallery.md)**.
+
+All previews use **synthetic demonstration data**, not benchmark results. Complete figures, statistical definitions, editable SVGs and reproduction commands are included. Gallery masters need typography adapted to the target paper width.
 
 ## What Prismatica does
 
@@ -66,6 +74,7 @@ Python 3.10+ and [uv](https://docs.astral.sh/uv/):
 ```sh
 uv sync --all-extras --locked
 uv run python skills/scientific-figure-making/examples/showcase_gallery.py --out /tmp/prismatica-gallery
+uv run python skills/scientific-figure-making/examples/cs_showcase.py --out /tmp/prismatica-cs
 uv run pytest -q
 ```
 

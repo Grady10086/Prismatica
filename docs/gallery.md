@@ -1,6 +1,36 @@
 # Selected gallery
 
-Six deliberately different compositions. These are original gallery designs with **synthetic inputs**, not screenshots from papers or performance claims. The readable gallery masters are 10.4 × 5.8–6 inches; adjust font sizes and dimensions for a specific manuscript venue.
+Nine deliberately different compositions. These are original gallery designs with **synthetic inputs**, not screenshots from papers or performance claims. The readable gallery masters are 10.4 × 5.8–6 or 11 × 6.4 inches; adjust font sizes and dimensions for a specific manuscript venue.
+
+## CS model analysis
+
+![CS model analysis](gallery/cs-model-analysis.png)
+
+- **Paired predictions:** 240 synthetic cases, identical probability axes, baseline/updated marginal histograms. The symmetric color scale encodes updated-minus-baseline probability; colorbar end caps indicate saturation beyond ±0.25. Probability estimates are synthetic, not calibrated model outputs.
+- **Layer probes:** a separate 12-layer × 10-seed fixture. Shading is a pointwise 95% Student t interval over seeds (df=9), not simultaneous coverage across layers. This does not establish a causal role for a layer.
+- **Difficulty slices:** four fixed equal-width bins of independently generated input difficulty. Intervals bootstrap paired case differences within each bin (2,000 resamples); they do not include retraining uncertainty.
+- **Use for:** instance-level changes alongside layer behavior and predefined failure strata. Marginals share the main axes; no losing cases are filtered.
+- [Editable SVG](gallery/cs-model-analysis.svg)
+
+## CS factorial ablation
+
+![CS factorial ablation](gallery/cs-factorial-ablation.png)
+
+- Complete 2³ design with 16 shared seed IDs in every configuration. The left panel shows all seed outcomes, configuration means and 95% seed-bootstrap intervals; the binary strip documents factor membership.
+- Component effects average on-minus-off over all settings of the other factors **within each seed**, then bootstrap those paired seed effects. These are marginal factorial effects, not leave-one-out effects from the full model.
+- The A × B panel averages over C; connecting lines identify factor settings rather than continuous dose. The fixture deliberately includes a harmful regularizer and a non-additive interaction.
+- **Use for:** component attribution when the full factorial experiment is available. Resample seeds jointly; do not infer interaction significance from nonparallel lines alone. Intervals are pointwise, without multiplicity adjustment.
+- [Editable SVG](gallery/cs-factorial-ablation.svg)
+
+## CS performance audit
+
+![CS performance audit](gallery/cs-performance-audit.png)
+
+- Four methods × four evaluated budgets × 20 matched seeds. Operating-point coordinates are median simulated latency and mean task score; connections only join measured fixture points, not a fitted optimum. Latency uses a log scale.
+- Fixed-budget effects compare each method to the reference at budget 4 using the same seed IDs; intervals are 95% percentile bootstraps of paired seed differences (2,000 resamples). This is an equal-budget comparison, not an equal-latency comparison.
+- The wide bottom strip shows ten tasks using the same method colors and symbols. Its 10 × 4 × 20 source tensor averages exactly to the fixed-budget seed scores, so the overview and task audit reconcile. Gray connectors group methods within a task, not an ordered method trajectory.
+- **Use for:** performance/cost comparisons that retain heterogeneous task outcomes. Actual submissions should report hardware, timing protocol, warm-up and budget definitions; this fixture has no hardware-measured timings.
+- [Editable SVG](gallery/cs-performance-audit.svg)
 
 ## Multi-track task fingerprint
 
@@ -68,10 +98,11 @@ From the repository root:
 uv sync --all-extras --locked
 uv run python skills/scientific-figure-making/examples/showcase_gallery.py --out /tmp/prismatica-gallery
 uv run python skills/scientific-figure-making/examples/advanced_showcase.py --out /tmp/prismatica-advanced
+uv run python skills/scientific-figure-making/examples/cs_showcase.py --out /tmp/prismatica-cs
 uv run python scripts/build_gallery_cover.py --gallery /tmp/prismatica-advanced --out /tmp/prismatica-cover
 ```
 
-Each figure script outputs three PNG/SVG/PDF figures, `showcase-inputs.npz` or `advanced-inputs.npz`, and `provenance.json` with the random seed and fixture status. Replace the data generation blocks with actual measurements and recompute all derived panels before publication.
+Each figure script outputs three PNG/SVG/PDF figures, `showcase-inputs.npz`, `advanced-inputs.npz` or `cs-inputs.npz`, and `provenance.json` with the random seed and fixture status. Replace the data generation blocks with actual measurements and recompute all derived panels before publication.
 
 ## Beyond this selection
 

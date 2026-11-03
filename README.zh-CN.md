@@ -4,9 +4,11 @@
 
 ## 从数据到可读的研究图
 
-[![多轨道任务指纹与稳定性分析](docs/gallery/circular-fingerprint.png)](docs/gallery.md#multi-track-task-fingerprint)
+[![CS 模型分析：配对预测、边缘分布、逐层探针与难度切片](docs/gallery/cs-model-analysis.png)](docs/gallery.md#cs-model-analysis)
 
-新增三种复杂组合：**多轨道环形图、表征分布与密度轮廓、配对评测流向图**。每种均配有精确比较面板；[精选画廊](docs/gallery.md)提供六张完整图、统计定义和可编辑 SVG。封面仅展示局部细节。
+<table><tr><td width="50%"><a href="docs/gallery.md#cs-factorial-ablation"><img src="docs/gallery/cs-factorial-ablation.png" alt="完整因子消融与交互分析"></a></td><td width="50%"><a href="docs/gallery.md#cs-performance-audit"><img src="docs/gallery/cs-performance-audit.png" alt="性能成本与逐任务对比"></a></td></tr><tr><td><strong>完整因子消融</strong>：配置、种子分布、主效应与交互。</td><td><strong>性能对比</strong>：预算曲线、配对增益与逐任务检查。</td></tr></table>
+
+新增三组面向 CS 论文的实验组合图；[精选画廊](docs/gallery.md)现有九种布局，包含完整图、统计定义和可编辑 SVG。已有的环形图、表征分布与流向图继续保留。
 
 Prismatica 是供 AI 编程助手使用的 skill 套件。它帮助确定图表类型、统计口径与配色，在最终尺寸下组织面板，并导出可编辑的 PDF／SVG 和 PNG 预览。
 
@@ -41,6 +43,7 @@ python3 scripts/install_skills.py
 ```sh
 uv sync --all-extras --locked
 uv run python skills/scientific-figure-making/examples/showcase_gallery.py --out /tmp/prismatica-gallery
+uv run python skills/scientific-figure-making/examples/cs_showcase.py --out /tmp/prismatica-cs
 uv run pytest -q
 ```
 
