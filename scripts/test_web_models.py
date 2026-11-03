@@ -12,12 +12,12 @@ ROOT=Path(__file__).resolve().parents[1]
 ctx=quickjs.Context()
 # QuickJS's JS standard library lacks this modern browser method.
 ctx.eval('Array.prototype.at=function(i){return this[i<0?this.length+i:i]}')
-for name,obj in [('models','Models'),('charts','Charts'),('hero','Hero')]:
+for name,obj in [('models','Models'),('charts','Charts'),('hero','Hero'),('motion','Motion')]:
     raw=(ROOT/'site'/f'{name}.js').read_text()
     exported=re.findall(r'export (?:const|function) (\w+)',raw)
     imported=re.search(r'import \{([^}]+)\}',raw)
     prefix='const {'+imported[1]+'}=Models;' if imported else ''
-    source=re.sub(r'^import .*?;\n','',raw,flags=re.M)
+    source=re.sub(r'^import\b[\s\S]*?;\n','',raw,flags=re.M)
     source=re.sub(r'\bexport\s+','',source)
     ctx.eval('globalThis.'+obj+'=(()=>{'+prefix+source+';return {'+','.join(exported)+'}})()')
 
@@ -25,7 +25,7 @@ def js(source):
     return json.loads(ctx.eval('JSON.stringify((()=>{'+source+'})())'))
 
 for script in (ROOT/'site').glob('*.js'):
-    source=re.sub(r'^import .*?;\n','',script.read_text(),flags=re.M)
+    source=re.sub(r'^import\b[\s\S]*?;\n','',script.read_text(),flags=re.M)
     source=re.sub(r'\bexport\s+','',source)
     ctx.eval('(function(){'+source+'})')
 
@@ -70,6 +70,12 @@ for family in ['Euler','Heun','Midpoint']:
 # A Möbius half twist must join u=2π,v to u=0,-v, including during scrolling.
 assert js("for(const p of [0,.4,1.15])for(const t of [0,2,9])for(const v of [-1,-.3,0,.7,1]){const a=Hero.mobiusPoint(2*Math.PI,v,p,t),b=Hero.mobiusPoint(0,-v,p,t);if(a.some((x,i)=>Math.abs(x-b[i])>1e-12))return false}return true;")
 assert js("const a=Hero.mobiusPoint(.7,.4,0,0),b=Hero.mobiusPoint(.7,.4,.9,0);return Math.hypot(...a.map((x,i)=>x-b[i]))>.01;")
+
+# Attribute transitions end at the exact canonical strings, and never morph incompatible paths.
+assert js("const f=Motion.pathInterpolator('M0,0L10,20','M4,8L20,40');return f(1)==='M4,8L20,40'&&f(.5)==='M2.000,4.000L15.000,30.000';")
+assert js("return Motion.pathInterpolator('M0,0L1,1','M0,0C1,1 2,2 3,3')===null;")
+assert js("const f=Motion.numberInterpolator('1','8.125');return f(1)==='8.125'&&f(0)==='1';")
+assert js("return Motion.colorInterpolator('#000000','#ffffff')(.5)==='rgb(128,128,128)';")
 
 # No broken local links/assets in the static entrypoint or module graph.
 html=(ROOT/'site/index.html').read_text()
