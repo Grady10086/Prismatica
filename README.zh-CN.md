@@ -53,4 +53,6 @@ uv run pytest -q
 
 更多说明见 [精选画廊](docs/gallery.md)、[使用方式](docs/usage.md)、[全部示例](docs/examples.md) 和 [贡献指南](CONTRIBUTING.md)。
 
-项目由扩展 [beautify](https://github.com/ruixuan-ray-zhang/beautify) 的工作整理而来，保留上游 [MIT 许可证](LICENSE) 与 [来源说明](NOTICE.md)。
+## 许可
+
+[MIT](LICENSE)。

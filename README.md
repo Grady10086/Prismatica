@@ -90,6 +90,6 @@ The Iris logo palette is documented in [brand assets](docs/brand). Brand colors 
 
 Contributions can improve a plotting primitive, add a coherent composition, expand an evidence-grounded reference or fix final-size readability. Include provenance and a reproducible preview. [Development and review checklist →](CONTRIBUTING.md)
 
-## Credits & license
+## License
 
-Developed while extending [ruixuan-ray-zhang/beautify](https://github.com/ruixuan-ray-zhang/beautify). Upstream MIT authorship is retained in [LICENSE](LICENSE) and [NOTICE](NOTICE.md). Referenced papers and third-party data retain their own rights. The project is not affiliated with or endorsed by Pantone LLC.
+[MIT](LICENSE).
