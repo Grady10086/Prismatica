@@ -4,11 +4,13 @@
     <img src="docs/homepage/masthead.png" alt="Prismatica — 从研究证据到论文成图" width="1200">
   </picture>
 </p>
-<p align="center"><a href="#开始绘图">开始使用</a> · <a href="docs/gallery.md">精选画廊</a> · <a href="docs/usage.md">使用指南</a> · <a href="docs/examples.md">全部示例</a> · <a href="README.md">English</a></p>
+<p align="center"><a href="https://grady10086.github.io/Prismatica/">在线交互工作室 ↗</a> · <a href="#开始绘图">开始使用</a> · <a href="docs/gallery.md">精选画廊</a> · <a href="docs/usage.md">使用指南</a> · <a href="docs/examples.md">全部示例</a> · <a href="README.md">English</a></p>
 
 Prismatica 是面向 AI 编程助手的**完整科研绘图工具套件**。提供实验数据、结果素材或已有草图，即可通过统一工作流完成选图、配色、组合排版、最终尺寸检查与可编辑导出。
 
 **实验数据图 · 模型分析 · 复杂统计组合 · 方法主图 · 科研 teaser**
+
+**[进入在线交互工作室 →](https://grady10086.github.io/Prismatica/)** · 15 个实时案例，可修改数据、调整配色并导出矢量图。[使用说明](docs/interactive-studio.md)。
 
 ## 精选展示
 

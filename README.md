@@ -4,11 +4,13 @@
     <img src="docs/homepage/masthead.png" alt="Prismatica — from research evidence to publication-ready figures" width="1200">
   </picture>
 </p>
-<p align="center"><a href="#start-creating">Get started</a> · <a href="docs/gallery.md">Gallery</a> · <a href="docs/usage.md">Guide</a> · <a href="docs/examples.md">Examples</a> · <a href="README.zh-CN.md">简体中文</a></p>
+<p align="center"><a href="https://grady10086.github.io/Prismatica/">Interactive studio ↗</a> · <a href="#start-creating">Get started</a> · <a href="docs/gallery.md">Gallery</a> · <a href="docs/usage.md">Guide</a> · <a href="docs/examples.md">Examples</a> · <a href="README.zh-CN.md">简体中文</a></p>
 
 Prismatica is a **complete scientific figure toolkit for AI coding agents**. Bring your data, results or figure draft; use one workflow to choose the visual form, coordinate colors, compose panels, refine the final layout and export editable figures.
 
 **Experiment plots · model analysis · statistical composites · method diagrams · research teasers**
+
+**[Explore the interactive studio →](https://grady10086.github.io/Prismatica/)** · 15 live studies, editable data, palettes and vector export. [How it works](docs/interactive-studio.md).
 
 ## Selected work
 
