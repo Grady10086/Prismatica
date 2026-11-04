@@ -30,7 +30,10 @@ for script in (ROOT/'site').glob('*.js'):
     ctx.eval('(function(){'+source+'})')
 
 count=0
-for index in range(15):
+study_count=js("return Models.studies.length;")
+assert study_count==24
+assert js("return ['Multimodal','Generative','Model analysis','Statistical'].every(c=>Models.studies.filter(s=>s.category===c).length===6);")
+for index in range(study_count):
     for variant in ['default','min','max']:
         result=js(f"""const study=Models.studies[{index}],p=Models.defaults(study.family);
         for(const c of Models.controls(study.family)){{if(!c.options&&'{variant}'!=='default')p[c.key]=c['{variant}'];}}
@@ -91,3 +94,18 @@ for url in re.findall(r'(?:src|href)="([^\"]+)"',html):
 for p in (ROOT/'site').glob('*.js'):
     for target in re.findall(r"from '(\./[^']+)'",p.read_text()):assert (p.parent/target).exists(),target
 print(f'{count} study/boundary renders passed; deterministic data, schema validation, retrieval, paired effects, analytic gradients, solver convergence and Möbius seam continuity verified.')
+
+# Expanded catalog: independent numerical fixtures, not just render smoke checks.
+assert js("return JSON.stringify(Models.matrixRanks([[.9,.8],[.95,.7]]))==='[1,2]'&&JSON.stringify(Models.matrixRanks(Models.transpose([[.9,.8],[.95,.7]])))==='[2,2]';")
+assert js("const bb=Models.reliabilityBins([[.8,.1,.1],[.2,.7,.1]],[0,1]);return bb.reduce((s,b)=>s+b.n,0)===2&&bb.find(b=>b.bin===6).accuracy===1&&bb.find(b=>b.bin===5).accuracy===0;")
+assert js("const v=Models.brierScores([[.8,.1,.1],[.2,.7,.1]]);return Math.abs(v[0]-.06)<1e-12&&Math.abs(v[1]-1.14)<1e-12;")
+assert js("return Models.centres.every((c,i)=>Models.nearestMode(c)===i);")
+# A valid imported performance table can contain just one budget.
+for variant in ['budget','tails']:
+    result=js(f"""const s=Models.studies.find(s=>s.variant==='{variant}'),p=Models.defaults(s.family),r=[];
+    for(let m=0;m<3;m++)for(let seed=1;seed<=2;seed++)r.push([m,16,seed,.2+m*.05,.5+seed*.1-m*.05]);
+    Models.validate(r,'performance');const out=Charts.render(s,r,p,Models.palettes.iris,{{custom:true}});
+    return {{svg:out.svg,metrics:out.metrics}};""")
+    assert not re.search('NaN|Infinity',result['svg'])
+    ET.fromstring(result['svg'])
+    assert result['metrics'][0]['value']==2

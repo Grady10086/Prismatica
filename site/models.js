@@ -15,7 +15,16 @@ export const studies=[
 {id:'cs-audit',title:'Beyond the leaderboard',category:'Model analysis',family:'performance',variant:'audit',desc:'Operating points and within-seed effects reveal the trade-offs behind a ranking.',tag:'PERFORMANCE / AUDIT',source:'docs/gallery.md#cs-performance-audit'},
 {id:'atlas',title:'A benchmark atlas',category:'Statistical',family:'tasks',variant:'atlas',desc:'A broad radial overview, paired with exact task-level comparisons.',tag:'BENCHMARK / COVERAGE',source:'docs/gallery.md#benchmark-atlas'},
 {id:'estimation',title:'The shape of a change',category:'Statistical',family:'paired',variant:'estimation',desc:'Follow every pair. See distributions of change and group-level estimates.',tag:'PAIRED ESTIMATION / UNCERTAINTY',source:'docs/gallery.md#paired-estimation'},
-{id:'quality-cost',title:'What quality costs',category:'Generative',family:'performance',variant:'quality',desc:'Reconstruction-error fixtures, budget curves and full tail distributions.',tag:'SAMPLING BUDGET / ERROR',source:'docs/gallery.md#quality-and-cost'}
+{id:'quality-cost',title:'What quality costs',category:'Generative',family:'performance',variant:'quality',desc:'Reconstruction-error fixtures, budget curves and full tail distributions.',tag:'SAMPLING BUDGET / ERROR',source:'docs/gallery.md#quality-and-cost'},
+{id:'retrieval-ranks',title:'How the ranks move',category:'Multimodal',family:'retrieval',variant:'ranks',desc:'Query-level rank changes, top-1 transitions and paired reciprocal-rank gains.',tag:'RETRIEVAL / RANK MOBILITY',source:'docs/interactive-studio.md#expanded-compositions'},
+{id:'retrieval-directions',title:'Alignment goes both ways',category:'Multimodal',family:'retrieval',variant:'directions',desc:'Read the same similarity matrices in both directions, with query and candidate identities preserved.',tag:'ALIGNMENT / BIDIRECTIONAL',source:'docs/interactive-studio.md#expanded-compositions'},
+{id:'conflict-simplex',title:'Between three answers',category:'Multimodal',family:'conflict',variant:'simplex',desc:'Probability trajectories on a ternary simplex reveal how conflicting text changes the same cases.',tag:'EVIDENCE / PROBABILITY GEOMETRY',source:'docs/interactive-studio.md#expanded-compositions'},
+{id:'conflict-calibration',title:'When confidence misleads',category:'Multimodal',family:'conflict',variant:'calibration',desc:'Reliability bins, Brier scores and selective risk for a labelled synthetic conflict model.',tag:'CONFIDENCE / RELIABILITY',source:'docs/interactive-studio.md#expanded-compositions'},
+{id:'diffusion-solvers',title:'The solver makes a difference',category:'Generative',family:'diffusion',variant:'solvers',desc:'Same-start analytic-score integration: compare solver convergence, endpoint errors and particle-level tails.',tag:'DIFFUSION / SOLVER AUDIT',source:'docs/interactive-studio.md#expanded-compositions'},
+{id:'diffusion-modes',title:'Where the particles arrive',category:'Generative',family:'diffusion',variant:'modes',desc:'Follow toy probability-flow particles to eight target modes, with reference occupancy and numerical error.',tag:'DIFFUSION / MODE COVERAGE',source:'docs/interactive-studio.md#expanded-compositions'},
+{id:'sampling-budget',title:'What another step buys',category:'Generative',family:'performance',variant:'budget',desc:'Budget scaling, shared-seed error reductions and empirical spread across three synthetic samplers.',tag:'SAMPLING / BUDGET RETURNS',source:'docs/interactive-studio.md#expanded-compositions'},
+{id:'sampling-tails',title:'Beyond the average sample',category:'Generative',family:'performance',variant:'tails',desc:'Inspect error exceedance, paired seed outcomes and latency trade-offs at a fixed sampling budget.',tag:'GENERATION / TAIL RELIABILITY',source:'docs/interactive-studio.md#expanded-compositions'},
+{id:'paired-agreement',title:'Do the measurements agree?',category:'Statistical',family:'paired',variant:'agreement',desc:'Paired differences against their means, descriptive agreement limits and group-level shifts.',tag:'PAIRED MEASUREMENTS / AGREEMENT',source:'docs/interactive-studio.md#expanded-compositions'}
 ];
 export function random(seed=1){let a=seed>>>0;return()=>{a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
 export function gaussian(r){return Math.sqrt(-2*Math.log(Math.max(1e-12,r())))*Math.cos(2*Math.PI*r())}
@@ -68,3 +77,16 @@ export const centres=Array.from({length:8},(_,i)=>[2*Math.cos(i*Math.PI/4),2*Mat
 export function drift(x,s){const v=.16**2+s*s,w=softmax(centres.map(c=>-((x[0]-c[0])**2+(x[1]-c[1])**2)/(2*v)));return[-s*(-x[0]+dot(w,centres.map(c=>c[0])))/v,-s*(-x[1]+dot(w,centres.map(c=>c[1])))/v]}
 export function integrate(rows,nfe,solver,sigma){const steps=solver==='Euler'?nfe:nfe/2,path=[rows.map(r=>[r[1],r[2]])],sigmas=[sigma];for(let i=0;i<steps;i++){const s=sigma*(.01/sigma)**(i/steps),next=sigma*(.01/sigma)**((i+1)/steps),h=next-s,xx=path.at(-1).map(x=>{let k=drift(x,s);if(solver==='Euler')return x.map((v,j)=>v+h*k[j]);if(solver==='Midpoint'){let kk=drift(x.map((v,j)=>v+h*k[j]/2),(s+next)/2);return x.map((v,j)=>v+h*kk[j])}let kk=drift(x.map((v,j)=>v+h*k[j]),next);return x.map((v,j)=>v+h*(k[j]+kk[j])/2)});path.push(xx);sigmas.push(next)}return{path,sigmas,final:path.at(-1)}}
 export function simulate(study,rows,p){switch(study.family){case'paired':return paired(rows);case'retrieval':return retrievalData(rows);case'conflict':return conflictData(rows,p);case'flow':return flowData(rows,p);case'diffusion':return integrate(rows,+p.steps,p.solver,+p.sigma);default:return rows}}
+
+// Descriptive summaries reused by the expanded compositions and their checks.
+export function transpose(matrix){return matrix[0].map((_,j)=>matrix.map(row=>row[j]))}
+export function matrixRanks(matrix){return matrix.map((row,i)=>1+row.filter(v=>v>row[i]).length)}
+export function reliabilityBins(probabilities,states,bins=8){
+ return Array.from({length:bins},(_,bin)=>{
+  const observations=probabilities.map((v,i)=>({confidence:Math.max(...v),correct:states[i]===0?1:0}))
+   .filter(v=>Math.min(bins-1,Math.floor(v.confidence*bins))===bin);
+  return observations.length?{bin,n:observations.length,confidence:mean(observations.map(v=>v.confidence)),accuracy:mean(observations.map(v=>v.correct))}:null;
+ }).filter(Boolean);
+}
+export function brierScores(probabilities){return probabilities.map(row=>row.reduce((sum,v,i)=>sum+(v-(i===0?1:0))**2,0))}
+export function nearestMode(point){let best=0,dist=Infinity;centres.forEach((c,i)=>{const d=Math.hypot(point[0]-c[0],point[1]-c[1]);if(d<dist){dist=d;best=i}});return best}

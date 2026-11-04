@@ -2,7 +2,7 @@
 
 [Open Prismatica online](https://grady10086.github.io/Prismatica/)
 
-The GitHub Pages website complements the Python figure-making suite with fifteen browser-native study presets across nine computational families. Every gallery card opens a live composition; no plot is a PNG masquerading as an interactive chart. The browser figures reinterpret the selected static studies rather than numerically reproducing every Python panel.
+The GitHub Pages website complements the Python figure-making suite with twenty-four browser-native study presets across nine computational families. Every gallery card opens a live composition; no plot is a PNG masquerading as an interactive chart. The browser figures reinterpret the selected static studies rather than numerically reproducing every Python panel.
 
 ## Explore
 
@@ -43,7 +43,7 @@ python3 -m http.server 8877 --directory site
 uv run --with quickjs python scripts/test_web_models.py
 ```
 
-The model checks execute the actual JavaScript modules with QuickJS, validate every preset at default and numeric parameter boundaries (45 complete SVG renders), and check deterministic sampling, CSV validation, retrieval ranking, matched effects, analytic-score gradients and numerical convergence. Browser QA additionally verifies editing, navigation, rendering, palette changes and downloads.
+The model checks execute the actual JavaScript modules with QuickJS, validate every preset at default and numeric parameter boundaries (72 complete SVG renders), and check deterministic sampling, CSV validation, retrieval ranking, matched effects, analytic-score gradients and numerical convergence. Browser QA additionally verifies editing, navigation, rendering, palette changes and downloads.
 
 [The deployment workflow](../.github/workflows/pages.yml) validates and packages only `site/` with revisioned asset URLs, then publishes it after a matching push to `main`. Hosting does not require changing the repository's visibility. Model and data code is intentionally part of the public browser bundle; it contains no credentials.
 
@@ -54,3 +54,23 @@ Visual-direction references: [Active Theory](https://activetheory.net/), [Resn](
 The collection and laboratory share the Iris interface with a warm paper canvas. Study changes crossfade; compatible data changes interpolate SVG geometry for 230 ms. Dense figures use a short crossfade. Transitions can be interrupted by another edit, and both the pause control and reduced-motion preference disable them. SVG and PNG exports always use the final calculated figure, independent of any intermediate animation frame.
 
 Use the panel selector above the figure to focus a single panel; Fit restores the complete composition. Click a keyed data mark to pin the same observation across linked panels. Clear selection or Escape releases it. Editing data clears the selection; exports contain the complete final figure without interactive dimming. Panel focus eases over 280 ms and respects reduced motion. Heatmaps use a sequential scale for non-negative ranges and a peach–paper–Iris diverging scale for signed ranges, with explicit endpoint legends.
+
+## Expanded compositions
+
+The collection now contains **24 compositions: six in each category**. The original fifteen remain available at their existing study IDs. Nine additional views use the same validated input schemas; all panels are calculated from the imported observations or explicitly labelled toy integration.
+
+| Study | Category | Additional analysis / layout |
+| --- | --- | --- |
+| `retrieval-ranks` | Multimodal | Tall query-level rank trajectories, paired log-ranks, four top-1 transition counts and ordered reciprocal-rank changes |
+| `retrieval-directions` | Multimodal | Four directional recall curves, directional rank asymmetry, updated margins and per-pair rank gaps; reverse retrieval uses transposed matrices |
+| `conflict-simplex` | Multimodal | Ternary probability trajectories, evidence balance and entropy–confidence diagnostics |
+| `conflict-calibration` | Multimodal | Reliability bins, multiclass Brier distributions, selective risk and bin support |
+| `diffusion-solvers` | Generative | Median and P10–P90 convergence bands, selected positions vs endpoint reference, ordered final errors and solver tails |
+| `diffusion-modes` | Generative | Large particle map, nearest-target occupancy vs reference and displacement–error relationships |
+| `sampling-budget` | Generative | Median and empirical P10–P90 budget curves, shared-seed gains between consecutive supplied budgets, fixed-budget effects and latency ECDFs |
+| `sampling-tails` | Generative | Strict error exceedance, linked seed trajectories, fixed-budget operating points, paired effects and pooled upper-quartile exceedance counts |
+| `paired-agreement` | Statistical | Difference-vs-mean view, mean ±1.96 SD descriptive limits, difference density, group shifts and all ordered observations |
+
+Rank ties use the same optimistic rule as the original retrieval view: one plus the number of strictly greater similarities. Both directions preserve matched IDs. The calibration fixture defines the visual answer (class 0) as correct; ECE uses eight equal-width confidence bins, and multiclass Brier is the sum of squared differences from that one-hot target. Marker sizes show bin support. It is a descriptive toy-model analysis, not a claim about calibrated pretrained models. Ternary coordinates use normalized class probabilities; entropy is normalized by log(3).
+
+Sampler bands are empirical 10th–90th percentiles across shared seeds or particles, **not confidence intervals**. Consecutive-budget gains are pooled descriptive differences and require at least two supplied budgets; a single-budget import displays an explicit missing-comparison message. Latency remains simulated in presets. Diffusion mode occupancy assigns each endpoint to the nearest of eight known centres; it is neither FID nor a learned generative-model benchmark. The 512-call Heun endpoint is a numerical reference, not an exact solution. Agreement limits describe observed differences and do not establish interchangeability or a confidence interval.

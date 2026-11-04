@@ -118,3 +118,6 @@
 #tooltip{border:1px solid #ab669066;border-radius:7px;background:#23182fed;color:#f3e9f6;box-shadow:0 8px 32px #0003;padding:12px 15px;line-height:1.7;backdrop-filter:blur(12px);font-variant-numeric:tabular-nums;pointer-events:none}
 @media(max-width:760px){#panel-picker{max-width:140px;font-size:8px}.figure-toolbar>div{justify-content:flex-start}}
 @media(prefers-reduced-motion:reduce){.chart-stage [data-tip]{transition:none}}
+
+.gallery.is-filtered{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:850px){.gallery.is-filtered{grid-template-columns:repeat(2,minmax(0,1fr))}}

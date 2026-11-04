@@ -68,7 +68,7 @@ const words = {
   sculpture: '探索连续曲面',
   drag: '移动鼠标改变视角，滚动页面感受形变。',
   collectionTitle: '为研究，找到\n新的视角。',
-  collectionDesc: '十五个实时案例，同一种视觉语言。\n选择一种组合，让它成为你的作品。',
+  collectionDesc: '二十四个实时案例，同一种视觉语言。\n选择一种组合，让它成为你的作品。',
   labTitle: '雕琢图形，\n让证据清晰。',
   labDesc: '从参数到面板，从观测到细节。\n让每一次修改，都看得见。',
   newSample: '新样本',
@@ -161,6 +161,7 @@ function configure() {
   $('#study-description').textContent = current.desc;
   $('#study-select').value = current.id;
   $('#figure-source').href = REPO + current.source;
+  $('#figure-source').textContent=current.source.includes('interactive-studio')?'Study definitions ↗':'Python figure & definitions ↗';
   $('#schema-help').textContent = 'Columns: ' + schemas[current.family].join(', ') + '. Numeric values only. IDs and paired structures must remain consistent.';
   $('#controls').replaceChildren();
   for (const c of controls(current.family)) {
@@ -679,6 +680,7 @@ function gallery() {
     card.querySelector('.study-preview').innerHTML=render(study,data,p,palettes.iris).svg;
     cardCache.set(study.id,card);return card;
   });
+  $('#gallery').classList.toggle('is-filtered',filter!=='All');
   $('#gallery').replaceChildren(...cards);
   $('#empty-gallery').hidden=selected.length>0;
   $('#collection-count').textContent=selected.length+' / '+studies.length+' STUDIES';
