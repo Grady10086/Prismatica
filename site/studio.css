@@ -121,3 +121,15 @@
 
 .gallery.is-filtered{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:850px){.gallery.is-filtered{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.contact{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;border-top:1px solid #ad91c426;background:radial-gradient(ellipse at 80% 100%,#ab669010,transparent 65%),#100f19;padding-top:65px;padding-bottom:65px}
+.contact h2{font-size:clamp(34px,4vw,56px);font-weight:400;letter-spacing:-2px;margin:16px 0;color:#eae1f0}
+.contact-name{font-size:12px;color:#a596b2}
+.contact-links{display:grid;align-content:center;gap:12px;min-width:0}
+.contact-links a{position:relative;display:grid;gap:12px;padding:22px 52px 22px 23px;border:1px solid #ab8ebd33;border-radius:8px;background:#21182966;transition:background .2s,border-color .2s}
+.contact-links a:hover{background:#30213788;border-color:#e6a38580}
+.contact-links .micro{font-size:8px;letter-spacing:1.3px;color:#ac94bc}
+.contact-links strong{font-size:clamp(15px,1.7vw,22px);font-weight:400;overflow-wrap:anywhere;color:#eee5f3}
+.contact-arrow{position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:24px;color:#e6a385}
+@media(max-width:760px){.contact{grid-template-columns:1fr;gap:20px;padding-top:40px;padding-bottom:40px}.contact h2{letter-spacing:-1px}.contact-links a{padding:19px 48px 19px 18px}}
+@media(prefers-reduced-motion:reduce){.contact-links a{transition:none}}

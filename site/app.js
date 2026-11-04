@@ -59,6 +59,12 @@ selectionStatus.setAttribute('role','status');
 $('.canvas-area').append(selectionStatus);
 const cardCache = new Map();
 const words = {
+  contactNav: '联系我们',
+  contactEyebrow: '联系我们',
+  contactTitle: '聊聊你的想法。',
+  contactEmail: '邮箱',
+  contactHomepage: '个人主页',
+  contactVisit: '访问我的主页',
   collection: '精选图集',
   lab: '交互实验室',
   workflow: '绘图工具',
