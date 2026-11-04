@@ -43,7 +43,20 @@ let current = studies[0],
   },
   drag = null;
 const presenter = createPresenter($('#chart'));
-let canonicalFigure = '', metricSignature = '';
+let canonicalFigure = '', metricSignature = '', pinnedKey = null, pointerStart = null;
+let panelSignature = '', cameraRAF = 0;
+const panelPicker = document.createElement('select');
+panelPicker.id = 'panel-picker';
+panelPicker.setAttribute('aria-label', 'Focus a figure panel');
+const clearSelection = document.createElement('button');
+clearSelection.id = 'clear-selection';
+clearSelection.textContent = 'Clear selection ×';
+clearSelection.hidden = true;
+$('.figure-toolbar>div').prepend(panelPicker, clearSelection);
+const selectionStatus = document.createElement('span');
+selectionStatus.className = 'sr-only';
+selectionStatus.setAttribute('role','status');
+$('.canvas-area').append(selectionStatus);
 const cardCache = new Map();
 const words = {
   collection: '精选图集',
@@ -265,7 +278,10 @@ function paint(recalculate = true, kind = 'data') {
     phase,
     custom
   });
+  cancelAnimationFrame(cameraRAF);
+  clearInspection();
   canonicalFigure = result.svg;
+  updatePanelPicker(result.svg);
   presenter.present(result.svg, {kind,animate:!booting});
   applyView();
   const signature = JSON.stringify(result.metrics);
@@ -458,6 +474,7 @@ function applyView() {
   $('#chart').style.cursor = zoom > 1 ? 'grab' : ''
 }
 $('#zoom-in').addEventListener('click', () => {
+  cancelAnimationFrame(cameraRAF);
   presenter.finish();
   zoom = Math.min(4, zoom * 1.4);
   const w = 1000 / zoom,
@@ -472,8 +489,10 @@ $('#zoom-in').addEventListener('click', () => {
   toast('Drag the figure to pan. Fit restores the full view.')
 });
 $('#zoom-fit').addEventListener('click', () => {
+  cancelAnimationFrame(cameraRAF);
   presenter.finish();
   zoom = 1;
+  panelPicker.value = '';
   view = {
     x: 0,
     y: 0,
@@ -483,7 +502,8 @@ $('#zoom-fit').addEventListener('click', () => {
   applyView()
 });
 $('#chart').addEventListener('pointerdown', e => {
-  if (zoom <= 1) return;
+  if (zoom <= 1 || e.target.closest('[data-tip]')) return;
+  cancelAnimationFrame(cameraRAF);
   presenter.finish();
   drag = {
     x: e.clientX,
@@ -556,33 +576,85 @@ $('#copy-install').addEventListener('click', async () => {
   if (await copy(install)) toast('Installation commands copied')
 });
 const tooltip = $('#tooltip');
+function clearInspection() {
+  pinnedKey = null;
+  clearSelection.hidden = true;
+  selectionStatus.textContent = '';
+  $('#tooltip').hidden = true;
+  $('#chart').querySelectorAll('.muted,.linked').forEach(x=>x.classList.remove('muted','linked'));
+}
+function highlight(key) {
+  $('#chart').querySelectorAll('[data-key]').forEach(x=>{
+    x.classList.toggle('muted',key!==undefined&&x.dataset.key!==key);
+    x.classList.toggle('linked',key!==undefined&&x.dataset.key===key);
+  });
+}
+function showTip(el,e) {
+  tooltip.textContent = el.dataset.tip;
+  tooltip.hidden = false;
+  const rect=tooltip.getBoundingClientRect();
+  tooltip.style.left=Math.max(8,Math.min(innerWidth-rect.width-12,e.clientX+15))+'px';
+  tooltip.style.top=Math.max(8,Math.min(innerHeight-rect.height-12,e.clientY+15))+'px';
+}
+function updatePanelPicker(source) {
+  const svg=parseFigure(source), panels=[...svg.querySelectorAll('[data-panel-box]')];
+  const signature=panels.map(p=>p.dataset.panelBox+p.dataset.panelLabel).join('|');
+  if(signature===panelSignature)return;
+  panelSignature=signature;
+  panelPicker.replaceChildren(new Option('All panels', ''));
+  panels.forEach(p=>panelPicker.append(new Option(p.dataset.panelLabel,p.dataset.panelBox)));
+  panelPicker.value='';
+}
+panelPicker.addEventListener('change',()=>{
+  cancelAnimationFrame(cameraRAF);
+  presenter.finish();
+  if(!panelPicker.value){$('#zoom-fit').click();return}
+  const[x,y,w,h]=panelPicker.value.split(' ').map(Number);
+  // Preserve the canvas aspect ratio and keep the entire selected panel visible.
+  const width=Math.min(1000,Math.max(w+20,(h+20)*1000/620)),height=width*620/1000;
+  const next={x:Math.max(0,Math.min(1000-width,x+w/2-width/2)),y:Math.max(0,Math.min(620-height,y+h/2-height/2)),w:width,h:height};
+  const previous={...view};
+  let start=null;
+  function focus(now){
+    if(start===null)start=now;
+    const t=motionAllowed()?Math.min(1,(now-start)/280):1,e=1-(1-t)**3;
+    for(const key of ['x','y','w','h'])view[key]=previous[key]+(next[key]-previous[key])*e;
+    zoom=1000/view.w;
+    applyView();
+    if(t<1)cameraRAF=requestAnimationFrame(focus);
+  }
+  cameraRAF=requestAnimationFrame(focus);
+});
+clearSelection.addEventListener('click',clearInspection);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')clearInspection()});
+$('#chart').addEventListener('pointerdown',e=>{pointerStart={x:e.clientX,y:e.clientY}});
+$('#chart').addEventListener('click',e=>{
+  if(pointerStart&&Math.hypot(e.clientX-pointerStart.x,e.clientY-pointerStart.y)>5)return;
+  const el=e.target.closest('[data-key][data-tip]');
+  if(!el||pinnedKey===el.dataset.key){clearInspection();return}
+  pinnedKey=el.dataset.key;
+  highlight(pinnedKey);
+  showTip(el,e);
+  clearSelection.hidden=false;
+  selectionStatus.textContent='Observation '+pinnedKey+' selected across linked panels.';
+});
 $('#chart').addEventListener('pointermove', e => {
   if (drag && zoom > 1) {
     const box = $('#chart').getBoundingClientRect();
     view.x = Math.max(0, Math.min(1000 - view.w, drag.v.x - (e.clientX - drag.x) / box.width * view.w));
     view.y = Math.max(0, Math.min(620 - view.h, drag.v.y - (e.clientY - drag.y) / box.height * view.h));
     applyView();
-    return
+    return;
   }
-  const el = e.target.closest('[data-tip]');
-  if (!el) {
-    tooltip.hidden = true;
-    return
-  }
-  tooltip.textContent = el.dataset.tip;
-  tooltip.hidden = false;
-  const rect = tooltip.getBoundingClientRect();
-  tooltip.style.left = Math.min(innerWidth - rect.width - 12, e.clientX + 15) + 'px';
-  tooltip.style.top = Math.max(8, Math.min(innerHeight - rect.height - 12, e.clientY + 15)) + 'px';
-  const key = el.dataset.key;
-  $('#chart').querySelectorAll('[data-key]').forEach(x => {
-    x.classList.toggle('muted', key !== undefined && x.dataset.key !== key);
-    x.classList.toggle('linked', key !== undefined && x.dataset.key === key)
-  })
+  if(pinnedKey!==null)return;
+  const el=e.target.closest('[data-tip]');
+  if(!el){tooltip.hidden=true;highlight(undefined);return}
+  showTip(el,e);
+  highlight(el.dataset.key);
 });
-$('#chart').addEventListener('pointerleave', () => {
-  tooltip.hidden = true;
-  $('#chart').querySelectorAll('.muted,.linked').forEach(x => x.classList.remove('muted', 'linked'))
+$('#chart').addEventListener('pointerleave',()=>{
+  tooltip.hidden=true;
+  if(pinnedKey===null)highlight(undefined);
 });
 
 function markSelected() {

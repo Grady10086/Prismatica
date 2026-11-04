@@ -38,7 +38,14 @@ for index in range(15):
         const result=Charts.render(study,rows,p,Models.palettes.mineral);
         if(/NaN|Infinity/.test(result.svg))throw Error('non-finite SVG: '+study.id);
         return {{id:study.id,svg:result.svg,metrics:result.metrics}};""")
-        ET.fromstring(result['svg'])
+        figure=ET.fromstring(result['svg'])
+        panels=[node for node in figure.iter() if 'data-panel-box' in node.attrib]
+        assert panels, result['id']
+        for panel in panels:
+            x,y,w,h=map(float,panel.attrib['data-panel-box'].split())
+            assert 0<=x<x+w<=1000 and 0<=y<y+h<=620
+            assert panel.attrib['data-panel-label']
+
         assert len(result['metrics'])==4
         count+=1
 
