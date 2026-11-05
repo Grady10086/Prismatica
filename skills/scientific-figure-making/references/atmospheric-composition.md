@@ -1,8 +1,8 @@
 # Atmospheric composition: landscape references
 
 Use when a figure needs the restrained warm–cool balance, selective detail and
-asymmetric composition seen in the five landscape references supplied by the
-user on 2026-11-05. This is an optional aesthetic direction, not a replacement
+asymmetric composition seen in the landscape references supplied by the
+user on 2026-11-05 (an initial five images and a follow-up ten). This is an optional aesthetic direction, not a replacement
 for the project theme or a scientific plotting standard.
 
 ## What the references teach
@@ -15,9 +15,63 @@ for the project theme or a scientific plotting standard.
 | Lighthouse between cool and warm fields | Asymmetric blue-grey and peach masses, ivory space, fragmented dark coast | Balance unequal panels by visual weight rather than forced symmetry |
 | Bird on a broken shoreline | Fine silhouette within dense blue, salmon and burgundy detail; calm surrounding fields | Concentrate texture around meaningful evidence and leave its surroundings legible |
 
-These are observations from supplied screenshots. Artist, original medium and
-publication source are unverified; the screenshots are not bundled with this
-reference. Implement new compositions using the principles below.
+These are observations from supplied screenshots. In the follow-up batch,
+the social post labels images 1–8 as Claire Russell; this is the supplied
+post's attribution, not independently verified authorship or medium. Images
+2, 6 and 7 repeat earlier compositions: treat these as reinforced preferences,
+not three new styles. Original sources remain unverified and screenshots are
+not bundled here. Implement new compositions using the principles below.
+
+## Additional lessons from the ten-image batch
+
+| Follow-up images | New or reinforced feature | Useful application |
+| --- | --- | --- |
+| 1 and 5: tree on a sharp ledge | A near-horizontal black edge turns into a textured vertical descent; tiny tree and bird anchor the corner | Use a strong alignment line and a clear change of direction to organize a method overview or adjoining result panels |
+| 2, 6 and 7: lighthouse and reflected trees | Repeated preference for long visual routes, cool mist and localized warm detail | Retain this direction as a consistent option rather than introducing more unrelated decoration |
+| 3: sunset, tree and hanging contours | Warm upper field against a pale cool lower field; fine vertical lines balance a horizontal horizon | Contrast broad panel groupings with a small detailed inset; keep quantitative marks at readable contrast |
+| 4: crescent and winding shore | Long tapered S-curve, repeated fine ripples, one luminous crescent | Use a controlled curve in a conceptual flow; give repeated stages consistent spacing and one purposeful focal point |
+| 8: tree, colored plume and birds | Heavy trunk becomes branches, then a light arc of dispersed points | Use coherent coarse-to-fine hierarchy in conceptual overview illustrations; actual networks and point clouds retain their real topology and positions |
+| 9: white house and golden tree | Crisp triangle and rectangle beside an irregular textured crown; blue, ochre and ivory fields | Pair a clean structural panel with a richer result panel; use shared alignment to unite their different visual densities |
+| 10: coral clouds over teal water | Large soft warm mass, cool surrounding field, thin horizon and tiny dark boat | Use warm–cool grouping and a small crisp focal mark in an image-led teaser or presentation cover |
+
+### Three directions to choose from
+
+**Mist and ink:** subdued blue-grey, blush and ivory with sparse dark contours.
+Use when the main challenge is hierarchy in a dense method or experimental
+composition. Keep the data layer precise even if the surrounding design is soft.
+
+**Blue, ochre and ivory:** a clearer, brighter relationship from image 9, with
+geometric and organic forms balancing one another. Useful for architecture
+plus real-result layouts. Reuse a compatible registered palette, or register
+an explicitly requested new palette through paper-colors; Iris does not itself
+provide a literal golden-ochre match.
+
+**Teal and coral:** a broad cool field balanced by a warm mass, with a small
+dark anchor, as in image 10. Useful for image-led covers and teasers. For a
+multi-series experiment, translate this into two semantic color families and
+neutral context rather than tinting every input image or series.
+
+These are role-based directions, not sampled palettes. Match saturation and
+lightness as well as hue: blue and orange alone do not reproduce image 9's
+balance, and teal and coral need enough neutral separation to remain legible.
+
+### Composition choices without a fixed template
+
+- A horizontal spine with aligned evidence below can borrow the ledge's
+  structural clarity. Keep panel borders light so the alignment does the work.
+- A larger geometric overview beside a detailed result mosaic can borrow the
+  house/tree balance. Match crop scales wherever the scientific comparison
+  depends on object size.
+- A primary image with a narrow row of measured evidence can borrow the
+  cloud/horizon balance. Allocate the sky-like quiet field only when it serves
+  a title or real visual content; do not enlarge manuscript whitespace to
+  imitate the reference's proportions.
+- A conceptual branching overview can taper from coarse to fine, but diagram
+  stroke weight, node size and flow width need a declared meaning if they
+  encode quantities. Decorative repeated marks must not look like extra data.
+
+Do not use the artistic reflections as permission to mirror experimental
+images, duplicate observations or imply an additional measured condition.
 
 ## Color roles
 
