@@ -74,7 +74,7 @@ const words = {
   sculpture: '探索连续曲面',
   drag: '移动鼠标改变视角，滚动页面感受形变。',
   collectionTitle: '为研究，找到\n新的视角。',
-  collectionDesc: '二十四个实时案例，同一种视觉语言。\n选择一种组合，让它成为你的作品。',
+  collectionDesc: '二十七个实时案例，同一种视觉语言。\n选择一种组合，让它成为你的作品。',
   labTitle: '雕琢图形，\n让证据清晰。',
   labDesc: '从参数到面板，从观测到细节。\n让每一次修改，都看得见。',
   newSample: '新样本',
@@ -167,10 +167,10 @@ function configure() {
   $('#study-description').textContent = current.desc;
   $('#study-select').value = current.id;
   $('#figure-source').href = REPO + current.source;
-  $('#figure-source').textContent=current.source.includes('interactive-studio')?'Study definitions ↗':'Python figure & definitions ↗';
+  $('#figure-source').textContent=(current.source.includes('interactive-studio')||current.source.includes('set-overlap'))?'Study definitions ↗':'Python figure & definitions ↗';
   $('#schema-help').textContent = 'Columns: ' + schemas[current.family].join(', ') + '. Numeric values only. IDs and paired structures must remain consistent.';
   $('#controls').replaceChildren();
-  for (const c of controls(current.family)) {
+  for (const c of controls(current.family).filter(c=>current.family!=='sets'||c.key!=='top'||current.variant==='upset')) {
     const el = document.createElement('div');
     el.className = 'control';
     const label = document.createElement('label');
@@ -306,7 +306,7 @@ function paint(recalculate = true, kind = 'data') {
   $('#figure-caption').textContent = current.tag + ' / SEED ' + seed;
   $('#compute-time').textContent = Math.round(performance.now() - begin) + ' ms / LOCAL';
   $('#data-badge').textContent = custom ? 'YOUR DATA · LOCAL ONLY' : current.family === 'diffusion' ? 'COMPUTED TOY DIFFUSION' : 'SYNTHETIC DEMONSTRATION';
-  $('#data-origin').textContent = current.family === 'diffusion' ? 'Analytic 8-mode score, finite σ=.01. Numerical error vs 512-call Heun; no trained image model.' : custom ? 'Your imported numeric observations. Derived views recomputed locally.' : 'Seeded browser fixtures, not pretrained-model results. Intervals are pointwise normal approximations, not the Python bootstrap intervals.';
+  $('#data-origin').textContent = current.family === 'sets' ? 'Six binary memberships per numeric item ID. Exact counts; schematic petal areas. UpSet shows exclusive intersections; Jaccard uses inclusive pair intersections.' : current.family === 'diffusion' ? 'Analytic 8-mode score, finite σ=.01. Numerical error vs 512-call Heun; no trained image model.' : custom ? 'Your imported numeric observations. Derived views recomputed locally.' : 'Seeded browser fixtures, not pretrained-model results. Intervals are pointwise normal approximations, not the Python bootstrap intervals.';
   if (editOpen) $('#csv-editor').value = csv(rows, current.family);
   $('#chart').dataset.revision = String(++renderToken);
   document.dispatchEvent(new CustomEvent('prismatica:render', {
@@ -366,7 +366,7 @@ function choose(id, fromHash = false) {
       if (Number.isInteger(s) && s > 0 && s < 2 ** 31) seed = s;
       const pal = query.get('palette');
       if (Object.prototype.hasOwnProperty.call(palettes, pal)) palette = pal;
-      for (const c of controls(current.family)) {
+      for (const c of controls(current.family).filter(c=>current.family!=='sets'||c.key!=='top'||current.variant==='upset')) {
         let v = query.get(c.key);
         if (v === null) continue;
         if (c.options) {
@@ -678,7 +678,8 @@ function gallery() {
     card.innerHTML=`<div class="study-preview"></div><div class="card-topline"><span>${study.category}</span><span>${String(studies.indexOf(study)+1).padStart(2,'0')} / LIVE</span></div><h3>${study.title}<span>↗</span></h3><p>${study.tag}</p>`;
     card.addEventListener('click',()=>{choose(study.id);$('#laboratory').scrollIntoView({behavior:motionAllowed()?'smooth':'instant'})});
     const p=defaults(study.family);
-    if(study.family==='retrieval')p.n=12;
+    if(study.family==='sets')p.n=200;
+    else if(study.family==='retrieval')p.n=12;
     else if(study.family==='diffusion')p.n=32;
     else if(['paired','representation','flow','conflict'].includes(study.family))p.n=32;
     else if(['factorial','performance'].includes(study.family))p.n=6;

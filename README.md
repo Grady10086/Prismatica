@@ -10,7 +10,7 @@ Prismatica is a **complete scientific figure toolkit for AI coding agents**. Bri
 
 **Experiment plots · model analysis · statistical composites · method diagrams · research teasers**
 
-**[Explore the interactive studio →](https://grady10086.github.io/Prismatica/)** · 24 live studies, editable data, palettes and vector export. [How it works](docs/interactive-studio.md).
+**[Explore the interactive studio →](https://grady10086.github.io/Prismatica/)** · 27 live studies, editable data, palettes and vector export. [How it works](docs/interactive-studio.md).
 
 ## Selected work
 

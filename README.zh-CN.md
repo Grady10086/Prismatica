@@ -10,7 +10,7 @@ Prismatica 是面向 AI 编程助手的**完整科研绘图工具套件**。提�
 
 **实验数据图 · 模型分析 · 复杂统计组合 · 方法主图 · 科研 teaser**
 
-**[进入在线交互工作室 →](https://grady10086.github.io/Prismatica/)** · 24 个实时案例，可修改数据、调整配色并导出矢量图。[使用说明](docs/interactive-studio.md)。
+**[进入在线交互工作室 →](https://grady10086.github.io/Prismatica/)** · 27 个实时案例，可修改数据、调整配色并导出矢量图。[使用说明](docs/interactive-studio.md)。
 
 ## 精选展示
 

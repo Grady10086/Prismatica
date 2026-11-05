@@ -2,7 +2,7 @@ import {mean,sd,interval,quantile,kde,grouped,simulate,integrate,centres,clamp,t
 const INK='#333F49',MUTED='#77808B',GRID='#E7E4E8',PAPER='#F8F7F2';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const N=(tag,attrs={},inner='')=>`<${tag} ${Object.entries(attrs).map(([k,v])=>`${k}="${esc(v)}"`).join(' ')}>${inner}</${tag}>`;
-const text=(x,y,s,attrs={})=>N('text',{x,y,fill:INK,'font-size':9,'font-family':'Arial, sans-serif',...attrs},esc(s));
+const text=(x,y,s,attrs={})=>N('text',{x,y,fill:INK,'font-size':9,'font-family':'Arial, sans-serif','pointer-events':'none',...attrs},esc(s));
 const path=(points,close=false)=>points.length?'M'+points.map(p=>p.map(v=>Number(v).toFixed(3)).join(',')).join('L')+(close?'Z':''):'';
 export const format=v=>!Number.isFinite(v)?'—':Math.abs(v)>=1000?v.toFixed(0):Math.abs(v)<.001&&v!==0?v.toExponential(1):Number(v.toPrecision(3)).toString();
 function extent(values,pad=.08){let min=Math.min(...values),max=Math.max(...values);if(min===max){min-=1;max+=1}let p=(max-min)*pad;return[min-p,max+p]}
@@ -150,5 +150,71 @@ function agreementPlate(w,study,rows,p,colors,d){
  return[{label:'Matched measurements',value:d.length},{label:'Mean difference',value:format(bias)},{label:'Descriptive limits',value:format(limits[0])+' / '+format(limits[1])},{label:'Outside mean ±1.96 SD',value:changes.filter(v=>v<limits[0]||v>limits[1]).length}];
 }
 
-export function render(study,rows,p,colors,options={}){const w=writer(study.title),d=options.simulation??simulate(study,rows,p);let metrics=[],note=options.custom?'User-provided numeric observations · pointwise normal-approximate intervals where shown':'Browser fixture · synthetic data · pointwise normal-approximate intervals where shown';switch(study.family){case'paired':metrics=study.variant==='agreement'?agreementPlate(w,study,rows,p,colors,d):pairedPlate(w,study,rows,p,colors,d);if(study.variant==='agreement')note+=' · limits: mean difference ±1.96 SD; descriptive, not confidence intervals';break;case'factorial':metrics=factorialPlate(w,study,rows,p,colors);break;case'performance':metrics=['budget','tails'].includes(study.variant)?performanceExpanded(w,study,rows,p,colors):performancePlate(w,study,rows,p,colors);break;case'retrieval':metrics=study.variant?retrievalExpanded(w,study,rows,p,colors,d):retrievalPlate(w,study,rows,p,colors,d);break;case'conflict':metrics=study.variant?conflictExpanded(w,study,rows,p,colors,d):conflictPlate(w,study,rows,p,colors,d);if(study.variant==='calibration')note+=' · target class: visual answer (0); ECE: 8 equal-width confidence bins';break;case'flow':metrics=flowPlate(w,study,rows,p,colors,d);break;case'representation':metrics=representationPlate(w,study,rows,p,colors);break;case'tasks':metrics=tasksPlate(w,study,rows,p,colors);note+=' · chords: baseline seed r ≥ .75; association, not causation';break;case'diffusion':metrics=study.variant?diffusionExpanded(w,study,rows,p,colors,d,options.extra??diffusionExtra(rows,p,d),options.phase??1):diffusionPlate(w,study,rows,p,colors,d,options.extra??diffusionExtra(rows,p,d),options.phase??1);note='Computed 2D analytic-score ODE · no trained image model · Euler / Heun / Midpoint · same-start numerical error'+(options.custom?' · user initial positions':'');break;}
+function setColors(colors){return [...colors,lerpColor(colors[0].slice(1),'ffffff',.3),lerpColor(colors[1].slice(1),'ffffff',.3)]}
+function setSizePanel(w,box,l,d,colors){
+ const a=area(w,box,l,'Set sizes and exclusive items',[0,Math.max(...d.totals,1)*1.25],[-.6,5.6],'Items · light: total / dark: exclusive','',{hideY:true,left:38});
+ d.names.forEach((name,i)=>{const y=5-i;w.add(text(a.x-10,a.sy(y)+3,name,{'font-size':8,'text-anchor':'end',fill:colors[i]}));
+  w.add(N('rect',{x:a.x,y:a.sy(y)-7,width:a.sx(d.totals[i])-a.x,height:14,rx:2,fill:colors[i],opacity:.22,'data-key':'set:'+name,'data-tip':`${name}\ntotal ${d.totals[i]}\nexclusive ${d.unique[i]}`}));
+  w.add(N('rect',{x:a.x,y:a.sy(y)-7,width:a.sx(d.unique[i])-a.x,height:14,rx:2,fill:colors[i],'data-key':'set:'+name,'data-tip':`${name}\nexclusive ${d.unique[i]}`}));
+  w.add(text(a.sx(d.totals[i])+5,a.sy(y)+3,`${d.totals[i]} / ${d.unique[i]}`,{'font-size':7,fill:MUTED}));
+ });
+}
+function setDegreePanel(w,box,l,d,colors){
+ const a=area(w,box,l,'How many sets contain each item?',[.5,6.5],[0,Math.max(...d.degree,1)*1.15],'Membership degree','Distinct items',{ticks:3,hideX:true});[1,2,3,4,5,6].forEach(k=>w.add(text(a.sx(k),a.y+a.h+14,k,{'font-size':7,'text-anchor':'middle'})));
+ d.degree.forEach((v,i)=>{w.add(N('rect',{x:a.sx(i+.7),y:a.sy(v),width:a.w/6*.6,height:a.sy(0)-a.sy(v),rx:2,fill:colors[i],'data-key':'degree:'+(i+1),'data-tip':`Exactly ${i+1} sets\n${v} items`}));w.add(text(a.sx(i+1),a.sy(v)-5,v,{'font-size':7,'text-anchor':'middle'}))});
+}
+function flowerPanel(w,box,l,d,colors){
+ title(w,box,l,'Six-set shared-core summary · schematic petals');
+ const cx=box[0]+box[2]/2,cy=box[1]+box[3]/2+7;
+ d.names.forEach((name,i)=>{const theta=-Math.PI/2+i*Math.PI/3,c=Math.cos(theta),s=Math.sin(theta),id='set-petal-'+i;
+  w.add(`<defs><radialGradient id="${id}"><stop offset="0" stop-color="${colors[i]}" stop-opacity=".08"/><stop offset=".78" stop-color="${colors[i]}" stop-opacity=".15"/><stop offset="1" stop-color="${colors[i]}" stop-opacity=".48"/></radialGradient></defs>`);
+  w.add(N('ellipse',{cx:cx+c*76,cy:cy+s*76,rx:148,ry:83,transform:`rotate(${theta*180/Math.PI},${cx+c*76},${cy+s*76})`,fill:`url(#${id})`,stroke:colors[i],'stroke-width':1.3,'data-key':'set:'+name,'data-tip':`Set ${name}\ntotal ${d.totals[i]}\nexclusive ${d.unique[i]}\nall-six core ${d.core}\nSchematic geometry: no area encoding`}));
+ });
+ d.names.forEach((name,i)=>{const theta=-Math.PI/2+i*Math.PI/3,c=Math.cos(theta),s=Math.sin(theta);
+  w.add(text(cx+c*244,cy+s*244+3,name,{'font-size':14,'font-weight':600,'text-anchor':'middle',fill:colors[i]}));
+  w.add(text(cx+c*172,cy+s*172,d.unique[i],{'font-size':18,'text-anchor':'middle',fill:colors[i]}));
+  w.add(text(cx+c*172,cy+s*172+13,'EXCLUSIVE',{'font-size':6,'letter-spacing':.6,'text-anchor':'middle',fill:MUTED}));
+ });
+ const vertices=Array.from({length:6},(_,i)=>{const a=-Math.PI/2+i*Math.PI/3;return[cx+Math.cos(a)*79,cy+Math.sin(a)*79]});
+ w.add(N('path',{d:path(vertices,true),fill:'#EAE5F2',stroke:colors[0],'stroke-width':1.5,'data-key':'mask:63','data-tip':`Shared by all six sets\n${d.core} / ${d.union} union items\n${format(d.core/d.union*100)}% of union`}));
+ w.add(text(cx,cy-18,'SHARED BY ALL SIX',{'font-size':7,'letter-spacing':.6,'text-anchor':'middle',fill:colors[0]}));
+ w.add(text(cx,cy+11,d.core,{'font-size':30,'text-anchor':'middle',fill:INK}));
+ w.add(text(cx,cy+31,format(100*d.core/d.union)+'% OF UNION',{'font-size':7,'text-anchor':'middle',fill:MUTED}));
+ w.add(text(cx,box[1]+box[3]-9,'Petals show exclusive counts; partial intersections are detailed in UpSet.',{'font-size':7,'text-anchor':'middle',fill:MUTED}));
+}
+function upsetPanel(w,box,l,d,colors,top){
+ title(w,box,l,'Exclusive intersections · descending counts');
+ const shown=d.intersections.slice(0,top),x0=box[0]+43,width=box[2]-62,barTop=box[1]+44,base=box[1]+box[3]*.54,max=Math.max(...shown.map(v=>v.count),1),step=width/shown.length;
+ [0,.5,1].forEach(t=>{const y=base-t*(base-barTop);w.add(N('path',{d:`M${x0},${y}h${width}`,stroke:GRID,'stroke-width':.6}));w.add(text(x0-7,y+3,format(max*t),{'font-size':7,'text-anchor':'end',fill:MUTED}))});
+ const y0=base+40,gap=(box[1]+box[3]-49-y0)/5;
+ d.names.forEach((name,i)=>{const y=y0+i*gap;w.add(N('rect',{x:x0-24,y:y-gap*.4,width:width+30,height:gap*.8,fill:i%2?'#F3EFF5':'#FDFCF9'}));w.add(text(x0-12,y+3,name,{'font-size':8,'text-anchor':'end',fill:colors[i]}))});
+ shown.forEach((v,j)=>{const x=x0+(j+.5)*step,y=base-v.count/max*(base-barTop),members=d.names.filter((_,i)=>v.mask&(1<<i)),tip=`Exactly ${members.join(' ∩ ')}\nAbsent from all other sets\n${v.count} items`,key='mask:'+v.mask,color=v.degree===6?colors[0]:colors[(v.degree-1)%colors.length];
+  w.add(N('rect',{x:x-step*.31,y,width:step*.62,height:base-y,rx:2,fill:color,'data-key':key,'data-tip':tip}));w.add(text(x,y-5,v.count,{'font-size':7,'text-anchor':'middle'}));
+  const active=d.names.map((_,i)=>i).filter(i=>v.mask&(1<<i));w.add(N('path',{d:`M${x},${y0+active[0]*gap}V${y0+active.at(-1)*gap}`,stroke:color,'stroke-width':1.7,'data-key':key,'data-tip':tip}));
+  d.names.forEach((_,i)=>w.add(N('circle',{cx:x,cy:y0+i*gap,r:Math.min(4.5,step*.2),fill:v.mask&(1<<i)?color:'#DDD7E3','data-key':key,'data-tip':tip})))
+ });
+ const hidden=d.intersections.slice(top).reduce((s,v)=>s+v.count,0);
+ w.add(text(x0,box[1]+box[3]-10,`${shown.length} / ${d.intersections.length} non-empty intersections shown · ${hidden} items in omitted intersections`,{'font-size':7,fill:MUTED}));
+}
+function setSimilarityPanel(w,box,l,d,colors){
+ title(w,box,l,'Pairwise Jaccard similarity · intersection / union');const cell=57,x0=box[0]+100,y0=box[1]+100;
+ d.names.forEach((name,i)=>{w.add(text(x0+(i+.5)*cell,y0-15,name,{'font-size':11,'text-anchor':'middle',fill:colors[i]}));w.add(text(x0-18,y0+(i+.5)*cell+4,name,{'font-size':11,'text-anchor':'middle',fill:colors[i]}));
+  d.names.forEach((other,j)=>{const value=d.jaccard[i][j],x=x0+j*cell,y=y0+i*cell;w.add(N('rect',{x:x+1,y:y+1,width:cell-2,height:cell-2,rx:4,fill:value===null?'#EEEAF0':lerpColor('f0ebef',colors[0].slice(1),value),'data-key':'pair:'+Math.min(i,j)+':'+Math.max(i,j),'data-tip':`${name} ∩ ${other}: ${d.shared[i][j]} items\nJaccard ${value===null?'undefined (empty union)':format(value)}\nSets ${d.totals[i]} / ${d.totals[j]}`}));w.add(text(x+cell/2,y+cell/2+4,value===null?'—':value.toFixed(2),{'font-size':11,'text-anchor':'middle',fill:value!==null&&value>.65?'#FFFFFF':INK}))})
+ });
+ w.add(text(x0,y0+6*cell+38,'0  none shared',{'font-size':8,fill:MUTED}));w.add(text(x0+6*cell,y0+6*cell+38,'1  identical',{'font-size':8,'text-anchor':'end',fill:colors[0]}));
+}
+function setNetworkPanel(w,box,l,d,colors){
+ title(w,box,l,'Pairwise overlap · width = Jaccard');const cx=box[0]+box[2]/2,cy=box[1]+box[3]/2+7,r=78,positions=d.names.map((_,i)=>[cx+Math.cos(-Math.PI/2+i*Math.PI/3)*r,cy+Math.sin(-Math.PI/2+i*Math.PI/3)*r]);
+ positions.forEach((pt,i)=>positions.slice(i+1).forEach((other,k)=>{const j=i+1+k,v=d.jaccard[i][j];if(v>0)w.add(N('path',{d:path([pt,other]),fill:'none',stroke:colors[0],'stroke-width':.5+v*5,opacity:.3,'data-key':`pair:${i}:${j}`,'data-tip':`${d.names[i]} ∩ ${d.names[j]}\n${d.shared[i][j]} shared items\nJaccard ${format(v)}`}))}));
+ positions.forEach((pt,i)=>{w.add(N('circle',{cx:pt[0],cy:pt[1],r:13,fill:colors[i],stroke:PAPER,'stroke-width':2,'data-key':'set:'+d.names[i],'data-tip':`Set ${d.names[i]}\n${d.totals[i]} items`}));w.add(text(pt[0],pt[1]+4,d.names[i],{'font-size':10,'text-anchor':'middle',fill:'#FFFFFF','pointer-events':'none'}))});
+}
+function setPlate(w,study,rows,p,colors,d){
+ const six=setColors(colors);
+ if(study.variant==='flower'){flowerPanel(w,[10,32,570,548],'a',d,six);setSizePanel(w,[610,32,370,250],'b',d,six);setDegreePanel(w,[610,330,370,250],'c',d,six)}
+ else if(study.variant==='upset'){upsetPanel(w,[10,32,640,548],'a',d,six,p.top);setSizePanel(w,[680,32,300,250],'b',d,six);setDegreePanel(w,[680,330,300,250],'c',d,six)}
+ else{setSimilarityPanel(w,[10,32,555,548],'a',d,six);setNetworkPanel(w,[600,32,380,270],'b',d,six);const pairs=[];d.names.forEach((a,i)=>d.names.slice(i+1).forEach((b,k)=>pairs.push({name:a+' ∩ '+b,i,j:i+k+1,n:d.shared[i][i+k+1]})));pairs.sort((a,b)=>b.n-a.n||a.i-b.i||a.j-b.j);const shown=pairs.slice(0,6),a=area(w,[600,345,380,235],'c','Largest pairwise shared-item counts',[0,Math.max(...shown.map(v=>v.n),1)*1.2],[-.6,5.6],'Items · inclusive pair intersections','',{hideY:true,left:54});shown.forEach((v,i)=>{const y=5-i;w.add(text(a.x-7,a.sy(y)+3,v.name,{'font-size':8,'text-anchor':'end'}));w.add(N('rect',{x:a.x,y:a.sy(y)-7,width:a.sx(v.n)-a.x,height:14,rx:2,fill:six[i],'data-key':`pair:${v.i}:${v.j}`,'data-tip':`${v.name}\n${v.n} items (including higher-order overlaps)`}));w.add(text(a.sx(v.n)+5,a.sy(y)+3,v.n,{'font-size':7}))})}
+ return[{label:'Distinct union items',value:d.union},{label:'Shared by all six',value:d.core},{label:'Exclusive to one set',value:d.unique.reduce((s,v)=>s+v,0)},{label:'Non-empty exact intersections',value:d.intersections.length}];
+}
+
+export function render(study,rows,p,colors,options={}){const w=writer(study.title),d=options.simulation??simulate(study,rows,p);let metrics=[],note=options.custom?'User-provided numeric observations · pointwise normal-approximate intervals where shown':'Browser fixture · synthetic data · pointwise normal-approximate intervals where shown';switch(study.family){case'sets':metrics=setPlate(w,study,rows,p,colors,d);note=(options.custom?'User memberships':'Synthetic membership fixture')+' · exact counts from item identities · petals and network positions are schematic, not area-proportional';break;case'paired':metrics=study.variant==='agreement'?agreementPlate(w,study,rows,p,colors,d):pairedPlate(w,study,rows,p,colors,d);if(study.variant==='agreement')note+=' · limits: mean difference ±1.96 SD; descriptive, not confidence intervals';break;case'factorial':metrics=factorialPlate(w,study,rows,p,colors);break;case'performance':metrics=['budget','tails'].includes(study.variant)?performanceExpanded(w,study,rows,p,colors):performancePlate(w,study,rows,p,colors);break;case'retrieval':metrics=study.variant?retrievalExpanded(w,study,rows,p,colors,d):retrievalPlate(w,study,rows,p,colors,d);break;case'conflict':metrics=study.variant?conflictExpanded(w,study,rows,p,colors,d):conflictPlate(w,study,rows,p,colors,d);if(study.variant==='calibration')note+=' · target class: visual answer (0); ECE: 8 equal-width confidence bins';break;case'flow':metrics=flowPlate(w,study,rows,p,colors,d);break;case'representation':metrics=representationPlate(w,study,rows,p,colors);break;case'tasks':metrics=tasksPlate(w,study,rows,p,colors);note+=' · chords: baseline seed r ≥ .75; association, not causation';break;case'diffusion':metrics=study.variant?diffusionExpanded(w,study,rows,p,colors,d,options.extra??diffusionExtra(rows,p,d),options.phase??1):diffusionPlate(w,study,rows,p,colors,d,options.extra??diffusionExtra(rows,p,d),options.phase??1);note='Computed 2D analytic-score ODE · no trained image model · Euler / Heun / Midpoint · same-start numerical error'+(options.custom?' · user initial positions':'');break;}
 return{svg:w.finish(note),metrics,simulation:d}}

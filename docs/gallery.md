@@ -150,3 +150,7 @@ The homepage displays complete dense compositions directly. `build_homepage.py` 
 ## Beyond this selection
 
 The [full example index](examples.md) covers statistical composites, manuscript experiments, method overviews and image-led teasers. Those modes have different goals and visual conventions. Earlier [training](images/training-dynamics.png) and [factorial](images/factorial-interactions.png) fixtures remain available for regression/reference, but are no longer the homepage showcase.
+
+## Set overlaps and shared cores
+
+[Flower, UpSet and Jaccard compositions](set-overlap.md) accept item membership tables and preserve exact union, core, exclusive and inclusive pair counts. The bundled skill includes reusable Python plotting functions and editable vector exports.

@@ -40,6 +40,7 @@ For the combined palette + composition workflow, use the sibling
 | Factorial ablation, modality conflict, sampler cost | [CS paper comparisons](references/cs-paper-comparisons.md) |
 | General layout, editable export, final-size review | [Layout](references/layout.md) |
 | Nature production profile and source distinctions | [Nature](references/nature.md) |
+| Set overlaps, flower/petal summaries, Venn/Euler, UpSet, Jaccard | [Set overlap](references/set-overlap.md) |
 | Statistical plot families and complex compositions | [Gallery catalog](references/gallery-catalog.md#rich-statistical-compositions) |
 | CS model analysis and diagnostic examples | [Analysis](references/cs-analysis.md), [diagnostics](references/cs-diagnostics.md) |
 | Method overview with scope, mechanisms and evidence | [Trinity overview](references/trinity-overview.md) |

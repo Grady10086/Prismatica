@@ -2,7 +2,7 @@
 
 [Open Prismatica online](https://grady10086.github.io/Prismatica/)
 
-The GitHub Pages website complements the Python figure-making suite with twenty-four browser-native study presets across nine computational families. Every gallery card opens a live composition; no plot is a PNG masquerading as an interactive chart. The browser figures reinterpret the selected static studies rather than numerically reproducing every Python panel.
+The GitHub Pages website complements the Python figure-making suite with twenty-seven browser-native study presets across ten computational families. Every gallery card opens a live composition; no plot is a PNG masquerading as an interactive chart. The browser figures reinterpret the selected static studies rather than numerically reproducing every Python panel.
 
 ## Explore
 
@@ -21,6 +21,7 @@ The browser uses pointwise **normal-approximate mean intervals** (`mean ± 1.96 
 
 | Family | Editable schema | Derived views |
 | --- | --- | --- |
+| Six-set overlap | `item,A,B,C,D,E,F` | Unique integer IDs, binary membership, at least one set per item; exact exclusive masks and inclusive pairs |
 | Paired analysis / estimation | `case,group,before,after` | Paired observations, changes, density, group effects; groups 0–3 |
 | Task fingerprints / atlas | `task,seed,baseline,updated` | Radial tracks, paired effects, seed variability; shared seed IDs required. Fingerprint chords select baseline correlations r ≥ .75, with no causal claim. |
 | Full-factorial ablation | `config,seed,score` | All eight configurations (0–7), within-seed marginal effects and interactions; all configurations require the same seed IDs |
@@ -43,7 +44,7 @@ python3 -m http.server 8877 --directory site
 uv run --with quickjs python scripts/test_web_models.py
 ```
 
-The model checks execute the actual JavaScript modules with QuickJS, validate every preset at default and numeric parameter boundaries (72 complete SVG renders), and check deterministic sampling, CSV validation, retrieval ranking, matched effects, analytic-score gradients and numerical convergence. Browser QA additionally verifies editing, navigation, rendering, palette changes and downloads.
+The model checks execute the actual JavaScript modules with QuickJS, validate every preset at default and numeric parameter boundaries (81 complete SVG renders), and check deterministic sampling, CSV validation, retrieval ranking, matched effects, analytic-score gradients and numerical convergence. Browser QA additionally verifies editing, navigation, rendering, palette changes and downloads.
 
 [The deployment workflow](../.github/workflows/pages.yml) validates and packages only `site/` with revisioned asset URLs, then publishes it after a matching push to `main`. Hosting does not require changing the repository's visibility. Model and data code is intentionally part of the public browser bundle; it contains no credentials.
 
@@ -57,7 +58,7 @@ Use the panel selector above the figure to focus a single panel; Fit restores th
 
 ## Expanded compositions
 
-The collection now contains **24 compositions: six in each category**. The original fifteen remain available at their existing study IDs. Nine additional views use the same validated input schemas; all panels are calculated from the imported observations or explicitly labelled toy integration.
+The collection now contains **27 compositions: six each in Multimodal, Generative and Model analysis, and nine in Statistical**. The original fifteen remain available at their existing study IDs. Nine additional views use the same validated input schemas; all panels are calculated from the imported observations or explicitly labelled toy integration.
 
 | Study | Category | Additional analysis / layout |
 | --- | --- | --- |
@@ -74,3 +75,5 @@ The collection now contains **24 compositions: six in each category**. The origi
 Rank ties use the same optimistic rule as the original retrieval view: one plus the number of strictly greater similarities. Both directions preserve matched IDs. The calibration fixture defines the visual answer (class 0) as correct; ECE uses eight equal-width confidence bins, and multiclass Brier is the sum of squared differences from that one-hot target. Marker sizes show bin support. It is a descriptive toy-model analysis, not a claim about calibrated pretrained models. Ternary coordinates use normalized class probabilities; entropy is normalized by log(3).
 
 Sampler bands are empirical 10th–90th percentiles across shared seeds or particles, **not confidence intervals**. Consecutive-budget gains are pooled descriptive differences and require at least two supplied budgets; a single-budget import displays an explicit missing-comparison message. Latency remains simulated in presets. Diffusion mode occupancy assigns each endpoint to the nearest of eight known centres; it is neither FID nor a learned generative-model benchmark. The 512-call Heun endpoint is a numerical reference, not an exact solution. Agreement limits describe observed differences and do not establish interchangeability or a confidence interval.
+
+The Statistical category also includes three [set-overlap compositions](set-overlap.md): a schematic petal shared-core summary, an exact UpSet view and pairwise Jaccard analysis. This brings the collection to 27 views across ten computational families.

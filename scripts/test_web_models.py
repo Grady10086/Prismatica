@@ -31,8 +31,8 @@ for script in (ROOT/'site').glob('*.js'):
 
 count=0
 study_count=js("return Models.studies.length;")
-assert study_count==24
-assert js("return ['Multimodal','Generative','Model analysis','Statistical'].every(c=>Models.studies.filter(s=>s.category===c).length===6);")
+assert study_count==27
+assert js("return ['Multimodal','Generative','Model analysis'].every(c=>Models.studies.filter(s=>s.category===c).length===6)&&Models.studies.filter(s=>s.category==='Statistical').length===9;")
 for index in range(study_count):
     for variant in ['default','min','max']:
         result=js(f"""const study=Models.studies[{index}],p=Models.defaults(study.family);
@@ -109,3 +109,15 @@ for variant in ['budget','tails']:
     assert not re.search('NaN|Infinity',result['svg'])
     ET.fromstring(result['svg'])
     assert result['metrics'][0]['value']==2
+
+# Six-set fixtures verify exclusive vs inclusive intersections and empty-set semantics.
+assert js("const d=Models.setSummary([[1,1,0,0,0,0,0],[2,0,1,0,0,0,0],[3,1,1,0,0,0,0],[4,1,1,1,1,1,1]]);return d.union===4&&d.core===1&&d.totals[0]===3&&d.unique[0]===1&&d.degree.join(',')==='2,1,0,0,0,1'&&d.shared[0][1]===2&&d.jaccard[0][1]===.5;")
+assert js("const d=Models.setSummary([[1,1,0,0,0,0,0],[2,1,0,0,0,0,0]]);return d.jaccard[0][1]===0&&d.jaccard[1][2]===null;")
+assert js("for(const r of [[[1,0,0,0,0,0,0],[2,1,0,0,0,0,0]],[[1,1,.5,0,0,0,0],[2,1,0,0,0,0,0]]]){try{Models.validate(r,'sets');return false}catch{}}return true;")
+assert js("const s=Models.studies.find(s=>s.family==='sets'),p=Models.defaults('sets'),rows=Models.generate(s,p,1107),d=Models.setSummary(rows);return d.intersections.reduce((s,v)=>s+v.count,0)===rows.length&&d.degree.reduce((s,v)=>s+v,0)===rows.length&&d.totals.reduce((s,v)=>s+v,0)===d.degree.reduce((s,v,i)=>s+(i+1)*v,0);")
+
+assert js("const rows=Array.from({length:63},(_,i)=>[i+1,...Array.from({length:6},(_,j)=>(i+1)>>j&1)]),d=Models.setSummary(rows);return d.totals.every(v=>v===32)&&d.unique.every(v=>v===1)&&d.core===1&&d.degree.join(',')==='6,15,20,15,6,1'&&Math.abs(d.jaccard[0][1]-1/3)<1e-12;")
+for variant in ['flower','upset','similarity']:
+    result=js(f"const s=Models.studies.find(s=>s.family==='sets'&&s.variant==='{variant}'),p=Models.defaults('sets');return Charts.render(s,[[1,1,0,0,0,0,0],[2,1,0,0,0,0,0]],p,Models.palettes.iris,{{custom:true}}).svg;")
+    assert not re.search('NaN|Infinity',result)
+    ET.fromstring(result)
