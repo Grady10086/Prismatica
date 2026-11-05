@@ -28,7 +28,7 @@ export function initHero() {
   const media = matchMedia('(prefers-reduced-motion: reduce)');
   const motionButton = document.querySelector('#motion-toggle');
   let width = 0, height = 0, dpr = 1, visible = true;
-  let paused = media.matches, mode = 0, time = 0, raf = 0, previous = 0;
+  let paused = media.matches, mode = 5, time = 0, raf = 0, previous = 0;
   let pointer = { x: 0, y: 0 }, tilt = { x: 0, y: 0 };
   let targetProgress = 0, progress = 0;
 
@@ -55,9 +55,9 @@ export function initHero() {
     [x, z] = [x * Math.cos(ry) + z * Math.sin(ry), -x * Math.sin(ry) + z * Math.cos(ry)];
     [x, y] = [x * Math.cos(rz) - y * Math.sin(rz), x * Math.sin(rz) + y * Math.cos(rz)];
     const mobile = width < 760;
-    const scale = Math.min(width * (mobile ? .39 : .205), height * .31);
+    const scale = Math.min(width * (mobile ? .39 : .155), height * .24);
     const perspective = 4.8 / (4.8 + z);
-    const cx = width * (mobile ? .79 : .81) + tilt.x * 14;
+    const cx = width * (mobile ? .79 : .76) + tilt.x * 14;
     const cy = height * (mobile ? .43 : .48) - progress * height * .08;
     return [cx + x * scale * perspective, cy + y * scale * perspective, z];
   }
@@ -69,10 +69,72 @@ export function initHero() {
     ctx.strokeStyle = color; ctx.globalAlpha = alpha; ctx.lineWidth = lineWidth; ctx.stroke();
   }
 
+  // Fixed analytic samples: decorative geometry, never represented as sensor data.
+  const cloud = Array.from({length: 4800}, (_, k) => {
+    const hash = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+    return {u: hash(k + 1) * TAU, v: hash(k + 9001) * 2 - 1,
+      size: .45 + hash(k + 17001) * .8, grain: hash(k + 23001)};
+  });
+
+  function drawStudy() {
+    const mobile = width < 760;
+    ctx.globalCompositeOperation = 'screen';
+    if (mode === 3) {
+      // Stable hue roles by position; interaction changes orientation, not meaning.
+      for (let lane = 0; lane < 3; lane++) {
+        const color = IRIS[lane];
+        for (let strand = 0; strand < 13; strand++) {
+          const v = -.9 + lane * .65 + strand * .022;
+          const points = Array.from({length: 145}, (_, i) =>
+            project(mobiusPoint(i * TAU / 144, v, progress, time)));
+          curve(points, color, .055, 13 - strand * .55);
+          curve(points, color, .4, .6);
+        }
+      }
+    } else if (mode === 4) {
+      // Synchronized trajectories connect small planar facets into a light score.
+      const count = mobile ? 22 : 34;
+      for (let k = 0; k < count; k++) {
+        const u = k * TAU / count;
+        const v = Math.sin(k * 2.399) * .82;
+        const a = project(mobiusPoint(u, v, progress, time));
+        const b = project(mobiusPoint(u + .38 + .12 * Math.sin(time * .4), -v, progress, time));
+        const color = IRIS[k % 3];
+        curve([a,b], color, .055, 9);
+        curve([a,b], color, .18, 3);
+        curve([a,b], '#ead6be', .62, .65);
+        ctx.save();ctx.translate(a[0],a[1]);ctx.rotate(u + time * .06);
+        ctx.fillStyle = color;ctx.globalAlpha = .28;ctx.fillRect(-5,-2,10,4);
+        ctx.strokeStyle = '#ead6be';ctx.globalAlpha = .65;ctx.lineWidth = .65;ctx.strokeRect(-5,-2,10,4);ctx.restore();
+      }
+    } else {
+      const points = cloud.filter((_,k) => !mobile || k % 2 === 0).map(sample => {
+        const point = project(mobiusPoint(sample.u, sample.v, progress, time));
+        return {...sample, point};
+      }).sort((a,b) => b.point[2] - a.point[2]);
+      for (const sample of points) {
+        const [x,y,z] = sample.point;
+        const color = pigment(sample.u);
+        ctx.fillStyle = `rgb(${color.join(',')})`;
+        ctx.globalAlpha = clamp(.62 - z * .16, .18, .85);
+        const size = sample.size * clamp(1.25 - z * .18,.65,1.7);
+        ctx.fillRect(x,y,size,size);
+        if(sample.grain > .97) {ctx.globalAlpha *= .12;ctx.fillRect(x-2,y-2,size+4,size+4);}
+      }
+      for (const v of [-1,1]) {
+        const points = Array.from({length:145},(_,i)=>project(mobiusPoint(i*TAU/144,v,progress,time)));
+        curve(points,'#e6a385',.28,.5);
+      }
+    }
+    ctx.globalCompositeOperation = 'source-over';ctx.globalAlpha = 1;
+  }
+
   function draw() {
     if (!width || !height) return;
     ctx.clearRect(0, 0, width, height);
     const mobile = width < 760;
+    if (mode >= 3) drawStudy();
+    else {
     const segments = mobile ? 72 : 112, strips = mobile ? 12 : 18;
     const vertices = Array.from({ length: segments + 1 }, (_, i) =>
       Array.from({ length: strips + 1 }, (_, j) =>
@@ -114,6 +176,7 @@ export function initHero() {
       const color = pigment(i * TAU / segments);
       ctx.fillStyle = `rgb(${color.join(',')})`; ctx.globalAlpha = clamp(.62 - z * .1, .3, .9);
       ctx.beginPath(); ctx.arc(x, y, mode === 1 ? 1.4 : .85, 0, TAU); ctx.fill();
+    }
     }
     // Fade the art behind the headline, keeping its geometry on the right.
     ctx.globalAlpha = 1;

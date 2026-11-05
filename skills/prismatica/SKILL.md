@@ -50,6 +50,7 @@ relevant to the requested output.
 | Published multimodal and diffusion reference layouts | [Multimodal](../scientific-figure-making/references/multimodal-diffusion.md), [recent](../scientific-figure-making/references/recent-multimodal.md) |
 | Atmospheric warm–cool composition and selective detail | [Landscape aesthetic reference](../scientific-figure-making/references/atmospheric-composition.md) |
 | Architectural framing, material contrast, light and fine connections | [Architectural aesthetic reference](../scientific-figure-making/references/architectural-composition.md) |
+| Generative visual systems: state colors, choreographed light, discrete form | [Gamma, SKALAR, Pointillisme studies](../scientific-figure-making/references/generative-art-studies.md) |
 | Optional Nature profile | [Nature](../scientific-figure-making/references/nature.md) |
 
 For existing figures, preserve the project's code-native representation and data

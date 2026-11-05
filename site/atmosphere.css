@@ -47,3 +47,10 @@ body{background:#0d151b}
 footer{background:#0d151b}
 @media(max-width:760px){.atmosphere{opacity:.6}.closing:before{width:90vw;height:90vw;right:-35vw;top:-10vw}}
 @media print{.atmosphere{display:none}}
+
+/* One geometry, six renderings; art stays outside the evidence canvas. */
+.sculpture-controls{max-width:510px}.sculpture-controls>div{flex-wrap:wrap;justify-content:flex-end;gap:5px}.sculpture-controls button{padding:9px 12px}.sculpture-controls button.active{background:#e6b29b;color:#18232a;border-color:#e6b29b}
+.study-card:before{content:'';position:absolute;top:-1px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,#adc3bf,transparent);opacity:0;transition:opacity .3s;pointer-events:none}.study-card:hover:before,.study-card:focus-visible:before{opacity:.8}
+.lab-shell:focus-within{border-color:#9eb8b2aa}
+@media(max-width:760px){.sculpture-controls{max-width:340px;right:5%}.sculpture-controls button{padding:8px 10px;font-size:9px}}
+@media(prefers-reduced-motion:reduce){.study-card:before{transition:none}}

@@ -41,6 +41,7 @@ For the combined palette + composition workflow, use the sibling
 | General layout, editable export, final-size review | [Layout](references/layout.md) |
 | Atmospheric warm–cool composition, focal detail and asymmetric balance | [Landscape aesthetic reference](references/atmospheric-composition.md) |
 | Architectural framing, material contrast and editorial hierarchy | [Architectural aesthetic reference](references/architectural-composition.md) |
+| Generative method/teaser aesthetics: state, light, point samples | [Gamma, SKALAR, Pointillisme studies](references/generative-art-studies.md) |
 | Nature production profile and source distinctions | [Nature](references/nature.md) |
 | Biological data: OncoPrint, spatial omics, annotated trees, genomic Circos, Sashimi | [Bioinformatics](references/bioinformatics.md) |
 | Set overlaps, flower/petal summaries, Venn/Euler, UpSet, Jaccard | [Set overlap](references/set-overlap.md) |
