@@ -48,6 +48,7 @@ relevant to the requested output.
 | Model internals and diagnostic compositions | [Analysis](../scientific-figure-making/references/cs-analysis.md), [diagnostics](../scientific-figure-making/references/cs-diagnostics.md) |
 | Image-led multimodal, video, 3D and robotics teasers | [CS editorial](../scientific-figure-making/references/cs-editorial.md), [sequences](../scientific-figure-making/references/sequence-teasers.md) |
 | Published multimodal and diffusion reference layouts | [Multimodal](../scientific-figure-making/references/multimodal-diffusion.md), [recent](../scientific-figure-making/references/recent-multimodal.md) |
+| Atmospheric warm–cool composition and selective detail | [Landscape aesthetic reference](../scientific-figure-making/references/atmospheric-composition.md) |
 | Optional Nature profile | [Nature](../scientific-figure-making/references/nature.md) |
 
 For existing figures, preserve the project's code-native representation and data

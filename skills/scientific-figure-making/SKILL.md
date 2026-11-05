@@ -39,6 +39,7 @@ For the combined palette + composition workflow, use the sibling
 | Manuscript CS experiments: training, alignment, reconstruction | [CS paper data](references/cs-paper-data.md) |
 | Factorial ablation, modality conflict, sampler cost | [CS paper comparisons](references/cs-paper-comparisons.md) |
 | General layout, editable export, final-size review | [Layout](references/layout.md) |
+| Atmospheric warm–cool composition, focal detail and asymmetric balance | [Landscape aesthetic reference](references/atmospheric-composition.md) |
 | Nature production profile and source distinctions | [Nature](references/nature.md) |
 | Biological data: OncoPrint, spatial omics, annotated trees, genomic Circos, Sashimi | [Bioinformatics](references/bioinformatics.md) |
 | Set overlaps, flower/petal summaries, Venn/Euler, UpSet, Jaccard | [Set overlap](references/set-overlap.md) |
