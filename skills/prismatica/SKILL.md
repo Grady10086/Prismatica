@@ -40,6 +40,7 @@ relevant to the requested output.
 | --- | --- |
 | CS training, alignment, diffusion evaluation | [Paper data](../scientific-figure-making/references/cs-paper-data.md) |
 | Ablations, condition conflicts, sampler quality/cost | [Paper comparisons](../scientific-figure-making/references/cs-paper-comparisons.md) |
+| Biological data: OncoPrint, spatial omics, annotated trees, genomic Circos, Sashimi | [Bioinformatics](../scientific-figure-making/references/bioinformatics.md) |
 | Set membership, shared cores, petal summaries, UpSet, Jaccard | [Set overlap](../scientific-figure-making/references/set-overlap.md) |
 | All statistical/complex charts: clustering, correlation, Sankey, spatial, survival, ROC/PR | [Full catalog](../scientific-figure-making/references/gallery-catalog.md) |
 | Method overview / central loop / mechanism details | [Overview](../scientific-figure-making/references/trinity-overview.md) |

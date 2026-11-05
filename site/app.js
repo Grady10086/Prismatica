@@ -1,3 +1,4 @@
+import {bioFamilies,bioHelp} from './bio.js';
 import {createPresenter,parseFigure,animateMetrics,animateCards,motionAllowed} from './motion.js';
 import {
   studies,
@@ -57,6 +58,33 @@ const selectionStatus = document.createElement('span');
 selectionStatus.className = 'sr-only';
 selectionStatus.setAttribute('role','status');
 $('.canvas-area').append(selectionStatus);
+let spatialImage=null;
+const imageControls=document.createElement('div');
+imageControls.className='tissue-controls';
+imageControls.hidden=true;
+imageControls.innerHTML='<label class="button">Tissue image · PNG / JPEG<input type="file" id="tissue-image" accept="image/png,image/jpeg"></label><button type="button" id="clear-tissue">Remove image</button><small id="tissue-status">Optional. Coordinates must match original-image pixels.</small>';
+$('#controls').after(imageControls);
+function updateTissue(){
+ imageControls.hidden=current.family!=='spatial';
+ $('#tissue-status').textContent=spatialImage?`${spatialImage.width} × ${spatialImage.height} original pixels · local only`:'Optional. Coordinates must match original-image pixels.';
+ $('#clear-tissue').hidden=!spatialImage;
+}
+$('#tissue-image').addEventListener('change',async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ try{
+  if(!['image/png','image/jpeg'].includes(file.type)||file.size>4_000_000)throw Error('Use a PNG or JPEG smaller than 4 MB.');
+  const url=URL.createObjectURL(file),img=new Image();
+  try{await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(Error('Image could not be decoded.'));img.src=url});
+   if(img.width*img.height>40_000_000)throw Error('Use an image under 40 megapixels.');
+   if(rows.some(r=>r[1]<0||r[2]<0||r[1]>img.width||r[2]>img.height))throw Error('Spots fall outside this image. Import matching pixel coordinates first.');
+   const ratio=Math.min(1,1800/Math.max(img.width,img.height)),canvas=document.createElement('canvas');canvas.width=Math.round(img.width*ratio);canvas.height=Math.round(img.height*ratio);canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+   spatialImage={url:canvas.toDataURL('image/png'),width:img.width,height:img.height};updateTissue();paint(false,'palette');
+  }finally{URL.revokeObjectURL(url)}
+ }catch(err){toast(err.message)}
+ e.target.value='';
+});
+$('#clear-tissue').addEventListener('click',()=>{spatialImage=null;updateTissue();paint(false,'palette')});
+
 const cardCache = new Map();
 const words = {
   contactNav: '联系我们',
@@ -74,7 +102,7 @@ const words = {
   sculpture: '探索连续曲面',
   drag: '移动鼠标改变视角，滚动页面感受形变。',
   collectionTitle: '为研究，找到\n新的视角。',
-  collectionDesc: '二十七个实时案例，同一种视觉语言。\n选择一种组合，让它成为你的作品。',
+  collectionDesc: '三十二个实时案例，同一种视觉语言。\n选择一种组合，让它成为你的作品。',
   labTitle: '雕琢图形，\n让证据清晰。',
   labDesc: '从参数到面板，从观测到细节。\n让每一次修改，都看得见。',
   newSample: '新样本',
@@ -168,8 +196,10 @@ function configure() {
   $('#study-description').textContent = current.desc;
   $('#study-select').value = current.id;
   $('#figure-source').href = REPO + current.source;
-  $('#figure-source').textContent=(current.source.includes('interactive-studio')||current.source.includes('set-overlap'))?'Study definitions ↗':'Python figure & definitions ↗';
-  $('#schema-help').textContent = 'Columns: ' + schemas[current.family].join(', ') + '. Numeric values only. IDs and paired structures must remain consistent.';
+  $('#figure-source').textContent=(current.source.includes('interactive-studio')||current.source.includes('set-overlap')||current.source.includes('bioinformatics'))?'Study definitions ↗':'Python figure & definitions ↗';
+  $('#schema-help').textContent = 'Columns: '+schemas[current.family].join(', ')+'. '+(bioFamilies.includes(current.family)?bioHelp(current.family):'Numeric values only. IDs and paired structures must remain consistent.');
+  $('#data-file').accept=current.family==='phylogeny'?'.csv,.json,.nwk,.newick,.tree,text/plain':'.csv,.json,text/csv,application/json';
+  updateTissue();
   $('#controls').replaceChildren();
   for (const c of controls(current.family).filter(c=>current.family!=='sets'||c.key!=='top'||current.variant==='upset')) {
     const el = document.createElement('div');
@@ -208,7 +238,7 @@ function configure() {
       params[c.key] = n;
       const output = el.querySelector('output');
       if (output) output.value = n;
-      regenerate()
+      if(current.family==='spatial'&&c.key==='opacity'){paint(false,'palette');store();updateURL()}else regenerate()
     });
     el.append(label, input);
     $('#controls').append(el)
@@ -284,7 +314,8 @@ function paint(recalculate = true, kind = 'data') {
     simulation,
     extra,
     phase,
-    custom
+    custom,
+    spatialImage:current.family==='spatial'?spatialImage:null
   });
   cancelAnimationFrame(cameraRAF);
   clearInspection();
@@ -307,7 +338,7 @@ function paint(recalculate = true, kind = 'data') {
   $('#figure-caption').textContent = current.tag + ' / SEED ' + seed;
   $('#compute-time').textContent = Math.round(performance.now() - begin) + ' ms / LOCAL';
   $('#data-badge').textContent = custom ? 'YOUR DATA · LOCAL ONLY' : current.family === 'diffusion' ? 'COMPUTED TOY DIFFUSION' : 'SYNTHETIC DEMONSTRATION';
-  $('#data-origin').textContent = current.family === 'sets' ? 'Six binary memberships per numeric item ID. Exact counts; schematic petal areas. UpSet shows exclusive intersections; Jaccard uses inclusive pair intersections.' : current.family === 'diffusion' ? 'Analytic 8-mode score, finite σ=.01. Numerical error vs 512-call Heun; no trained image model.' : custom ? 'Your imported numeric observations. Derived views recomputed locally.' : 'Seeded browser fixtures, not pretrained-model results. Intervals are pointwise normal approximations, not the Python bootstrap intervals.';
+  $('#data-origin').textContent = bioFamilies.includes(current.family) ? (custom?'Your supplied biological table. Descriptive values; no statistical or biological inference.':'Seeded synthetic biological fixture. Not measured patients, tissue, genomes or sequencing reads.') : current.family === 'sets' ? 'Six binary memberships per numeric item ID. Exact counts; schematic petal areas. UpSet shows exclusive intersections; Jaccard uses inclusive pair intersections.' : current.family === 'diffusion' ? 'Analytic 8-mode score, finite σ=.01. Numerical error vs 512-call Heun; no trained image model.' : custom ? 'Your imported numeric observations. Derived views recomputed locally.' : 'Seeded browser fixtures, not pretrained-model results. Intervals are pointwise normal approximations, not the Python bootstrap intervals.';
   if (editOpen) $('#csv-editor').value = csv(rows, current.family);
   $('#chart').dataset.revision = String(++renderToken);
   document.dispatchEvent(new CustomEvent('prismatica:render', {
@@ -320,6 +351,7 @@ function paint(recalculate = true, kind = 'data') {
 }
 
 function regenerate() {
+  if(current.family==='spatial'){spatialImage=null;updateTissue()}
   stopPlay();
   phase = 1;
   custom = false;
@@ -424,6 +456,7 @@ function applyText(text) {
     next = payload.rows;
     validate(next, current.family)
   } else next = parseCSV(text, current.family);
+  if(current.family==='spatial'&&spatialImage&&next.some(r=>r[1]<0||r[2]<0||r[1]>spatialImage.width||r[2]>spatialImage.height))throw Error('Imported coordinates fall outside the tissue image. Remove the image or use matching pixel coordinates.');
   const backup = rows, wasCustom = custom;
   try {
     rows = next;
@@ -577,7 +610,7 @@ $('#export-png').addEventListener('click', () => {
 });
 $('#share').addEventListener('click', async () => {
   updateURL();
-  if (await copy(location.href)) toast(custom ? 'Link copied. Custom data is not included; export your CSV too.' : 'Reproducible parameter link copied')
+  if (await copy(location.href)) toast(current.family==='spatial'&&spatialImage?'Link copied. The local tissue image is not included; export SVG to share the complete figure.':custom ? 'Link copied. Custom data is not included; export your CSV too.' : 'Reproducible parameter link copied')
 });
 const install = 'git clone https://github.com/Grady10086/Prismatica.git\ncd Prismatica\npython3 scripts/install_skills.py';
 $('#copy-install').addEventListener('click', async () => {
@@ -679,7 +712,8 @@ function gallery() {
     card.innerHTML=`<div class="study-preview"></div><div class="card-topline"><span>${study.category}</span><span>${String(studies.indexOf(study)+1).padStart(2,'0')} / LIVE</span></div><h3>${study.title}<span>↗</span></h3><p>${study.tag}</p>`;
     card.addEventListener('click',()=>{choose(study.id);$('#laboratory').scrollIntoView({behavior:motionAllowed()?'smooth':'instant'})});
     const p=defaults(study.family);
-    if(study.family==='sets')p.n=200;
+    if(study.family==='spatial')p.n=200;
+    else if(study.family==='sets')p.n=200;
     else if(study.family==='retrieval')p.n=12;
     else if(study.family==='diffusion')p.n=32;
     else if(['paired','representation','flow','conflict'].includes(study.family))p.n=32;
@@ -695,7 +729,7 @@ function gallery() {
   markSelected();
   if(!booting)animateCards($('#gallery'),before);
 }
-for (const label of ['All', 'Multimodal', 'Generative', 'Model analysis', 'Statistical']) {
+for (const label of ['All', 'Multimodal', 'Generative', 'Model analysis', 'Statistical', 'Bioinformatics']) {
   const b = document.createElement('button');
   b.textContent = label;
   b.classList.toggle('active', label === filter);

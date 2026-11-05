@@ -2,7 +2,7 @@
 
 [Open Prismatica online](https://grady10086.github.io/Prismatica/)
 
-The GitHub Pages website complements the Python figure-making suite with twenty-seven browser-native study presets across ten computational families. Every gallery card opens a live composition; no plot is a PNG masquerading as an interactive chart. The browser figures reinterpret the selected static studies rather than numerically reproducing every Python panel.
+The GitHub Pages website complements the Python figure-making suite with thirty-two browser-native study presets across fifteen computational families. Every gallery card opens a live composition; no plot is a PNG masquerading as an interactive chart. The browser figures reinterpret the selected static studies rather than numerically reproducing every Python panel.
 
 ## Explore
 
@@ -44,7 +44,7 @@ python3 -m http.server 8877 --directory site
 uv run --with quickjs python scripts/test_web_models.py
 ```
 
-The model checks execute the actual JavaScript modules with QuickJS, validate every preset at default and numeric parameter boundaries (81 complete SVG renders), and check deterministic sampling, CSV validation, retrieval ranking, matched effects, analytic-score gradients and numerical convergence. Browser QA additionally verifies editing, navigation, rendering, palette changes and downloads.
+The model checks execute the actual JavaScript modules with QuickJS, validate every preset at default and numeric parameter boundaries (96 complete SVG renders), and check deterministic sampling, CSV validation, retrieval ranking, matched effects, analytic-score gradients and numerical convergence. Browser QA additionally verifies editing, navigation, rendering, palette changes and downloads.
 
 [The deployment workflow](../.github/workflows/pages.yml) validates and packages only `site/` with revisioned asset URLs, then publishes it after a matching push to `main`. Hosting does not require changing the repository's visibility. Model and data code is intentionally part of the public browser bundle; it contains no credentials.
 
@@ -58,7 +58,7 @@ Use the panel selector above the figure to focus a single panel; Fit restores th
 
 ## Expanded compositions
 
-The collection now contains **27 compositions: six each in Multimodal, Generative and Model analysis, and nine in Statistical**. The original fifteen remain available at their existing study IDs. Nine additional views use the same validated input schemas; all panels are calculated from the imported observations or explicitly labelled toy integration.
+The collection now contains **32 compositions: six each in Multimodal, Generative and Model analysis, nine in Statistical, and five in Bioinformatics**. The original fifteen remain available at their existing study IDs. Nine additional views use the same validated input schemas; all panels are calculated from the imported observations or explicitly labelled toy integration.
 
 | Study | Category | Additional analysis / layout |
 | --- | --- | --- |
@@ -76,4 +76,6 @@ Rank ties use the same optimistic rule as the original retrieval view: one plus 
 
 Sampler bands are empirical 10th–90th percentiles across shared seeds or particles, **not confidence intervals**. Consecutive-budget gains are pooled descriptive differences and require at least two supplied budgets; a single-budget import displays an explicit missing-comparison message. Latency remains simulated in presets. Diffusion mode occupancy assigns each endpoint to the nearest of eight known centres; it is neither FID nor a learned generative-model benchmark. The 512-call Heun endpoint is a numerical reference, not an exact solution. Agreement limits describe observed differences and do not establish interchangeability or a confidence interval.
 
-The Statistical category also includes three [set-overlap compositions](set-overlap.md): a schematic petal shared-core summary, an exact UpSet view and pairwise Jaccard analysis. This brings the collection to 27 views across ten computational families.
+The Statistical category also includes three [set-overlap compositions](set-overlap.md): a schematic petal shared-core summary, an exact UpSet view and pairwise Jaccard analysis. This brings the collection to 27 views across fifteen computational families.
+
+The [Bioinformatics guide](bioinformatics.md) specifies the five typed biological schemas, Newick import, local tissue images, validation limits and Python exports. These families accept text identifiers; earlier numeric schemas remain unchanged.

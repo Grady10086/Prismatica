@@ -12,11 +12,12 @@ ROOT=Path(__file__).resolve().parents[1]
 ctx=quickjs.Context()
 # QuickJS's JS standard library lacks this modern browser method.
 ctx.eval('Array.prototype.at=function(i){return this[i<0?this.length+i:i]}')
-for name,obj in [('models','Models'),('charts','Charts'),('hero','Hero'),('motion','Motion')]:
+for name,obj in [('bio','Bio'),('models','Models'),('charts','Charts'),('hero','Hero'),('motion','Motion')]:
     raw=(ROOT/'site'/f'{name}.js').read_text()
     exported=re.findall(r'export (?:const|function) (\w+)',raw)
-    imported=re.search(r'import \{([^}]+)\}',raw)
-    prefix='const {'+imported[1]+'}=Models;' if imported else ''
+    imports=re.findall(r"import \{([^}]+)\} from '(\./[^']+)'",raw,re.S)
+    objects={'./bio.js':'Bio','./models.js':'Models'}
+    prefix=''.join('const {'+names+'}='+objects[target]+';' for names,target in imports)
     source=re.sub(r'^import\b[\s\S]*?;\n','',raw,flags=re.M)
     source=re.sub(r'\bexport\s+','',source)
     ctx.eval('globalThis.'+obj+'=(()=>{'+prefix+source+';return {'+','.join(exported)+'}})()')
@@ -31,7 +32,8 @@ for script in (ROOT/'site').glob('*.js'):
 
 count=0
 study_count=js("return Models.studies.length;")
-assert study_count==27
+assert study_count==32
+assert js("return Models.studies.filter(s=>s.category==='Bioinformatics').length===5;")
 assert js("return ['Multimodal','Generative','Model analysis'].every(c=>Models.studies.filter(s=>s.category===c).length===6)&&Models.studies.filter(s=>s.category==='Statistical').length===9;")
 for index in range(study_count):
     for variant in ['default','min','max']:
@@ -93,7 +95,6 @@ for url in re.findall(r'(?:src|href)="([^\"]+)"',html):
     if url.startswith('./'):assert (ROOT/'site'/url[2:]).exists(),url
 for p in (ROOT/'site').glob('*.js'):
     for target in re.findall(r"from '(\./[^']+)'",p.read_text()):assert (p.parent/target).exists(),target
-print(f'{count} study/boundary renders passed; deterministic data, schema validation, retrieval, paired effects, analytic gradients, solver convergence and Möbius seam continuity verified.')
 
 # Expanded catalog: independent numerical fixtures, not just render smoke checks.
 assert js("return JSON.stringify(Models.matrixRanks([[.9,.8],[.95,.7]]))==='[1,2]'&&JSON.stringify(Models.matrixRanks(Models.transpose([[.9,.8],[.95,.7]])))==='[2,2]';")
@@ -121,3 +122,27 @@ for variant in ['flower','upset','similarity']:
     result=js(f"const s=Models.studies.find(s=>s.family==='sets'&&s.variant==='{variant}'),p=Models.defaults('sets');return Charts.render(s,[[1,1,0,0,0,0,0],[2,1,0,0,0,0,0]],p,Models.palettes.iris,{{custom:true}}).svg;")
     assert not re.search('NaN|Infinity',result)
     ET.fromstring(result)
+
+# Specialized biology contracts and independent known-value fixtures.
+assert js(r"""const r=Bio.bioParse('sample,gene,alteration,cohort\nP1,G1,WT,A\nP1,G2,NA,A\nP2,G1,missense,B\nP2,G2,amplification,B','oncoprint'),d=Bio.bioSummary('oncoprint',r);return d.burden('P1')===0&&d.burden('P2')===2&&d.get('P1','G2')[0]==='NA';""")
+assert js(r"""const rows=Bio.parseNewick("('Leaf A':0.1,('B':0.2,C:0.3):0.4);"),d=Bio.bioSummary('phylogeny',rows);return d.leaves.length===3&&d.leaves.find(n=>n.label==='Leaf A').distance===.1&&Math.abs(d.leaves.find(n=>n.label==='C').distance-.7)<1e-12&&d.leaves.every(n=>n.value===null);""")
+assert js("for(const text of ['(A,B:1);','(A:-1,B:1);','(A:1,A:2);','(A:1,B:2) trailing']){try{Bio.parseNewick(text);return false}catch{}}return true;")
+assert js("const r=[['r','','',0,'',null],['a','b','A',1,'',null],['b','a','B',1,'',null]];try{Bio.bioValidate(r,'phylogeny');return false}catch{return true};")
+assert js("const rows=[['chromosome','chrA',0,100,0,'',0,0,''],['chromosome','chrB',0,200,0,'',0,0,''],['gc','chrA',0,25,.2,'',0,0,''],['gc','chrA',25,100,.6,'',0,0,'']];Bio.bioValidate(rows,'circos');return Math.abs(Bio.bioSummary('circos',rows).weightedGC('chrA')-.5)<1e-12;")
+assert js("const r=[['exon','G',0,10,0,'E1'],['exon','G',20,30,0,'E2'],['coverage','S',0,20,3,''],['coverage','S',10,30,4,''],['junction','S',10,20,4,'J']];try{Bio.bioValidate(r,'sashimi');return false}catch{return true};")
+for family in ['oncoprint','spatial','phylogeny','circos','sashimi']:
+    assert js(f"const f='{family}',p=Object.fromEntries(Bio.bioControls(f).map(c=>[c.key,c.value])),r=Bio.bioGenerate(f,p,1107);return JSON.stringify(Bio.bioParse(Bio.bioCSV(r,f),f))===JSON.stringify(r);")
+# Strings with commas and escaped quotes survive the CSV codec.
+assert js("const r=[['cell, \"A\"',0,0,'Type A',1],['cell2',1,1,'Type B',2]];return JSON.stringify(Bio.bioParse(Bio.bioCSV(r,'spatial'),'spatial'))===JSON.stringify(r);")
+# Valid unassayed cohorts and zero-length branches render without invented numbers.
+for family, fixture in [
+ ('oncoprint',[['P1','G1','NA','A'],['P1','G2','NA','A'],['P2','G1','NA','B'],['P2','G2','NA','B']]),
+ ('phylogeny',[['r','','',0,'',None],['a','r','A',0,'',None],['b','r','B',0,'',None]])]:
+    result=js(f"const f='{family}',r={json.dumps(fixture)},s=Models.studies.find(s=>s.family===f);Bio.bioValidate(r,f);return Charts.render(s,r,Models.defaults(f),Models.palettes.iris,{{custom:true}}).svg;")
+    ET.fromstring(result)
+    assert not re.search('NaN|Infinity',result)
+
+# A partial sample/junction table is missing data, not a zero-support call.
+assert js("const r=[['exon','G',0,10,0,'E1'],['exon','G',20,30,0,'E2'],['junction','A',10,20,3,'J'],['coverage','B',0,10,1,'']];try{Bio.bioValidate(r,'sashimi');return false}catch{return true};")
+
+print(f'{count} study/boundary renders passed; deterministic data, schema validation, retrieval, paired effects, analytic gradients, solver convergence and Möbius seam continuity verified.')

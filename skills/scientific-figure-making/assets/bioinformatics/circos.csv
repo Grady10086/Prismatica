@@ -1,0 +1,142 @@
+kind,chrom,start,end,value,target,target_start,target_end,label
+chromosome,chr1,0,1115799,0,,0,0,chr1
+gc,chr1,0,92983,0.418,,0,0,GC fraction
+density,chr1,0,92983,17,,0,0,Supplied gene density
+gc,chr1,92983,185966,0.587,,0,0,GC fraction
+density,chr1,92983,185966,21,,0,0,Supplied gene density
+gc,chr1,185966,278949,0.362,,0,0,GC fraction
+density,chr1,185966,278949,4,,0,0,Supplied gene density
+gc,chr1,278949,371933,0.589,,0,0,GC fraction
+density,chr1,278949,371933,30,,0,0,Supplied gene density
+gc,chr1,371933,464916,0.492,,0,0,GC fraction
+density,chr1,371933,464916,24,,0,0,Supplied gene density
+gc,chr1,464916,557899,0.469,,0,0,GC fraction
+density,chr1,464916,557899,9,,0,0,Supplied gene density
+gc,chr1,557899,650882,0.348,,0,0,GC fraction
+density,chr1,557899,650882,28,,0,0,Supplied gene density
+gc,chr1,650882,743866,0.409,,0,0,GC fraction
+density,chr1,650882,743866,18,,0,0,Supplied gene density
+gc,chr1,743866,836849,0.508,,0,0,GC fraction
+density,chr1,743866,836849,12,,0,0,Supplied gene density
+gc,chr1,836849,929832,0.52,,0,0,GC fraction
+density,chr1,836849,929832,30,,0,0,Supplied gene density
+gc,chr1,929832,1022815,0.423,,0,0,GC fraction
+density,chr1,929832,1022815,15,,0,0,Supplied gene density
+gc,chr1,1022815,1115799,0.568,,0,0,GC fraction
+density,chr1,1022815,1115799,29,,0,0,Supplied gene density
+chromosome,chr2,0,1128199,0,,0,0,chr2
+gc,chr2,0,94016,0.474,,0,0,GC fraction
+density,chr2,0,94016,25,,0,0,Supplied gene density
+gc,chr2,94016,188033,0.56,,0,0,GC fraction
+density,chr2,94016,188033,24,,0,0,Supplied gene density
+gc,chr2,188033,282049,0.529,,0,0,GC fraction
+density,chr2,188033,282049,27,,0,0,Supplied gene density
+gc,chr2,282049,376066,0.338,,0,0,GC fraction
+density,chr2,282049,376066,26,,0,0,Supplied gene density
+gc,chr2,376066,470082,0.345,,0,0,GC fraction
+density,chr2,376066,470082,18,,0,0,Supplied gene density
+gc,chr2,470082,564099,0.566,,0,0,GC fraction
+density,chr2,470082,564099,5,,0,0,Supplied gene density
+gc,chr2,564099,658116,0.616,,0,0,GC fraction
+density,chr2,564099,658116,4,,0,0,Supplied gene density
+gc,chr2,658116,752132,0.628,,0,0,GC fraction
+density,chr2,658116,752132,20,,0,0,Supplied gene density
+gc,chr2,752132,846149,0.362,,0,0,GC fraction
+density,chr2,752132,846149,18,,0,0,Supplied gene density
+gc,chr2,846149,940165,0.569,,0,0,GC fraction
+density,chr2,846149,940165,3,,0,0,Supplied gene density
+gc,chr2,940165,1034182,0.472,,0,0,GC fraction
+density,chr2,940165,1034182,4,,0,0,Supplied gene density
+gc,chr2,1034182,1128199,0.645,,0,0,GC fraction
+density,chr2,1034182,1128199,23,,0,0,Supplied gene density
+chromosome,chr3,0,1185375,0,,0,0,chr3
+gc,chr3,0,98781,0.553,,0,0,GC fraction
+density,chr3,0,98781,19,,0,0,Supplied gene density
+gc,chr3,98781,197562,0.563,,0,0,GC fraction
+density,chr3,98781,197562,27,,0,0,Supplied gene density
+gc,chr3,197562,296343,0.448,,0,0,GC fraction
+density,chr3,197562,296343,9,,0,0,Supplied gene density
+gc,chr3,296343,395125,0.534,,0,0,GC fraction
+density,chr3,296343,395125,14,,0,0,Supplied gene density
+gc,chr3,395125,493906,0.413,,0,0,GC fraction
+density,chr3,395125,493906,21,,0,0,Supplied gene density
+gc,chr3,493906,592687,0.446,,0,0,GC fraction
+density,chr3,493906,592687,25,,0,0,Supplied gene density
+gc,chr3,592687,691468,0.635,,0,0,GC fraction
+density,chr3,592687,691468,23,,0,0,Supplied gene density
+gc,chr3,691468,790250,0.532,,0,0,GC fraction
+density,chr3,691468,790250,15,,0,0,Supplied gene density
+gc,chr3,790250,889031,0.549,,0,0,GC fraction
+density,chr3,790250,889031,22,,0,0,Supplied gene density
+gc,chr3,889031,987812,0.32,,0,0,GC fraction
+density,chr3,889031,987812,12,,0,0,Supplied gene density
+gc,chr3,987812,1086593,0.585,,0,0,GC fraction
+density,chr3,987812,1086593,30,,0,0,Supplied gene density
+gc,chr3,1086593,1185375,0.503,,0,0,GC fraction
+density,chr3,1086593,1185375,30,,0,0,Supplied gene density
+chromosome,chr4,0,1104741,0,,0,0,chr4
+gc,chr4,0,92061,0.303,,0,0,GC fraction
+density,chr4,0,92061,21,,0,0,Supplied gene density
+gc,chr4,92061,184123,0.474,,0,0,GC fraction
+density,chr4,92061,184123,17,,0,0,Supplied gene density
+gc,chr4,184123,276185,0.631,,0,0,GC fraction
+density,chr4,184123,276185,22,,0,0,Supplied gene density
+gc,chr4,276185,368247,0.537,,0,0,GC fraction
+density,chr4,276185,368247,16,,0,0,Supplied gene density
+gc,chr4,368247,460308,0.491,,0,0,GC fraction
+density,chr4,368247,460308,4,,0,0,Supplied gene density
+gc,chr4,460308,552370,0.332,,0,0,GC fraction
+density,chr4,460308,552370,24,,0,0,Supplied gene density
+gc,chr4,552370,644432,0.603,,0,0,GC fraction
+density,chr4,552370,644432,9,,0,0,Supplied gene density
+gc,chr4,644432,736494,0.529,,0,0,GC fraction
+density,chr4,644432,736494,11,,0,0,Supplied gene density
+gc,chr4,736494,828555,0.373,,0,0,GC fraction
+density,chr4,736494,828555,12,,0,0,Supplied gene density
+gc,chr4,828555,920617,0.581,,0,0,GC fraction
+density,chr4,828555,920617,5,,0,0,Supplied gene density
+gc,chr4,920617,1012679,0.486,,0,0,GC fraction
+density,chr4,920617,1012679,9,,0,0,Supplied gene density
+gc,chr4,1012679,1104741,0.466,,0,0,GC fraction
+density,chr4,1012679,1104741,14,,0,0,Supplied gene density
+chromosome,chr5,0,839224,0,,0,0,chr5
+gc,chr5,0,69935,0.428,,0,0,GC fraction
+density,chr5,0,69935,10,,0,0,Supplied gene density
+gc,chr5,69935,139870,0.408,,0,0,GC fraction
+density,chr5,69935,139870,10,,0,0,Supplied gene density
+gc,chr5,139870,209806,0.585,,0,0,GC fraction
+density,chr5,139870,209806,12,,0,0,Supplied gene density
+gc,chr5,209806,279741,0.404,,0,0,GC fraction
+density,chr5,209806,279741,11,,0,0,Supplied gene density
+gc,chr5,279741,349676,0.426,,0,0,GC fraction
+density,chr5,279741,349676,28,,0,0,Supplied gene density
+gc,chr5,349676,419612,0.371,,0,0,GC fraction
+density,chr5,349676,419612,24,,0,0,Supplied gene density
+gc,chr5,419612,489547,0.478,,0,0,GC fraction
+density,chr5,419612,489547,20,,0,0,Supplied gene density
+gc,chr5,489547,559482,0.453,,0,0,GC fraction
+density,chr5,489547,559482,22,,0,0,Supplied gene density
+gc,chr5,559482,629418,0.491,,0,0,GC fraction
+density,chr5,559482,629418,18,,0,0,Supplied gene density
+gc,chr5,629418,699353,0.387,,0,0,GC fraction
+density,chr5,629418,699353,22,,0,0,Supplied gene density
+gc,chr5,699353,769288,0.618,,0,0,GC fraction
+density,chr5,699353,769288,6,,0,0,Supplied gene density
+gc,chr5,769288,839224,0.44,,0,0,GC fraction
+density,chr5,769288,839224,23,,0,0,Supplied gene density
+link,chr5,490368,517229,1,chr2,920017,946878,Block 1
+link,chr3,516628,568243,1,chr2,181005,232620,Block 2
+link,chr4,900872,959166,1,chr1,381534,439828,Block 3
+link,chr5,128756,172221,1,chr4,185819,229284,Block 4
+link,chr5,412492,463271,1,chr4,84346,135125,Block 5
+link,chr4,321554,405515,1,chr1,365235,449196,Block 6
+link,chr2,581638,655389,1,chr5,626731,700482,Block 7
+link,chr2,139813,222762,1,chr4,38715,121664,Block 8
+link,chr3,614737,664074,1,chr4,409550,458887,Block 9
+link,chr3,986909,1072167,1,chr2,420434,505692,Block 10
+link,chr4,172153,216798,1,chr1,649697,694342,Block 11
+link,chr1,301856,390401,1,chr3,61341,149886,Block 12
+link,chr3,730346,824622,1,chr5,581341,675617,Block 13
+link,chr5,686966,749011,1,chr1,914637,976682,Block 14
+link,chr1,916386,994730,1,chr4,398138,476482,Block 15
+link,chr3,533579,620011,1,chr1,622823,709255,Block 16

@@ -154,3 +154,7 @@ The [full example index](examples.md) covers statistical composites, manuscript 
 ## Set overlaps and shared cores
 
 [Flower, UpSet and Jaccard compositions](set-overlap.md) accept item membership tables and preserve exact union, core, exclusive and inclusive pair counts. The bundled skill includes reusable Python plotting functions and editable vector exports.
+
+## Biological data structures
+
+[OncoPrint, spatial omics, annotated phylogeny, genomic Circos and Sashimi](bioinformatics.md) add five interactive and Python compositions with typed biological tables, text identifiers and explicit missingness/coordinate contracts.

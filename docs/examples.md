@@ -47,3 +47,7 @@ Run `uv sync --all-extras --locked` from the repository root. The selected galle
 Use the [composition catalog](../skills/scientific-figure-making/references/gallery-catalog.md) for statistical definitions, required assets and provenance. The [main figure-making entrypoint](../skills/scientific-figure-making/SKILL.md) prioritizes manuscript data plots for experimental figures; [Prismatica](../skills/prismatica/SKILL.md) coordinates colors and layout.
 
 The scripts are examples, not a single universal plotting CLI. In particular, `--demo` galleries do not import arbitrary CSV files. Replacing fixtures means changing the data-loading/generation block and consistently recomputing all dependent summaries.
+
+## Bioinformatics
+
+[Five biological table compositors](bioinformatics.md): OncoPrint, spatial omics, annotated phylogenies, genome Circos and Sashimi. `skills/scientific-figure-making/scripts/bioinformatics.py --kind KIND --demo --out PATH` exports SVG/PDF/PNG from bundled synthetic CSVs; use `--csv` for supplied observations.
