@@ -79,3 +79,26 @@ Sampler bands are empirical 10th–90th percentiles across shared seeds or parti
 The Statistical category also includes three [set-overlap compositions](set-overlap.md): a schematic petal shared-core summary, an exact UpSet view and pairwise Jaccard analysis. This brings the collection to 27 views across fifteen computational families.
 
 The [Bioinformatics guide](bioinformatics.md) specifies the five typed biological schemas, Newick import, local tissue images, validation limits and Python exports. These families accept text identifiers; earlier numeric schemas remain unchanged.
+
+
+## Refined evidence inspection
+
+The collection uses larger overview cards among smaller previews. All previews
+retain the complete SVG composition. Alignment, representation and performance
+plates use tighter panel spacing while preserving numerical scales and values.
+Panel letters and fine dividers follow the selected chart palette in browser
+and exported figures.
+
+The palette selector includes the original Iris, Mineral and Spectral themes,
+plus Tide and Ember. The latter are original role-based palettes inspired by
+our art studies, not sampled artwork or Pantone-book matches. Palette changes
+leave observations and derived results unchanged.
+
+Select a data mark to pin its existing linked observation. The Linked Evidence
+rail shows its tooltip values; use the previous/next buttons (also keyboard
+focusable) to inspect other keyed observations. The order follows rendered
+marks, not measured rank. Escape or Clear selection restores the complete view.
+Hover frames and selection effects are omitted from canonical SVG/PNG exports.
+
+For the underlying visual decisions and original sources see
+[generative art studies](../skills/scientific-figure-making/references/generative-art-studies.md).

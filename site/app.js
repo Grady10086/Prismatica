@@ -45,7 +45,7 @@ let current = studies[0],
   drag = null;
 const presenter = createPresenter($('#chart'));
 let canonicalFigure = '', metricSignature = '', pinnedKey = null, pointerStart = null;
-let panelSignature = '', cameraRAF = 0;
+let panelSignature = '', cameraRAF = 0, highlightedKey;
 const panelPicker = document.createElement('select');
 panelPicker.id = 'panel-picker';
 panelPicker.setAttribute('aria-label', 'Focus a figure panel');
@@ -58,6 +58,11 @@ const selectionStatus = document.createElement('span');
 selectionStatus.className = 'sr-only';
 selectionStatus.setAttribute('role','status');
 $('.canvas-area').append(selectionStatus);
+const evidenceRail=document.createElement('div');
+evidenceRail.className='evidence-rail';
+evidenceRail.innerHTML='<div class="evidence-copy"><span class="micro">LINKED EVIDENCE</span><p id="evidence-detail" aria-live="polite">Select a mark to follow the same observation across panels.</p></div><div class="evidence-actions"><button type="button" id="evidence-prev" aria-label="Previous observation">←</button><span id="evidence-position">—</span><button type="button" id="evidence-next" aria-label="Next observation">→</button></div>';
+$('.figure-note').before(evidenceRail);
+
 let spatialImage=null;
 const imageControls=document.createElement('div');
 imageControls.className='tissue-controls';
@@ -133,6 +138,8 @@ function tr() {
     else e.innerHTML = e.dataset.en;
     e.style.whiteSpace = 'pre-line'
   });
+  if(pinnedKey===null)$('#evidence-detail').textContent=lang==='zh'?'选择一个数据点，查看它在各面板中的对应观测。':'Select a mark to follow the same observation across panels.';
+  $('.evidence-copy .micro').textContent=lang==='zh'?'关联观测':'LINKED EVIDENCE';
   $('#language').textContent = lang === 'en' ? '中文' : 'EN';
   document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN'
 }
@@ -277,6 +284,7 @@ function configure() {
     b.setAttribute('aria-label', name + ' palette');
     b.setAttribute('aria-pressed', name === palette);
     b.title = name;
+    const nameLabel=document.createElement('small');nameLabel.textContent=name;
     cols.forEach(col => {
       let dot = document.createElement('span');
       dot.style.background = col;
@@ -292,6 +300,7 @@ function configure() {
       store();
       updateURL()
     });
+    b.append(nameLabel);
     $('#palettes').append(b)
   });
   tr()
@@ -619,16 +628,51 @@ $('#copy-install').addEventListener('click', async () => {
 const tooltip = $('#tooltip');
 function clearInspection() {
   pinnedKey = null;
+  highlightedKey=undefined;
+  $('#chart').classList.remove('has-selection');
   clearSelection.hidden = true;
   selectionStatus.textContent = '';
   $('#tooltip').hidden = true;
+  $('#evidence-detail').textContent=lang==='zh'?'选择一个数据点，查看它在各面板中的对应观测。':'Select a mark to follow the same observation across panels.';
+  $('#evidence-position').textContent='—';
+  $('#chart').querySelector('[data-inspection-overlay]')?.remove();
   $('#chart').querySelectorAll('.muted,.linked').forEach(x=>x.classList.remove('muted','linked'));
 }
 function highlight(key) {
+  if(key===highlightedKey)return;highlightedKey=key;
+  $('#chart').classList.toggle('has-selection',key!==undefined);
   $('#chart').querySelectorAll('[data-key]').forEach(x=>{
     x.classList.toggle('muted',key!==undefined&&x.dataset.key!==key);
     x.classList.toggle('linked',key!==undefined&&x.dataset.key===key);
   });
+}
+function observationKeys(){return [...new Set([...$('#chart').querySelectorAll('svg:not(.figure-ghost) [data-key][data-tip]')].map(x=>x.dataset.key))]}
+function pinObservation(key){
+  const marks=[...$('#chart').querySelectorAll('svg:not(.figure-ghost) [data-key][data-tip]')];
+  const el=marks.find(x=>x.dataset.key===key);if(!el)return;
+  pinnedKey=key;highlight(key);clearSelection.hidden=false;
+  const keys=observationKeys(),index=keys.indexOf(key),matches=[...$('#chart').querySelectorAll('svg:not(.figure-ghost) [data-key]')].filter(x=>x.dataset.key===key);
+  $('#evidence-detail').textContent=el.dataset.tip.replaceAll('\n',' · ');
+  $('#evidence-position').textContent=`${index+1} / ${keys.length}`;
+  selectionStatus.textContent=`Observation ${key} selected; ${matches.length} linked marks.`;
+}
+function stepObservation(direction){
+  presenter.finish();const keys=observationKeys();if(!keys.length)return;
+  const i=pinnedKey===null?(direction>0?-1:0):keys.indexOf(pinnedKey);
+  pinObservation(keys[(i+direction+keys.length)%keys.length]);tooltip.hidden=true;
+}
+$('#evidence-prev').addEventListener('click',()=>stepObservation(-1));
+$('#evidence-next').addEventListener('click',()=>stepObservation(1));
+function panelGlow(e){
+  const svg=$('#chart').querySelector('svg:not(.figure-ghost)');if(!svg||$('#chart').dataset.transitioning==='true')return;
+  const matrix=svg.getScreenCTM();if(!matrix)return;
+  const point=new DOMPoint(e.clientX,e.clientY).matrixTransform(matrix.inverse());
+  const panel=[...svg.querySelectorAll('[data-panel-box]')].find(p=>{const[x,y,w,h]=p.dataset.panelBox.split(' ').map(Number);return point.x>=x&&point.x<=x+w&&point.y>=y&&point.y<=y+h});
+  let overlay=svg.querySelector('[data-inspection-overlay]');
+  if(!panel){overlay?.remove();return}
+  if(!overlay){overlay=document.createElementNS('http://www.w3.org/2000/svg','rect');overlay.dataset.inspectionOverlay='true';overlay.setAttribute('class','panel-aura');svg.append(overlay)}
+  const[x,y,w,h]=panel.dataset.panelBox.split(' ').map(Number);
+  for(const[k,v]of Object.entries({x,y,width:w,height:h,rx:3}))overlay.setAttribute(k,v);
 }
 function showTip(el,e) {
   tooltip.textContent = el.dataset.tip;
@@ -673,13 +717,13 @@ $('#chart').addEventListener('click',e=>{
   if(pointerStart&&Math.hypot(e.clientX-pointerStart.x,e.clientY-pointerStart.y)>5)return;
   const el=e.target.closest('[data-key][data-tip]');
   if(!el||pinnedKey===el.dataset.key){clearInspection();return}
-  pinnedKey=el.dataset.key;
-  highlight(pinnedKey);
+  pinObservation(el.dataset.key);
   showTip(el,e);
   clearSelection.hidden=false;
-  selectionStatus.textContent='Observation '+pinnedKey+' selected across linked panels.';
+
 });
 $('#chart').addEventListener('pointermove', e => {
+  panelGlow(e);
   if (drag && zoom > 1) {
     const box = $('#chart').getBoundingClientRect();
     view.x = Math.max(0, Math.min(1000 - view.w, drag.v.x - (e.clientX - drag.x) / box.width * view.w));
@@ -694,6 +738,7 @@ $('#chart').addEventListener('pointermove', e => {
   highlight(el.dataset.key);
 });
 $('#chart').addEventListener('pointerleave',()=>{
+  $('#chart').querySelector('[data-inspection-overlay]')?.remove();
   tooltip.hidden=true;
   if(pinnedKey===null)highlight(undefined);
 });

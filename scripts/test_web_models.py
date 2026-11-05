@@ -54,6 +54,18 @@ for index in range(study_count):
         assert len(result['metrics'])==4
         count+=1
 
+# Presentation palettes must not change derived results or produce invalid vectors.
+for palette in ['tide','ember']:
+    for index in range(study_count):
+        result=js(f"""const study=Models.studies[{index}],p=Models.defaults(study.family),rows=Models.generate(study,p,1107);
+        const before=JSON.stringify(rows),reference=Charts.render(study,rows,p,Models.palettes.iris),result=Charts.render(study,rows,p,Models.palettes['{palette}']);
+        if(before!==JSON.stringify(rows))throw Error('palette mutated inputs');
+        if(JSON.stringify(reference.metrics)!==JSON.stringify(result.metrics))throw Error('palette changed results');
+        return {{svg:result.svg}};""")
+        ET.fromstring(result['svg'])
+        assert not re.search(r'NaN|Infinity',result['svg'])
+print('64 additional palette renders passed; source observations and derived metrics unchanged.')
+
 assert js("const a=Models.random(12),b=Models.random(12);return Array.from({length:100},()=>a()===b()).every(Boolean);")
 assert js("const s=Models.studies.find(s=>s.family==='paired'),p=Models.defaults('paired'),a=Models.generate(s,p,4),b=Models.generate(s,{...p,effect:p.effect+4},4);return a.every((r,i)=>Math.abs(b[i][3]-r[3]-4)<1e-10);")
 assert js("const r=[[1,1,.9,.1],[1,2,.1,.9],[2,1,.1,.9],[2,2,.9,.1]],d=Models.retrievalData(r);return d.rank[0].every(r=>r===1)&&d.rank[1].every(r=>r===2);")

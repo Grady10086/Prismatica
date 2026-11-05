@@ -1,6 +1,6 @@
 import {bioFamilies,bioSchemas,bioControls,bioGenerate,bioValidate,bioParse,bioCSV,bioSummary} from './bio.js';
 // Deterministic browser models. Synthetic fixtures unless explicitly marked computed.
-export const palettes={iris:['#55609B','#AB6690','#E6A385','#758E8B'],mineral:['#4266A0','#328E89','#B9647C','#C69B4B'],spectral:['#7957AD','#4B9BA8','#DB8B6F','#A7AA68']};
+export const palettes={iris:['#55609B','#AB6690','#E6A385','#758E8B'],mineral:['#4266A0','#328E89','#B9647C','#C69B4B'],spectral:['#7957AD','#4B9BA8','#DB8B6F','#A7AA68'],tide:['#3E7286','#A86183','#C58050','#60877A'],ember:['#835D35','#566C89','#AC5960','#70815D']};
 export const studies=[
 {id:'diffusion',title:'Diffusion, unfolded',category:'Generative',family:'diffusion',desc:'An analytic score field. Shared particles. Actual numerical sampling, unfolding in your browser.',tag:'SAMPLING / NUMERICAL ANALYSIS',source:'docs/multimodal-diffusion.md#diffusion-sampling-and-numerics'},
 {id:'retrieval',title:'Across modalities',category:'Multimodal',family:'retrieval',desc:'Follow matched image–text pairs from a similarity matrix to retrieval ranks and their margins.',tag:'ALIGNMENT / RETRIEVAL',source:'docs/multimodal-diffusion.md#cross-modal-alignment-and-retrieval'},

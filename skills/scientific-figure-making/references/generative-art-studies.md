@@ -105,3 +105,26 @@ illustration, with the distinction visible and stated when needed.
 - Preserve the half-twist seam and original geometry across representations.
 - Link original projects as references; do not bundle their photos, videos,
   logos, soundtracks or source artwork as Prismatica-owned assets.
+
+## Chart collection and laboratory interpretation
+
+The website applies these principles to evidence as well as hero art:
+
+- Shared panel headings use a small palette-linked accent and a fine neutral
+  divider. Their treatment is in the SVG source, so canonical SVG/PNG exports
+  keep it. Neutral paper and readable axes remain independent of the theme.
+- Tide (blue, rose, ochre, sage) and Ember (bronze, slate, muted red, olive) are
+  original optional browser palettes. They are not sampled from the works or
+  identified as Pantone colors. Iris remains the default; fixed category order
+  and numerical color domains are retained when changing palettes.
+- The collection alternates larger primary previews with smaller supporting
+  cards. Individual plots preserve the full vector viewBox rather than cropping
+  evidence to fill a card.
+- Hover adds a thin frame to the current panel. Selecting an observation adds
+  local emphasis to its existing linked marks and keeps other observations
+  visible. The evidence rail exposes the selected mark's actual tooltip values;
+  previous/next buttons support keyboard inspection in SVG traversal order,
+  which is not a ranking by value.
+- Overlays and selection styles are transient interface state. Canonical exports
+  contain the full data and omit hover frames and dimming. No cinematic light,
+  artificial point jitter or decorative particles are added to measured marks.

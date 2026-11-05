@@ -156,7 +156,7 @@ function sashimiPlot(H,w,rows,p,colors,d){
  return[{label:'Samples',value:d.samples.length},{label:'Exon intervals',value:d.exons.length},{label:'Distinct junctions',value:d.junctions.length},{label:'Sum junction counts',value:sum(rows.filter(r=>r[0]==='junction').map(r=>r[4]))}];
 }
 export function renderBio(H,study,rows,p,palette,options={}){
- const colors=ramps(palette),w=H.writer(study.title),d=bioSummary(study.family,rows);let metrics;
+ const colors=ramps(palette),w=H.writer(study.title,palette),d=bioSummary(study.family,rows);let metrics;
  if(study.family==='oncoprint')metrics=oncoPlot(H,w,rows,p,colors,d);
  else if(study.family==='spatial')metrics=spatialPlot(H,w,rows,p,colors,d,options);
  else if(study.family==='phylogeny')metrics=phylogenyPlot(H,w,rows,p,colors,d);
