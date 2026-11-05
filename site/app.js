@@ -150,7 +150,8 @@ function updateURL() {
 }
 
 function store() {
-  cache.set(current.id, {
+  const ids=current.family==='sets'?studies.filter(s=>s.family==='sets').map(s=>s.id):[current.id];
+  for(const id of ids)cache.set(id, {
     seed,
     params: {
       ...params

@@ -23,7 +23,8 @@ Use `item,A,B,C,D,E,F`, with one unique integer ID per row and six binary 0/1
 memberships. At least one set must contain each item. The browser excludes no
 items silently. Zero-sized sets and a zero shared core are permitted. The four
 metrics report union size, all-six core, one-set-only items and non-empty exact
-intersections. Default parameter changes regenerate the seeded fixture; importing
+intersections. The three set views share their active data, parameters and palette when switched
+through the gallery or study selector. Default parameter changes regenerate the seeded fixture; importing
 CSV or JSON replaces it. Example:
 
 ```csv
