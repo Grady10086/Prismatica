@@ -1,0 +1,49 @@
+/* Landscape references translated into interface layers; chart SVGs stay intact. */
+body{background:#0d151b}
+.nav{background:#0d151bdc;border-bottom-color:#a6b6b51c}
+.hero{isolation:isolate;background:radial-gradient(ellipse at 92% 40%,#758e8b20,transparent 54%),radial-gradient(ellipse at 70% 85%,#e6a38513,transparent 48%),#0d151b}
+.atmosphere{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1}
+.hero h1 em{color:#e6b29b}
+.hero-bottom p{color:#b0bdc0}
+.hero-coordinate span,.sculpture-controls small{color:#93a5aa}
+.sculpture-controls button{background:#14232a9c;border-color:#9bafaf30}
+.marquee{background:#142027;color:#b4c2c3;border-color:#758e8b30}
+.collection,.laboratory{background:#101b22}
+.collection:before{background:radial-gradient(ellipse at 100% 0%,#758e8b16,transparent 50%)}
+.laboratory{background:radial-gradient(ellipse at 0 20%,#758e8b11,transparent 50%),#122028;border-top-color:#758e8b30}
+.laboratory:before{background:radial-gradient(ellipse at 95% 0%,#e6a3850b,transparent 50%)}
+.collection .section-heading h2 em,.laboratory .section-heading h2 em{color:#adc3bf}
+.collection .section-heading .eyebrow,.laboratory .section-heading .eyebrow{color:#b4b7b0}
+.collection .section-description,.laboratory .section-description{color:#a1b1b6}
+.collection-toolbar{background:#101b22ed;border-color:#758e8b33}
+.filters button{color:#a8b8be}.filters button:hover:not(.active){background:#758e8b18;border-color:#758e8b66}
+.search-label{background:#18272f;border-color:#758e8b40}.search-label span,#collection-count{color:#a2b7b6}
+.study-card{background:linear-gradient(145deg,#20313a,#152129);border-color:#758e8b30;border-radius:11px}
+.study-card:hover,.study-card:focus-visible{border-color:#b1c2b899;box-shadow:0 12px 30px #0003}
+.study-card.is-selected{background:linear-gradient(140deg,#34403e,#19282e);border-color:#e6a38599}
+.study-card .card-topline{color:#a3b9b9}.study-card h3{color:#e3ebe8}
+.study-preview:after{background:#16272eeb;border-color:#758e8b55}
+.lab-shell{border-color:#758e8b55;background:#14232b;box-shadow:0 24px 75px #0003}
+.lab-shell:before{background:linear-gradient(90deg,transparent,#758e8b99,#e6a38599,transparent)}
+.lab-topbar{background:linear-gradient(100deg,#23343b,#1a2932);border-bottom-color:#758e8b30}
+.live-indicator{color:#b4c8c3}.lab-topbar select,.control select{background:#23343d;border-color:#758e8b44}
+.control-panel{background:linear-gradient(155deg,#21333b,#17242d);border-right-color:#758e8b30}
+.study-kicker,.control-label{color:#b0c5bf}.control-panel h3{color:#e7eee9}.control-panel>p,.control-footer p{color:#a9b9bd}
+.control-heading{color:#c5d4d1}.control input[type=range]{accent-color:#a2b9b2}.control-footer a{color:#c2cfc2}
+.metric-strip{background:linear-gradient(110deg,#25383c,#192a33);border-top-color:#758e8b55}
+.metric{border-color:#758e8b30}.metric strong{color:#e6ede8}.metric:nth-child(2) strong{color:#b9cec7}.metric:nth-child(3) strong{color:#d6b7bc}.metric span{color:#a7bfbd}
+.figure-note{background:#1a2c34;color:#a9bfbd}
+.data-drawer{background:#17262e;border-color:#758e8b40}.data-toggle{color:#d2dfd9}.data-toggle>.micro{color:#a1b7b6}
+.editor-heading h4{color:#e1e9e5}.editor-heading p{color:#a9babd}
+#csv-editor{background:#101d25;border-color:#758e8b55;color:#c4d7d0}
+.workflow{background:radial-gradient(ellipse at 85% 30%,#758e8b12,transparent 60%),#0e181f}
+.workflow-grid article{border-color:#758e8b40}.workflow-grid p{color:#aab9bd}
+.install-block{background:linear-gradient(120deg,#203039,#19252d);border-color:#758e8b40}
+.closing{position:relative;overflow:hidden;background:radial-gradient(ellipse at 85% 90%,#e6a38518,transparent 55%),#142128}
+.closing:before{content:'';position:absolute;width:56vw;height:56vw;border:1px solid #758e8b30;border-radius:50%;right:-13vw;top:-18vw;pointer-events:none}
+.closing-link{position:relative}
+.contact{background:radial-gradient(ellipse at 85% 100%,#758e8b14,transparent 65%),#101b22;border-color:#758e8b33}
+.contact-links a{background:#1d2e3566;border-color:#758e8b40}.contact-links a:hover{background:#2a3b3b88;border-color:#e6a38580}.contact-links .micro{color:#a8bfba}
+footer{background:#0d151b}
+@media(max-width:760px){.atmosphere{opacity:.6}.closing:before{width:90vw;height:90vw;right:-35vw;top:-10vw}}
+@media print{.atmosphere{display:none}}

@@ -19,7 +19,7 @@ def build(out,revision):
     for p in out.glob('*.js'):
         p.write_text(re.sub(r'''(\bfrom\s+['"])(\./[^'"]+\.js)(['"])''',lambda m:m[1]+m[2]+'?v='+revision+m[3],p.read_text()))
     p=out/'index.html'
-    html=p.read_text().replace('./styles.css','./styles.css?v='+revision).replace('./app.js','./app.js?v='+revision).replace('./studio.css','./studio.css?v='+revision)
+    html=p.read_text().replace('./styles.css','./styles.css?v='+revision).replace('./app.js','./app.js?v='+revision).replace('./studio.css','./studio.css?v='+revision).replace('./atmosphere.css','./atmosphere.css?v='+revision)
     html=html.replace('</head>','<meta name="prismatica-version" content="'+revision+'">\n</head>')
     p.write_text(html)
     (out/'.nojekyll').touch()
