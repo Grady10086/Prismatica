@@ -2,7 +2,7 @@
 
 Use when a figure needs the restrained warm–cool balance, selective detail and
 asymmetric composition seen in the landscape references supplied by the
-user on 2026-11-05 (an initial five images and a follow-up ten). This is an optional aesthetic direction, not a replacement
+user on 2026-11-05 (an initial five images and two subsequent ten-image batches). This is an optional aesthetic direction, not a replacement
 for the project theme or a scientific plotting standard.
 
 ## What the references teach
@@ -72,6 +72,56 @@ balance, and teal and coral need enough neutral separation to remain legible.
 
 Do not use the artistic reflections as permission to mirror experimental
 images, duplicate observations or imply an additional measured condition.
+
+## Third batch: coastal geometry, forest depth and translucent forms
+
+Image numbers here refer to the second ten-image follow-up. The supplied
+post labels images 7–10 as Claire Russell; authorship and original medium
+remain unverified. Describe visible form and color without assuming a
+photographic or generative production process.
+
+| Images | Visual construction | Transferable decision |
+| --- | --- | --- |
+| 1: two palms above beach and road | Long blue, sand and charcoal horizontal bands; two unequal vertical silhouettes on the right | Use a shared alignment spine and an intentional pair of focal elements; vary their prominence without losing balance |
+| 2: yellow scooter and small cloud | Cyan field with one compact yellow subject low on the right, balanced by a small white shape high on the left | Place one strong accent within a coherent field; balance an asymmetric main result with a small secondary element |
+| 3: yellow beach hut under a cloud | Centered geometric subject, separated vertically from a soft white cloud; thin horizon behind | A centered layout can work when silhouette, spacing and a clear supporting axis provide structure |
+| 4: cactus and rippled sand | Dark isolated vertical subject against desaturated slate sky and warm sand; foreground texture supplies depth | Use a restrained slate–sand direction and selective dark detail for a quieter alternative to pastel palettes |
+| 5–6: upward views through trees | A large foreground trunk narrows toward the canopy, with repeated peripheral trunks and sky openings | Organize a conceptual hierarchy around one dominant structure; leave gaps between surrounding groups to preserve legibility |
+| 7: translucent petal-like form | Overlapping pale coral, sage and ivory sheets converge on a dark junction, then taper into a fine curved stem | Explore light layered surfaces around a crisp structural junction in a method illustration or cover |
+| 8: bird above an open crescent | Fine nested arcs enclose a broad quiet interior, with sparse branches and one dark silhouette | An open arc can frame a key result or title without requiring another enclosing rectangular card |
+| 9: pale cliff and tiny figure | Large off-center pale mass, a sharply dark base and a small human-scale anchor | Pair a broad overview with a precise local detail; preserve the relative scale of scientific image crops |
+| 10: moon, tree and reflection | Warm circular focal area above a horizon; dark branching structure continues into a cooler, denser lower field | Connect an upper conceptual overview to aligned lower evidence, using shared anchors and repeated semantic colors |
+
+### Color and density options
+
+The coastal images offer **cyan, sand and a compact yellow accent**; the cactus
+offers **slate, beige and charcoal**; the canopy images offer **ochre or moss,
+dark bark and blue gaps**. Treat these as optional role relationships. Retain
+the current registered theme unless a palette change is requested. Any new
+palette needs explicit color values and contrast checks through paper-colors;
+these descriptions are not sampled colors or Pantone identifications.
+
+The forest views show that a strong composition can be dense. Distinguish a
+large primary structure from repeated secondary ones through scale, spacing
+and clear gaps. For a dense experiment plate, use a prominent main comparison
+and closely aligned supporting panels rather than extra decorative branches.
+Avoid forced perspective in quantitative plots: apparent size must not alter
+how values or comparable image content are judged.
+
+### Layering, arcs and visual correspondence
+
+- Use translucent shapes for conceptual surfaces or separable decorative
+  layers. If overlap represents set membership, probability or uncertainty,
+  use the actual data and an explicit legend. Alpha blending creates extra
+  perceived colors and is unsuitable as an unexplained category encoding.
+- Use open arcs to frame content in a cover, teaser or conceptual overview.
+  A frame's curvature does not imply cyclic data or a measured connection.
+  Do not bend an ordinary quantitative axis to fit the crescent motif.
+- Carry semantic colors and aligned anchors between overview and evidence.
+  Artistic reflection is a composition reference; experimental images retain
+  their true orientation, and a repeated view is identified as the same view.
+- Keep soft edges in optional backgrounds or conceptual materials. Data
+  boundaries, uncertainty limits, axes and result crops remain precise.
 
 ## Color roles
 
