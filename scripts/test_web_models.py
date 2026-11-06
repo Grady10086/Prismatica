@@ -35,6 +35,9 @@ assert js("return ['none','url(#ramp)','transparent'].every(v=>Motion.displayCol
 assert js("return Object.values(Models.palettes).flat().every(c=>/^#[0-9a-f]{6}$/i.test(Motion.displayColor(c)));")
 assert js("const l=c=>{const a=c.slice(1).match(/../g).map(v=>parseInt(v,16));return (Math.max(...a)+Math.min(...a))/2};return l(Motion.displayColor('#333333'))>l(Motion.displayColor('#888888'))&&l(Motion.displayColor('#888888'))>l(Motion.displayColor('#dddddd'));")
 
+assert js("const lum=c=>c.slice(1).match(/../g).map(v=>parseInt(v,16)).reduce((s,v)=>s+v,0);return Object.values(Models.palettes).flat().every(c=>lum(Motion.luminousPaint(Motion.displayColor(c)))>lum(Motion.displayColor(c)));")
+assert js("return Motion.luminousPaint('none')==='none'&&Motion.luminousPaint('url(#x)')==='url(#x)';")
+
 count=0
 study_count=js("return Models.studies.length;")
 assert study_count==32

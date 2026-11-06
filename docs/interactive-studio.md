@@ -115,3 +115,14 @@ images keep their pixels. Selection, zoom and data editing work in both views.
 SVG and PNG export use the canonical light paper figure, independently of the
 website canvas setting. This keeps manuscript outputs ready for a light page;
 the button tooltips identify the export background.
+
+
+Dark-view contrast uses brighter point and unfilled-path stroke paints, quieter
+panel surfaces and readable coordinate labels. Point radii, weighted line widths,
+opacity encodings and every data coordinate are preserved. Heatmap cells and
+their legends share one color transform; local mark emphasis is limited to
+explicitly tagged categorical point fills and series line strokes. Spatial
+expression spots and other quantitative color mappings use the same transform
+as their legends. Selection retains more surrounding
+context, with a restrained halo on linked marks. Paper-view and export colors
+remain independent of this display treatment.

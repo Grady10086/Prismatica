@@ -94,3 +94,11 @@ body:not(.paper-canvas) .chart-stage .panel-aura{stroke:#9cbdaf}
 @media(max-width:760px){#collection-theme{align-self:flex-end}.collection-toolbar{gap:8px}}
 
 body:not(.paper-canvas) #clear-selection{background:#2a444b;border-color:#92b5a5;color:#dce6d8}
+
+/* Local light: evidence leads, axes support, selection keeps context visible. */
+body:not(.paper-canvas) .chart-stage .muted{filter:opacity(.68)}
+body:not(.paper-canvas) .chart-stage .linked{filter:drop-shadow(0 0 1.6px #bedfd599)}
+body:not(.paper-canvas) .study-preview{box-shadow:inset 0 0 0 1px #a4c3b80d}
+body:not(.paper-canvas) .study-card:hover .study-preview{box-shadow:inset 0 0 0 1px #a4c3b833}
+body:not(.paper-canvas) .canvas-area{background:linear-gradient(145deg,#172831,#14232b)}
+body:not(.paper-canvas) .evidence-rail{border-top-color:#9abfb15c}
