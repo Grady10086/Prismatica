@@ -126,3 +126,26 @@ expression spots and other quantitative color mappings use the same transform
 as their legends. Selection retains more surrounding
 context, with a restrained halo on linked marks. Paper-view and export colors
 remain independent of this display treatment.
+
+
+## Filled charts and biological tracks
+
+Dark heatmaps now carry normalized scale metadata: cells and legend stops use
+one sequential or diverging ramp. The sequential ramp has increasing relative
+luminance; diverging halves share the same neutral midpoint. Spatial expression,
+phylogeny value rings and the Sashimi count matrix use the same sequential
+mapping. Zero remains distinct from missing annotations and unassayed calls.
+OncoPrint keeps separate WT and unassayed surfaces and its existing NA hatch.
+
+Categorical bands, cohort strips, chromosome arcs, coverage fills and their
+swatches use a shared brightness treatment; flow and synteny ribbons get a
+separate restrained treatment. Width, area, opacity, branch length, coordinate
+frames, interval boundaries and raw counts are preserved. These are display
+styles; canonical paper exports retain their original colors.
+
+Selecting a Sankey ribbon emphasizes its actual source and destination nodes.
+Selecting a tree leaf emphasizes its ancestor branches. Circos links respond
+to either endpoint chromosome; Sashimi sample selection connects coverage,
+junction arcs and count cells. Related identities are stored as JSON arrays,
+so imported sample and chromosome names may contain spaces. No extra inferred
+relationships are introduced.

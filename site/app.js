@@ -653,12 +653,14 @@ function clearInspection() {
   $('#chart').querySelector('[data-inspection-overlay]')?.remove();
   $('#chart').querySelectorAll('.muted,.linked').forEach(x=>x.classList.remove('muted','linked'));
 }
+function linkedKeys(node){try{return JSON.parse(node.dataset.links||'[]')}catch{return []}}
 function highlight(key) {
   if(key===highlightedKey)return;highlightedKey=key;
   $('#chart').classList.toggle('has-selection',key!==undefined);
-  $('#chart').querySelectorAll('[data-key]').forEach(x=>{
-    x.classList.toggle('muted',key!==undefined&&x.dataset.key!==key);
-    x.classList.toggle('linked',key!==undefined&&x.dataset.key===key);
+  $('#chart').querySelectorAll('[data-key],[data-links]').forEach(x=>{
+    const matches=x.dataset.key===key||linkedKeys(x).includes(key);
+    x.classList.toggle('muted',key!==undefined&&!matches);
+    x.classList.toggle('linked',key!==undefined&&matches);
   });
 }
 function observationKeys(){return [...new Set([...$('#chart').querySelectorAll('svg:not(.figure-ghost) [data-key][data-tip]')].map(x=>x.dataset.key))]}
@@ -666,10 +668,10 @@ function pinObservation(key){
   const marks=[...$('#chart').querySelectorAll('svg:not(.figure-ghost) [data-key][data-tip]')];
   const el=marks.find(x=>x.dataset.key===key);if(!el)return;
   pinnedKey=key;highlight(key);clearSelection.hidden=false;
-  const keys=observationKeys(),index=keys.indexOf(key),matches=[...$('#chart').querySelectorAll('svg:not(.figure-ghost) [data-key]')].filter(x=>x.dataset.key===key);
+  const keys=observationKeys(),index=keys.indexOf(key),matches=[...$('#chart').querySelectorAll('svg:not(.figure-ghost) [data-key],svg:not(.figure-ghost) [data-links]')].filter(x=>x.dataset.key===key||linkedKeys(x).includes(key));
   $('#evidence-detail').textContent=el.dataset.tip.replaceAll('\n',' · ');
   $('#evidence-position').textContent=`${index+1} / ${keys.length}`;
-  selectionStatus.textContent=`Observation ${key} selected; ${matches.length} linked marks.`;
+  selectionStatus.textContent=`Selection ${key}; ${matches.length} linked marks.`;
 }
 function stepObservation(direction){
   presenter.finish();const keys=observationKeys();if(!keys.length)return;

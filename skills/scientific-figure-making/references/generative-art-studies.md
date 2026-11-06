@@ -128,3 +128,20 @@ The website applies these principles to evidence as well as hero art:
 - Overlays and selection styles are transient interface state. Canonical exports
   contain the full data and omit hover frames and dimming. No cinematic light,
   artificial point jitter or decorative particles are added to measured marks.
+
+
+### Filled evidence and biological relationships
+
+For dark heatmaps, use explicit normalized values and one ordered ramp for both
+cells and colorbar; keep sequential luminance monotonic and a common diverging
+midpoint. Spatial expression and annotation rings are continuous scales, not
+categorical marks to brighten independently. Preserve zero, missing and
+unassayed distinctions, including OncoPrint hatching.
+
+Use the same category treatment for fills and swatches. Ribbons can have a
+separate lightness treatment while retaining opacity, width and interval areas.
+Selection outlines are transient and excluded from paper exports. Highlight
+actual relationships: Sankey endpoints, tree ancestry, either chromosome of a
+synteny link, and a sample's coverage/junction evidence. Store related IDs as
+structured arrays so labels containing spaces remain intact. Do not infer new
+edges from decorative proximity.

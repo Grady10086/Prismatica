@@ -59,6 +59,14 @@ export function luminousPaint(value,amount=.2) {
   const pearl=[235,244,239];
   return '#'+color.map((v,i)=>Math.round(v+(pearl[i]-v)*amount).toString(16).padStart(2,'0')).join('');
 }
+export function darkScale(t,high,low=high,kind='sequential') {
+  t=Math.max(0,Math.min(1,Number(t)));
+  const mix=(a,b,f)=>{const aa=rgb(a),bb=rgb(b);return '#'+aa.map((v,i)=>Math.round(v+(bb[i]-v)*f).toString(16).padStart(2,'0')).join('')};
+  const neutral='#243b48',end=luminousPaint(displayColor(high),.18);
+  if(kind!=='diverging')return mix(neutral,end,t);
+  const start=luminousPaint(displayColor(low),.18);
+  return t<.5?mix(start,neutral,t*2):mix(neutral,end,(t-.5)*2);
+}
 export function themeFigure(source,dark=true) {
   if(!dark)return source;
   const svg=parseFigure(source);
@@ -72,6 +80,11 @@ export function themeFigure(source,dark=true) {
       const point=node.tagName==='circle'&&node.getAttribute('data-visual-role')==='point'&&name==='fill';
       const trace=node.tagName==='path'&&node.getAttribute('data-visual-role')==='trace'&&name==='stroke'&&(!node.hasAttribute('fill')||node.getAttribute('fill')==='none');
       if(chromatic&&(point||trace))paint=luminousPaint(paint,point ? .28 : .19);
+      const role=node.getAttribute('data-visual-role');
+      if(chromatic&&name==='fill'&&['category','ribbon'].includes(role))paint=luminousPaint(paint,role==='ribbon' ? .38 : .22);
+      if(name==='fill'&&node.hasAttribute('data-scale-position'))paint=darkScale(node.dataset.scalePosition,node.dataset.scaleHigh,node.dataset.scaleLow,node.dataset.scaleKind);
+      if(name==='fill'&&node.dataset.state==='WT')paint='#2b414b';
+      if(name==='fill'&&node.dataset.state==='NA')paint='#13232d';
       node.setAttribute(name,paint);
     }
   });

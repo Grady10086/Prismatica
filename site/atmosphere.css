@@ -102,3 +102,8 @@ body:not(.paper-canvas) .study-preview{box-shadow:inset 0 0 0 1px #a4c3b80d}
 body:not(.paper-canvas) .study-card:hover .study-preview{box-shadow:inset 0 0 0 1px #a4c3b833}
 body:not(.paper-canvas) .canvas-area{background:linear-gradient(145deg,#172831,#14232b)}
 body:not(.paper-canvas) .evidence-rail{border-top-color:#9abfb15c}
+
+/* Filled evidence receives the same local emphasis as point and line studies. */
+body:not(.paper-canvas) .chart-stage [data-visual-role="heat-cell"].linked{filter:none;stroke:#e3d3b8;stroke-width:.75;paint-order:fill stroke}
+body:not(.paper-canvas) .chart-stage [data-visual-role="ribbon"].linked{filter:drop-shadow(0 0 1px #bfdcd680);stroke:#d9e8df;stroke-width:.55;paint-order:fill stroke}
+body:not(.paper-canvas) .chart-stage [data-visual-role="category"].linked{filter:drop-shadow(0 0 1px #bfdcd680)}

@@ -38,6 +38,10 @@ assert js("const l=c=>{const a=c.slice(1).match(/../g).map(v=>parseInt(v,16));re
 assert js("const lum=c=>c.slice(1).match(/../g).map(v=>parseInt(v,16)).reduce((s,v)=>s+v,0);return Object.values(Models.palettes).flat().every(c=>lum(Motion.luminousPaint(Motion.displayColor(c)))>lum(Motion.displayColor(c)));")
 assert js("return Motion.luminousPaint('none')==='none'&&Motion.luminousPaint('url(#x)')==='url(#x)';")
 
+# Sequential ramps remain monotonic in luminance; diverging halves share one center.
+assert js("const lum=c=>{const a=c.slice(1).match(/../g).map(v=>parseInt(v,16)/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4);return a[0]*.2126+a[1]*.7152+a[2]*.0722};return Object.values(Models.palettes).flat().every(c=>{const a=Array.from({length:65},(_,i)=>lum(Motion.darkScale(i/64,c)));return a.every((v,i)=>!i||v>=a[i-1])});")
+assert js("return Motion.darkScale(.5,'#55609B','#E6A385','diverging')===Motion.darkScale(0,'#55609B');")
+
 count=0
 study_count=js("return Models.studies.length;")
 assert study_count==32
@@ -58,6 +62,18 @@ for index in range(study_count):
             x,y,w,h=map(float,panel.attrib['data-panel-box'].split())
             assert 0<=x<x+w<=1000 and 0<=y<y+h<=620
             assert panel.attrib['data-panel-label']
+
+        for node in figure.iter():
+            if 'data-scale-position' in node.attrib:
+                assert 0 <= float(node.attrib['data-scale-position']) <= 1
+                assert re.fullmatch(r'#[0-9A-Fa-f]{6}',node.attrib['data-scale-high'])
+            if 'data-links' in node.attrib:
+                assert all(isinstance(k,str) for k in json.loads(node.attrib['data-links']))
+        ribbons=[n for n in figure.iter() if n.attrib.get('data-key','').startswith('flow:')]
+        if ribbons:
+            for ribbon in ribbons:
+                key=ribbon.attrib['data-key']
+                assert sum(key in json.loads(n.attrib.get('data-links','[]')) for n in figure.iter())==2
 
         assert len(result['metrics'])==4
         count+=1
