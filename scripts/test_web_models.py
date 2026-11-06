@@ -30,6 +30,11 @@ for script in (ROOT/'site').glob('*.js'):
     source=re.sub(r'\bexport\s+','',source)
     ctx.eval('(function(){'+source+'})')
 
+# The display transform accepts SVG paint sentinels and keeps neutral ordering.
+assert js("return ['none','url(#ramp)','transparent'].every(v=>Motion.displayColor(v)===v);")
+assert js("return Object.values(Models.palettes).flat().every(c=>/^#[0-9a-f]{6}$/i.test(Motion.displayColor(c)));")
+assert js("const l=c=>{const a=c.slice(1).match(/../g).map(v=>parseInt(v,16));return (Math.max(...a)+Math.min(...a))/2};return l(Motion.displayColor('#333333'))>l(Motion.displayColor('#888888'))&&l(Motion.displayColor('#888888'))>l(Motion.displayColor('#dddddd'));")
+
 count=0
 study_count=js("return Models.studies.length;")
 assert study_count==32

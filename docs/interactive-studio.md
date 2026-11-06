@@ -102,3 +102,16 @@ Hover frames and selection effects are omitted from canonical SVG/PNG exports.
 
 For the underlying visual decisions and original sources see
 [generative art studies](../skills/scientific-figure-making/references/generative-art-studies.md).
+
+
+## Dark exhibition canvas
+
+The collection and laboratory default to a dark canvas. The Dark canvas / Paper
+canvas button switches both areas together without changing data or calculated
+metrics. Display colors keep their hue families while lightness is adapted for
+the background; legends use the same transform as the marks. Embedded local
+images keep their pixels. Selection, zoom and data editing work in both views.
+
+SVG and PNG export use the canonical light paper figure, independently of the
+website canvas setting. This keeps manuscript outputs ready for a light page;
+the button tooltips identify the export background.

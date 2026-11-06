@@ -38,6 +38,33 @@ export function parseFigure(source) {
   if (doc.querySelector('parsererror') || doc.documentElement.tagName !== 'svg') throw Error('Invalid figure output.');
   return document.importNode(doc.documentElement, true);
 }
+// Display-only color transform. Geometry, data and canonical paper exports stay exact.
+export function displayColor(value) {
+  const neutrals={'#f8f7f2':'#14232b','#fdfcf9':'#182a33','#dae2df':'#30444c',
+    '#e2e8e6':'#293d46','#333f49':'#dce5e5','#77808b':'#9eb3ba',
+    '#c5c9ce':'#536b75','#ffffff':'#14232b','#fff':'#14232b',white:'#14232b',black:'#e4eceb'};
+  const key=value.toLowerCase();if(neutrals[key])return neutrals[key];
+  const a=rgb(value);if(!a)return value;
+  const [r,g,b]=a.map(x=>x/255),max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min,l=(max+min)/2;
+  if(d<.025){const v=Math.round((.16+.78*(1-l))*255).toString(16).padStart(2,'0');return '#'+v.repeat(3)}
+  let h=max===r?((g-b)/d+6)%6:max===g?(b-r)/d+2:(r-g)/d+4;
+  h/=6;const sat=Math.min(.82,d/(1-Math.abs(2*l-1))*1.06),light=.16+.78*Math.pow(1-l,.58);
+  const c=(1-Math.abs(2*light-1))*sat,x=c*(1-Math.abs((h*6)%2-1)),m=light-c/2;
+  const sectors=[[c,x,0],[x,c,0],[0,c,x],[0,x,c],[x,0,c],[c,0,x]];
+  return '#'+sectors[Math.min(5,Math.floor(h*6))].map(v=>Math.round((v+m)*255).toString(16).padStart(2,'0')).join('');
+}
+export function themeFigure(source,dark=true) {
+  if(!dark)return source;
+  const svg=parseFigure(source);
+  svg.setAttribute('data-canvas-theme','dark');
+  svg.querySelectorAll('*').forEach(node=>{
+    for(const name of ['fill','stroke','stop-color']){
+      const color=node.getAttribute(name);if(color)node.setAttribute(name,displayColor(color));
+    }
+  });
+  return svg.outerHTML;
+}
+
 export function createPresenter(stage) {
   let raf = 0, tasks = [], ghosts = [], serial = 0, rootAnimation = null;
   function busy(value) { stage.dataset.transitioning = String(value); stage.setAttribute('aria-busy', String(value)); }

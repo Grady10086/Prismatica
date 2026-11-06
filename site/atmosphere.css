@@ -76,3 +76,21 @@ footer{background:#0d151b}
 @media(max-width:760px){.evidence-rail{margin:0 -9px;padding:11px 10px;gap:10px}.evidence-copy p{font-size:9px}.evidence-actions{gap:4px}.evidence-actions button{width:25px;height:25px}.evidence-actions span{min-width:40px;font-size:8px}.gallery:not(.is-filtered) .study-card:nth-child(11n+1) h3,.gallery.is-filtered .study-card:first-child h3{font-size:16px}.palette-button{grid-template-columns:repeat(4,9px)}.palette-button span{width:9px}.palette-button small{font-size:6px}}
 @media(prefers-reduced-motion:reduce){.chart-stage [data-tip],.evidence-actions button{transition:none}}
 @media print{.evidence-rail{display:none}}
+
+/* Dark exhibition canvas; paper presentation remains available explicitly. */
+body:not(.paper-canvas) .study-preview{background:#14232b;border-color:#758e8b22}
+body:not(.paper-canvas) .canvas-area{background:#14232b}
+body:not(.paper-canvas) .figure-toolbar{color:#a2b6bd;border-color:#758e8b33}
+body:not(.paper-canvas) .figure-toolbar button,body:not(.paper-canvas) #panel-picker{color:#becfcc;background:#1b3039;border-color:#758e8b55}
+body:not(.paper-canvas) .figure-toolbar button:hover{background:#29434b;border-color:#a4bcb0}
+body:not(.paper-canvas) .evidence-rail{background:#1c323a;color:#d1e0da;border-color:#758e8b44}
+body:not(.paper-canvas) .evidence-copy .micro{color:#91b3a7}
+body:not(.paper-canvas) .evidence-actions button{background:#213b44;color:#d9e4dc;border-color:#758e8b66}
+body:not(.paper-canvas) .evidence-actions span{color:#a9c1b8}
+body:not(.paper-canvas) .chart-stage .panel-aura{stroke:#9cbdaf}
+.canvas-theme{border:1px solid #758e8b55;background:#20353d;color:#c0d2ca;padding:7px 10px;border-radius:5px;font-size:9px;white-space:nowrap}
+.canvas-theme[aria-pressed=true]{border-color:#b3c8b680;color:#e3d1b7;background:#2b3e42}
+.collection-toolbar{flex-wrap:wrap}#collection-theme{font-size:9px;padding:7px 10px}
+@media(max-width:760px){#collection-theme{align-self:flex-end}.collection-toolbar{gap:8px}}
+
+body:not(.paper-canvas) #clear-selection{background:#2a444b;border-color:#92b5a5;color:#dce6d8}

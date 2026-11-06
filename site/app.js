@@ -1,5 +1,5 @@
 import {bioFamilies,bioHelp} from './bio.js';
-import {createPresenter,parseFigure,animateMetrics,animateCards,motionAllowed} from './motion.js';
+import {createPresenter,parseFigure,themeFigure,animateMetrics,animateCards,motionAllowed} from './motion.js';
 import {
   studies,
   palettes,
@@ -54,6 +54,20 @@ clearSelection.id = 'clear-selection';
 clearSelection.textContent = 'Clear selection ×';
 clearSelection.hidden = true;
 $('.figure-toolbar>div').prepend(panelPicker, clearSelection);
+let darkCanvas=true;
+const canvasThemes=[];
+for(const [id,parent]of [['canvas-theme',$('.figure-toolbar>div')],['collection-theme',$('.collection-toolbar')]]){
+  const button=document.createElement('button');button.type='button';button.id=id;button.className='canvas-theme';
+  button.setAttribute('aria-label','Dark chart canvas');button.setAttribute('aria-pressed','true');button.textContent='Dark canvas';
+  button.addEventListener('click',()=>{
+    darkCanvas=!darkCanvas;document.body.classList.toggle('paper-canvas',!darkCanvas);
+    canvasThemes.forEach(b=>{b.setAttribute('aria-pressed',String(darkCanvas));b.textContent=lang==='zh'?(darkCanvas?'深色画布':'浅色画布'):(darkCanvas?'Dark canvas':'Paper canvas')});
+    cardCache.forEach((card,id)=>card.querySelector('.study-preview').innerHTML=themeFigure(previewFigures.get(id),darkCanvas));
+    paint(false,'palette');
+  });
+  parent.append(button);canvasThemes.push(button);
+}
+
 const selectionStatus = document.createElement('span');
 selectionStatus.className = 'sr-only';
 selectionStatus.setAttribute('role','status');
@@ -90,7 +104,7 @@ $('#tissue-image').addEventListener('change',async e=>{
 });
 $('#clear-tissue').addEventListener('click',()=>{spatialImage=null;updateTissue();paint(false,'palette')});
 
-const cardCache = new Map();
+const cardCache = new Map(), previewFigures = new Map();
 const words = {
   contactNav: '联系我们',
   contactEyebrow: '联系我们',
@@ -140,6 +154,7 @@ function tr() {
   });
   if(pinnedKey===null)$('#evidence-detail').textContent=lang==='zh'?'选择一个数据点，查看它在各面板中的对应观测。':'Select a mark to follow the same observation across panels.';
   $('.evidence-copy .micro').textContent=lang==='zh'?'关联观测':'LINKED EVIDENCE';
+  canvasThemes.forEach(b=>b.textContent=lang==='zh'?(darkCanvas?'深色画布':'浅色画布'):(darkCanvas?'Dark canvas':'Paper canvas'));
   $('#language').textContent = lang === 'en' ? '中文' : 'EN';
   document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN'
 }
@@ -330,7 +345,7 @@ function paint(recalculate = true, kind = 'data') {
   clearInspection();
   canonicalFigure = result.svg;
   updatePanelPicker(result.svg);
-  presenter.present(result.svg, {kind,animate:!booting});
+  presenter.present(themeFigure(result.svg,darkCanvas), {kind,animate:!booting});
   applyView();
   const signature = JSON.stringify(result.metrics);
   if (signature !== metricSignature) {
@@ -764,7 +779,8 @@ function gallery() {
     else if(['paired','representation','flow','conflict'].includes(study.family))p.n=32;
     else if(['factorial','performance'].includes(study.family))p.n=6;
     const data=generate(study,p,1107+studies.indexOf(study));
-    card.querySelector('.study-preview').innerHTML=render(study,data,p,palettes.iris).svg;
+    const preview=render(study,data,p,palettes.iris).svg;previewFigures.set(study.id,preview);
+    card.querySelector('.study-preview').innerHTML=themeFigure(preview,darkCanvas);
     cardCache.set(study.id,card);return card;
   });
   $('#gallery').classList.toggle('is-filtered',filter!=='All');
